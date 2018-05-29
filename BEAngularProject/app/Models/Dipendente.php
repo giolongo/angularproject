@@ -11,15 +11,20 @@ class Dipendente extends Model
     protected $guarded = [];
     
     protected $primaryKey = 'id_dipendente';
+
+    public $timestamps = false;
     
     protected $fillable = [
-        'bot_id',
         'nome',
         'cognome',
         'email',
-        'id_ruolo'
+        'ruolo'
     ];
-    
+
+    public function sottoposti()
+    {
+        return $this->hasMany('App\Sottoposti', 'id_capo', 'id_dipendente');
+    }
     /* RELATION EXAMPLES */
     /*
     public function attachment()

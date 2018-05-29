@@ -18,7 +18,7 @@ class CreateDipendenteTable extends Migration
             $table->string('nome');
             $table->string('cognome');
             $table->string('email');
-            $table->string('id_ruolo');
+            $table->enum('ruolo', ['manager', 'dipendente']);	
         });
     }
 
