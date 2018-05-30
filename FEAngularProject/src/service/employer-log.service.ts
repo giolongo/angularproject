@@ -9,6 +9,7 @@ import { RestRequestService } from './rest-request.service';
 export class EmployerLogService {
 
   utenteLoggato : User;
+  csrf_token : String;
 
   constructor(private httpService : RestRequestService) {
     this.utenteLoggato = new User;
@@ -18,6 +19,7 @@ export class EmployerLogService {
     this.utenteLoggato.role="Semplice";
     this.utenteLoggato.roleValue=0;
    }
+   
 
   isLogged() : Observable<boolean>{
     var logged;
@@ -42,6 +44,10 @@ export class EmployerLogService {
 
   utenteLog() : User{
     return this.utenteLoggato;
+  }
+
+  getCsrfToken() : String{
+    return this.csrf_token;
   }
 
 }
