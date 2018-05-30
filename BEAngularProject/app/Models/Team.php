@@ -4,43 +4,25 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Dipendente extends Model
+class Team extends Model
 {
-    protected $table = 'dipendente';
+    protected $table = 'team';
     
     protected $guarded = [];
     
-    protected $primaryKey = 'id_dipendente';
+    protected $primaryKey = 'id_team';
 
     public $timestamps = false;
     
     protected $fillable = [
-        'nome',
-        'cognome',
-        'email',
-        'ruolo',
-        'codice_fiscale',
-        'data_nascita',
-        'email',
-        'password',
-        'iban',
-        'banca',
-        'bbc'
+        'id_capo_team'
     ];
 
-    public function sottoposti()
+    public function teamDipendente()
     {
-        return $this->hasMany('App\Sottoposti', 'id_capo', 'id_dipendente');
+        return $this->hasMany('App\TeamDipendente', 'id_team', 'id_team');
     }
 
-    public function skill()
-    {
-        return $this->hasMany('App\SkillDipendente', 'id_dipendente', 'id_dipendente');
-    }
-
-    public function team(){
-        return $this->hasMany('App\TeamDipendente', 'id_dipendente', 'id_dipendente');
-    }
     /* RELATION EXAMPLES */
     /*
     public function attachment()
