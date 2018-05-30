@@ -18,6 +18,10 @@ class CreateDipendenteTable extends Migration
             $table->string('nome');
             $table->string('cognome');
             $table->string('email');
+            $table->string('codice_fiscale')->unique();
+            $table->timestamp('data_nascita');
+            $table->string('email')->unique();
+            $table->string('password');
             $table->enum('ruolo', ['manager', 'dipendente']);	
         });
     }
@@ -29,6 +33,6 @@ class CreateDipendenteTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dipendete');
+        Schema::dropIfExists('dipendente');
     }
 }
