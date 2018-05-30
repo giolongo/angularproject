@@ -19,4 +19,6 @@ Route::match(array('GET','POST'),'urlDaInvocare1', 'FerieController@test1');
 Route::match(array('GET','POST'),'urlDaInvocare2', 'FerieController@test2');
 Route::match(array('GET','POST'),'generateMockData', 'FerieController@generateMockData');
 Route::match(array('GET','POST'),'selectSottoposti', 'FerieController@selectSottoposti');
+Route::match(array('GET','POST'),'generateMockDataGiovanni', 'SkillAndTeamController@generateMockDataGiovanni');
+
 

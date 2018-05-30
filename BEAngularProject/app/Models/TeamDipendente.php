@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Dipendente extends Model
+class TeamDipendente extends Model
 {
-    protected $table = 'dipendente';
+    protected $table = 'team_dipendente';
     
     protected $guarded = [];
     
@@ -25,7 +25,7 @@ class Dipendente extends Model
 
     public function team()
     {
-        return $this->hasMany('App\Team', 'id_team', 'id_team');
+        return $this->hasOne('App\Team', 'id_team', 'id_team');
     }
     /* RELATION EXAMPLES */
     /*

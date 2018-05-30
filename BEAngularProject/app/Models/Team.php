@@ -15,6 +15,7 @@ class Team extends Model
     public $timestamps = false;
     
     protected $fillable = [
+        'nome',
         'id_capo_team'
     ];
 

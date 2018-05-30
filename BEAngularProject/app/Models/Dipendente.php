@@ -38,7 +38,7 @@ class Dipendente extends Model
         return $this->hasMany('App\SkillDipendente', 'id_dipendente', 'id_dipendente');
     }
 
-    public function team(){
+    public function teamDipendente(){
         return $this->hasMany('App\TeamDipendente', 'id_dipendente', 'id_dipendente');
     }
     /* RELATION EXAMPLES */

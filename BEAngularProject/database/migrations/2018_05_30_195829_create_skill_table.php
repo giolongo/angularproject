@@ -15,7 +15,7 @@ class CreateSkillTable extends Migration
     {
         Schema::create('skill', function (Blueprint $table) {
             $table->increments('id_skill');
-            $table->enum('name', [
+            $table->enum('nome', [
                 'Angular', 
                 'Java',
                 'PHP'
