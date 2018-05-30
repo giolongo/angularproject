@@ -21,10 +21,10 @@ class Sottoposti extends Model
 
     public function dipendente()
     {
-        return $this->hasOne('App\Dipendente', 'id_dipendente', 'id_dipendente');
+        return $this->hasOne('App\Models\Dipendente', 'id_dipendente', 'id_dipendente');
     }
     public function capo()
     {
-        return $this->hasOne('App\Dipendente', 'id_capo', 'id_dipendente');
+        return $this->hasOne('App\Models\Dipendente', 'id_capo', 'id_dipendente');
     }
 }

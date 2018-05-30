@@ -1,11 +1,14 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Dipendente extends Model
+class Dipendente extends Authenticatable
 {
+    use Notifiable;
+
     protected $table = 'dipendente';
     
     protected $guarded = [];
@@ -28,6 +31,10 @@ class Dipendente extends Model
         'bbc'
     ];
 
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
+    
     public function sottoposti()
     {
         return $this->hasMany('App\Sottoposti', 'id_capo', 'id_dipendente');
@@ -37,23 +44,4 @@ class Dipendente extends Model
     {
         return $this->hasMany('App\SkillDipendente', 'id_dipendente', 'id_dipendente');
     }
-    /* RELATION EXAMPLES */
-    /*
-    public function attachment()
-    {
-        return $this->belongsTo('App\Models\Attachment', 'attachment_id', 'id');
-    }
-    public function bot_info()
-    {
-        return $this->belongsTo('App\Models\Bot', 'bot_id', 'bot_id');
-    } 
-    public function notification()
-    {
-        return $this->belongsTo('App\Models\Notification', 'id', 'feedbackmsg_id');
-    }
-    public function admin_sender()
-    {
-        return $this->hasOne('App\Models\User', 'id', 'admin_sender_id');
-    }
-    */
 }

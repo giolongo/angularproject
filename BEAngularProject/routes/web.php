@@ -20,3 +20,7 @@ Route::match(array('GET','POST'),'urlDaInvocare2', 'FerieController@test2');
 Route::match(array('GET','POST'),'generateMockData', 'FerieController@generateMockData');
 Route::match(array('GET','POST'),'selectSottoposti', 'FerieController@selectSottoposti');
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
