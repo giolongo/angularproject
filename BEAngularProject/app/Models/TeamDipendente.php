@@ -10,36 +10,22 @@ class Dipendente extends Model
     
     protected $guarded = [];
     
-    protected $primaryKey = 'id_dipendente';
+    protected $primaryKey = 'id';
 
     public $timestamps = false;
     
     protected $fillable = [
-        'nome',
-        'cognome',
-        'email',
-        'ruolo',
-        'codice_fiscale',
-        'data_nascita',
-        'email',
-        'password',
-        'iban',
-        'banca',
-        'bbc'
+
     ];
 
-    public function sottoposti()
+    public function dipendente()
     {
-        return $this->hasMany('App\Sottoposti', 'id_capo', 'id_dipendente');
+        return $this->hasOne('App\Dipendente', 'id_dipendente', 'id_dipendente');
     }
 
-    public function skill()
+    public function team()
     {
-        return $this->hasMany('App\SkillDipendente', 'id_dipendente', 'id_dipendente');
-    }
-
-    public function team(){
-        return $this->hasMany('App\TeamDipendente', 'id_dipendente', 'id_dipendente');
+        return $this->hasMany('App\Team', 'id_team', 'id_team');
     }
     /* RELATION EXAMPLES */
     /*
