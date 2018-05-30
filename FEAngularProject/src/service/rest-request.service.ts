@@ -20,7 +20,7 @@ export class RestRequestService {
       'username' : username,
       'password' : password
     }
-    return this.http.post(this.context+'login/'+username+'/'+password, credential, null);
+    return this.http.post(this.context+'login', credential, null);
   }
 }
 

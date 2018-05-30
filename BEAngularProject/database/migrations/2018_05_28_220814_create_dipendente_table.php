@@ -15,13 +15,15 @@ class CreateDipendenteTable extends Migration
     {
         Schema::create('dipendente', function (Blueprint $table) {
             $table->increments('id_dipendente');
-            $table->string('nome');
-            $table->string('cognome');
-            $table->string('email');
-            $table->string('codice_fiscale')->unique();
-            $table->timestamp('data_nascita');
-            $table->string('email')->unique();
-            $table->string('password');
+            $table->string('nome')->nullable(false);
+            $table->string('cognome')->nullable(false);
+            $table->string('email')->nullable(false);
+            $table->string('codice_fiscale')->unique()->nullable(false);
+            $table->timestamp('data_nascita')->nullable(false);
+            $table->string('password')->nullable(false);
+            $table->string('iban')->unique()->nullable(false);
+            $table->enum('banca' , ['Monte Paschi', 'Poste Italiane']);
+            $table->string('bbc')->nullable(false);
             $table->enum('ruolo', ['manager', 'dipendente']);	
         });
     }
