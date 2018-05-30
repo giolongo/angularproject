@@ -24,6 +24,6 @@ class Permessi extends Model
     ];
     public function dipendente()
     {
-        return $this->hasOne('App\Dipendente', 'id_dipendente', 'id_dipendente');
+        return $this->hasOne('App\Models\Dipendente', 'id_dipendente', 'id_dipendente');
     }
 }

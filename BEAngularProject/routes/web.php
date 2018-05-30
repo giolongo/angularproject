@@ -22,3 +22,7 @@ Route::match(array('GET','POST'),'selectSottoposti', 'FerieController@selectSott
 Route::match(array('GET','POST'),'generateMockDataGiovanni', 'SkillAndTeamController@generateMockDataGiovanni');
 
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

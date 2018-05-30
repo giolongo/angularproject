@@ -14,17 +14,20 @@ class CreateDipendenteTable extends Migration
     public function up()
     {
         Schema::create('dipendente', function (Blueprint $table) {
+            $mock_nullable=true;
             $table->increments('id_dipendente');
-            $table->string('nome')->nullable(false);
-            $table->string('cognome')->nullable(false);
-            $table->string('email')->nullable(false);
-            $table->string('codice_fiscale')->unique()->nullable(false);
-            $table->timestamp('data_nascita')->nullable(false);
-            $table->string('password')->nullable(false);
-            $table->string('iban')->unique()->nullable(false);
-            $table->enum('banca' , ['Monte Paschi', 'Poste Italiane']);
-            $table->string('bbc')->nullable(false);
-            $table->enum('ruolo', ['manager', 'dipendente']);	
+            $table->string('nome')->nullable($mock_nullable);
+            $table->string('cognome')->nullable($mock_nullable);
+            $table->string('email')->unique()->nullable($mock_nullable);
+            $table->string('codice_fiscale')->unique()->nullable($mock_nullable);
+            $table->timestamp('data_nascita')->nullable($mock_nullable);
+            $table->string('password')->nullable($mock_nullable);
+            $table->string('iban')->nullable(true);
+            $table->enum('banca' , ['Monte Paschi', 'Poste Italiane'])->nullable($mock_nullable);
+            $table->string('bbc')->nullable($mock_nullable);
+            $table->enum('ruolo', ['manager', 'dipendente'])->nullable($mock_nullable);	
+            $table->rememberToken();
+            $table->timestamps();
         });
     }
 
