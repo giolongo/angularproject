@@ -20,6 +20,10 @@ use Carbon\Carbon;
  */
 class SkillAndTeamController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function generateMockDataGiovanni(Request $request)
     {
         Dipendente::truncate();

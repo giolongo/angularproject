@@ -9,7 +9,6 @@ import {Router} from "@angular/router";
 export class EmployerLogService {
 
   utenteLoggato : User;
-  csrf_token : String;
 
   constructor(private httpService : RestRequestService, private router: Router) {
     this.utenteLoggato = new User;
@@ -31,7 +30,13 @@ export class EmployerLogService {
 
   logIn(username: String, password: String) : boolean{
     var isLogIn;
-    var result = this.httpService.login(username,password);
+    var cpy = this.httpService;
+    if(!this.utenteLoggato || !this.utenteLoggato._token){
+      this.httpService.getToken().subscribe(function(e){
+        var result = cpy.login(username,password, e._token);
+      });
+    }
+    
     return;
     //TODO: Inserire il metodo del service rest-request che effettua la login e il caricamento dell'utente
   }
@@ -46,9 +51,4 @@ export class EmployerLogService {
   utenteLog() : User{
     return this.utenteLoggato;
   }
-
-  getCsrfToken() : String{
-    return this.csrf_token;
-  }
-
 }

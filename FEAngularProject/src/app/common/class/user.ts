@@ -4,4 +4,5 @@ export class User{
     public surname : String;
     public role : String;
     public roleValue : Number;
+    public _token : String;
 }

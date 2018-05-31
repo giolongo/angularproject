@@ -26,3 +26,4 @@ Route::match(array('GET','POST'),'generateMockDataGiovanni', 'SkillAndTeamContro
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/getToken', 'CommonController@getToken')->name('getToken');
