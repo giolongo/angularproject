@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EmployerLogService } from '../../service/employer-log.service';
 import { Router } from "@angular/router";
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -8,7 +9,7 @@ import { Router } from "@angular/router";
 })
 export class LoginComponent implements OnInit {
   isLogin : boolean;
-  username : String;
+  codiceFiscale : String;
   password: String;
   constructor(private user : EmployerLogService, private router: Router) {
     user.isLogged().subscribe(userService => this.isLogin = userService);
@@ -21,7 +22,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() : boolean{
-    this.user.logIn(this.username, this.password);
+    this.user.logIn(this.codiceFiscale, this.password);
     return;
   }
 
