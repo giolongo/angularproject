@@ -7,10 +7,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 import { FormsModule } from '@angular/forms';
+import { LoginComponent } from './login/login.component';
+import { VistaPrincipaleComponent } from './vista-principale/vista-principale.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent,
+    VistaPrincipaleComponent
   ],
   imports: [
     BrowserModule,

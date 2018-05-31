@@ -2,11 +2,14 @@ import { NgModule }             from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
+import { LoginComponent } from './login/login.component';
+import { VistaPrincipaleComponent } from './vista-principale/vista-principale.component';
 
 
 const appRoutes: Routes = [
-    //{ path: 'employerData', component: },
-    //{ path: '', redirectTo: '/employerData', pathMatch: 'full'},
+    { path: 'login', component: LoginComponent},
+    { path: 'index', component: VistaPrincipaleComponent},
+    { path: '', redirectTo: '/index', pathMatch: 'full'},
     //{ path: '**', component: PageNotFoundComponent }
 ];
   

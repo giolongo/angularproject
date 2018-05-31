@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { User } from '../app/common/class/user';
 import { Observable, of } from 'rxjs';
 import { RestRequestService } from './rest-request.service';
-
+import {Router} from "@angular/router";
 @Injectable({
   providedIn: 'root'
 })
@@ -11,7 +11,7 @@ export class EmployerLogService {
   utenteLoggato : User;
   csrf_token : String;
 
-  constructor(private httpService : RestRequestService) {
+  constructor(private httpService : RestRequestService, private router: Router) {
     this.utenteLoggato = new User;
     this.utenteLoggato.id = 123;
     this.utenteLoggato.name="Pippo";
@@ -22,7 +22,7 @@ export class EmployerLogService {
    
 
   isLogged() : Observable<boolean>{
-    var logged;
+    var logged = false;
     if(this.utenteLoggato){
       logged= true;
     }
@@ -38,6 +38,7 @@ export class EmployerLogService {
 
   logOut() : boolean{
     delete this.utenteLoggato;
+    this.router.navigate(['\login']);
     return;
     //TODO: Inserire il metodo del service rest-request che effettua il logout
   }
