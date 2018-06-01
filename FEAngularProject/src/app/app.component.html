@@ -1,4 +1,3 @@
-<!--The content below is only a placeholder and can be replaced.-->
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;" *ngIf = "isLogin">
   <i (click)="visibleLogout()" class="material-icons hand">face</i>
   <label (click)="visibleLogout()" class="name hand">{{userService.utenteLog().name}} {{userService.utenteLog().surname}}</label>
@@ -13,6 +12,9 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Visualizza e prenota stanze</a>
+      </li>
+      <li class="nav-item" *ngIf="isManager">
+        <a class="nav-link" href="/register">Registra nuovo dipendente</a>
       </li>
     </ul>
     <form class="form-inline">

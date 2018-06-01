@@ -9,12 +9,14 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { VistaPrincipaleComponent } from './vista-principale/vista-principale.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    VistaPrincipaleComponent
+    VistaPrincipaleComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

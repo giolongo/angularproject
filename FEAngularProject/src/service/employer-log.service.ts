@@ -15,7 +15,7 @@ export class EmployerLogService {
     this.utenteLoggato.id = 123;
     this.utenteLoggato.name="Pippo";
     this.utenteLoggato.surname="De Pippis";
-    this.utenteLoggato.role="Semplice";
+    this.utenteLoggato.role="Manager";
     this.utenteLoggato.roleValue=0;
    }
    
@@ -43,12 +43,20 @@ export class EmployerLogService {
 
   logOut() : boolean{
     delete this.utenteLoggato;
-    this.router.navigate(['\login']);
+    this.router.navigate(['/login']);
     return;
     //TODO: Inserire il metodo del service rest-request che effettua il logout
   }
 
   utenteLog() : User{
     return this.utenteLoggato;
+  }
+
+  isManager() : boolean{
+    var result = false;
+    if( this.utenteLoggato.role == 'Manager'){
+      result = true;
+    }
+    return result;
   }
 }

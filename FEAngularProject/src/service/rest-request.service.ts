@@ -40,6 +40,10 @@ export class RestRequestService {
   getToken():any{
     return this.http.get(this.context+'getToken');
   }
+
+  registra(user:any):any{
+    return this.http.post(this.context+'register',user,httpOptions);
+  }
 }
 
 interface UserCredential{
