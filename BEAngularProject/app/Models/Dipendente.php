@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-
-class Dipendente extends Authenticatable
+use Tymon\JWTAuth\Contracts\JWTSubject;
+class Dipendente extends Authenticatable implements JWTSubject
 {
     use Notifiable;
 
@@ -28,7 +28,8 @@ class Dipendente extends Authenticatable
         'password',
         'iban',
         'banca',
-        'bbc'
+        'bbc',
+        'is_verified'
     ];
 
     protected $hidden = [
@@ -49,4 +50,22 @@ class Dipendente extends Authenticatable
         return $this->hasMany('App\TeamDipendente', 'id_dipendente', 'id_dipendente');
     }
 
+    /**
+     * Get the identifier that will be stored in the subject claim of the JWT.
+     *
+     * @return mixed
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
 }

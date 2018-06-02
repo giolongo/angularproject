@@ -12,11 +12,9 @@ export class EmployerLogService {
 
   constructor(private httpService : RestRequestService, private router: Router) {
     this.utenteLoggato = new User;
-    this.utenteLoggato.id = 123;
     this.utenteLoggato.name="Pippo";
     this.utenteLoggato.surname="De Pippis";
     this.utenteLoggato.role="Manager";
-    this.utenteLoggato.roleValue=0;
    }
    
 
@@ -29,12 +27,8 @@ export class EmployerLogService {
   }
 
   logIn(username: String, password: String) : boolean{
-    var isLogIn;
-    var cpy = this.httpService;
     if(!this.utenteLoggato || !this.utenteLoggato._token){
-      this.httpService.getToken().subscribe(function(e){
-        var result = cpy.login(username,password, e._token);
-      });
+      this.httpService.login(username, password);
     }
     
     return;

@@ -27,4 +27,6 @@ NB: `C:/Path/To/BEAngularProject/public` è relativo al path locale del server, 
 8. Esegui `composer install`  
 9. Esegui `php artisan migrate`   
 
-NB: le credenziali del database come il nome del database sono personalizzabili tramite il file .env del BE
+NB: le credenziali del database come il nome del database sono personalizzabili tramite il file .env del BE  
+
+- php artisan jwt:secret

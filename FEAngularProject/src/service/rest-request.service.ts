@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { HttpHeaders } from '@angular/common/http';
 import { catchError, retry } from 'rxjs/operators';
 import { User } from '../app/common/class/user';
+import { ApiResponse } from '../app/common/class/apiresponse';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -18,27 +19,31 @@ const httpOptions = {
 export class RestRequestService {
 
   private context : String;
+  private endpoint : Map<String, String>;
 
   constructor(private http: HttpClient) {
-    this.context = "http://localhost/angularproject/be/";
+    this.context = 'http://localhost/angularproject/be';
+    this.endpoint = new Map<String, String>();
+    this.endpoint['login'] = this.context+'/login';
+    this.endpoint['register'] = this.context+'/register';
    }
 
-  login(username: String, password: String, _token: String) : any{
+  login(username: String, password: String) : any{
     var credential;
       credential = {
-        '_token' : _token,
-        'email' : username,
+        'codice_fiscale' : username,
         'password' : password
       }
-      return this.http.post(this.context+'login', credential, httpOptions).subscribe(function(e){
+      return this.http.post(this.endpoint['login'], credential, httpOptions).subscribe(function(response){
         this.utenteLoggato = new User();
-        this.utenteLoggato._token = _token;
+        this.utenteLoggato.token = response['data'].token;
+        this.utenteLoggato.nome = response['data'].nome;
+        this.utenteLoggato.cognome = response['data'].cognome;
+        this.utenteLoggato.ruolo = response['data'].ruolo;
         console.log(this.utenteLoggato);
+        //redirect...
+        //this.router.navigate(['/']);
       });
-  }
-
-  getToken():any{
-    return this.http.get(this.context+'getToken');
   }
 
   registra(user:any):any{

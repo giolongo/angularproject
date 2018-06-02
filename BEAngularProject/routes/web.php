@@ -25,6 +25,21 @@ Route::match(array('GET','POST'),'generateMockDataGiovanni', 'SkillAndTeamContro
 
 //Auth::routes();
 
+Route::post('register', 'AuthController@register');
+Route::post('login', 'AuthController@login');
+Route::post('recover', 'AuthController@recover');
+Route::group(['middleware' => ['jwt.auth']], function() {
+    Route::get('logout', 'AuthController@logout');
+    Route::get('test', function(){
+        return response()->json(['foo'=>'bar']);
+    });
+});
+
+Route::get('user/verify/{verification_code}', 'AuthController@verifyUser');
+Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.request');
+Route::post('password/reset', 'Auth\ResetPasswordController@postReset')->name('password.reset');
+
+//...
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/getToken', 'CommonController@getToken')->name('getToken');
 Route::post('/customLogin', 'CommonController@customLogin')->name('customLogin');
