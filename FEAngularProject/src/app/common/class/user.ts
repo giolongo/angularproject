@@ -1,6 +1,6 @@
 export class User{
-    public name : String;
-    public surname : String;
-    public role : String;
-    public _token : String;
+    public nome : String;
+    public cognome : String;
+    public ruolo : String;
+    public token : String;
 }

@@ -18,8 +18,10 @@ export class AppComponent {
   private isManager : boolean;
   constructor(private userService : EmployerLogService){
     userService.isLogged().subscribe(userService => this.isLogin = userService);
-    this.name = this.userService.utenteLog().name;
-    this.isManager = this.userService.isManager();
+    if(this.isLogin){
+      this.name = this.userService.utenteLog().nome;
+      this.isManager = this.userService.isManager();
+    }
   }
   
   search() {

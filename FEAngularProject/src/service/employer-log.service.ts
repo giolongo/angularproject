@@ -11,10 +11,10 @@ export class EmployerLogService {
   utenteLoggato : User;
 
   constructor(private httpService : RestRequestService, private router: Router) {
-    this.utenteLoggato = new User;
+/*     this.utenteLoggato = new User;
     this.utenteLoggato.name="Pippo";
     this.utenteLoggato.surname="De Pippis";
-    this.utenteLoggato.role="Manager";
+    this.utenteLoggato.role="Manager"; */
    }
    
 
@@ -27,7 +27,7 @@ export class EmployerLogService {
   }
 
   logIn(username: String, password: String) : boolean{
-    if(!this.utenteLoggato || !this.utenteLoggato._token){
+    if(!this.utenteLoggato || !this.utenteLoggato.token){
       this.httpService.login(username, password);
     }
     
@@ -48,7 +48,7 @@ export class EmployerLogService {
 
   isManager() : boolean{
     var result = false;
-    if( this.utenteLoggato.role == 'Manager'){
+    if( this.utenteLoggato.ruolo == 'Manager'){
       result = true;
     }
     return result;

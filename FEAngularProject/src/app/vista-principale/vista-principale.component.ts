@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from "@angular/router";
+import { EmployerLogService } from '../../service/employer-log.service';
 
 @Component({
   selector: 'app-vista-principale',
@@ -6,10 +8,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./vista-principale.component.css']
 })
 export class VistaPrincipaleComponent implements OnInit {
+  private isLogin : boolean;
+  constructor(private router: Router, private userService : EmployerLogService,) {
 
-  constructor() { }
+   }
 
   ngOnInit() {
+    if(this.userService){
+      this.userService.isLogged().subscribe(userService => this.isLogin = userService);
+    }
+    if(!this.isLogin){
+      //Se non lo è lo riporto alla pagina di Login
+      this.router.navigate(['/login']);
+    }
+    
   }
 
 }

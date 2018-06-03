@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { HttpHeaders } from '@angular/common/http';
 import { catchError, retry } from 'rxjs/operators';
 import { User } from '../app/common/class/user';
-import { ApiResponse } from '../app/common/class/apiresponse';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -46,8 +45,12 @@ export class RestRequestService {
       });
   }
 
-  registra(user:any):any{
+  registraDipendente(user:any):any{
     return this.http.post(this.context+'register',user,httpOptions);
+  }
+
+  registraStanza(stanza:any):any{
+    //return this.http.post(this.context+'register',stanza,httpOptions); 
   }
 }
 
