@@ -19,21 +19,38 @@ class AuthController extends Controller
      */
     public function register(Request $request)
     {
-        $credentials = $request->only('name', 'email', 'password');
+        $credentials = $request->only(
+            'nome', 
+            'cognome', 
+            'email', 
+            'codiceFiscale', 
+            'dataDiNascita', 
+            'password'
+        );       
         
         $rules = [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:dipendente'
+            'nome' => 'required|max:255',
+            'cognome' => 'required|max:255',
+            'email' => 'required|email|max:255',
+            'codiceFiscale' => 'required|max:16|unique:dipendente',
+            'dataDiNascita' => 'required|max:255',
+            'password' => 'required|max:255'
         ];
         $validator = Validator::make($credentials, $rules);
         if($validator->fails()) {
             return response()->json(['success'=> false, 'error'=> $validator->messages()]);
         }
-        $name = $request->name;
-        $email = $request->email;
-        $password = $request->password;
         
-        $dipendente = Dipendente::create(['name' => $name, 'email' => $email, 'password' => Hash::make($password)]);
+        $dipendente = Dipendente::create([
+            'nome' => $credentials['nome'], 
+            'cognome' => $credentials['cognome'], 
+            'email' => $credentials['email'], 
+            'codice_fiscale' => $credentials['codiceFiscale'], 
+            'data_nascita' => $credentials['dataDiNascita'], 
+            'password' => Hash::make($credentials['password']),
+            'is_verified' => 1
+        ]);
+        /*
         $verification_code = str_random(30); //Generate verification code
         DB::table('dipendente_verifications')->insert(['dipendente_id'=>$dipendente->id,'token'=>$verification_code]);
         $subject = "Please verify your email address.";
@@ -43,6 +60,7 @@ class AuthController extends Controller
                 $mail->to($email, $name);
                 $mail->subject($subject);
             });
+        */
         return response()->json(['success'=> true, 'message'=> 'Thanks for signing up! Please check your email to complete your registration.']);
     }
 

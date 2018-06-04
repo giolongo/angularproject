@@ -46,7 +46,7 @@ export class RestRequestService {
   }
 
   registraDipendente(user:any):any{
-    return this.http.post(this.context+'register',user,httpOptions);
+    return this.http.post(this.endpoint['register'], user, httpOptions);
   }
 
   registraStanza(stanza:any):any{
