@@ -11,6 +11,7 @@ import { LoginComponent } from './login/login.component';
 import { VistaPrincipaleComponent } from './vista-principale/vista-principale.component';
 import { RegisterComponent } from './register/register.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,

@@ -2,21 +2,16 @@ import { Injectable } from '@angular/core';
 import { User } from '../app/common/class/user';
 import { Observable, of } from 'rxjs';
 import { RestRequestService } from './rest-request.service';
-import {Router} from "@angular/router";
+import { Router } from "@angular/router";
 @Injectable({
   providedIn: 'root'
 })
 export class EmployerLogService {
 
-  utenteLoggato : User;
+   utenteLoggato : User;
 
-  constructor(private httpService : RestRequestService, private router: Router) {
-/*     this.utenteLoggato = new User;
-    this.utenteLoggato.name="Pippo";
-    this.utenteLoggato.surname="De Pippis";
-    this.utenteLoggato.role="Manager"; */
-   }
-   
+  constructor(private httpService : RestRequestService, private router: Router) {}
+  
 
   isLogged() : Observable<boolean>{
     var logged = false;
@@ -26,14 +21,19 @@ export class EmployerLogService {
     return of(logged);
   }
 
-  logIn(username: String, password: String) : boolean{
+  logIn(username: String, password: String){
     if(!this.utenteLoggato || !this.utenteLoggato.token){
-      this.httpService.login(username, password);
+      this.httpService.login(username, password).subscribe(function(response){
+        this.utenteLoggato = new User();
+        this.utenteLoggato.token = response['data'].token;
+        this.utenteLoggato.nome = response['data'].nome;
+        this.utenteLoggato.cognome = response['data'].cognome;
+        this.utenteLoggato.ruolo = response['data'].ruolo;
+        this.router.navigate(['/index']);
+      }.bind(this))
     }
-    
-    return;
-    //TODO: Inserire il metodo del service rest-request che effettua la login e il caricamento dell'utente
   }
+
 
   logOut() : boolean{
     delete this.utenteLoggato;
@@ -42,13 +42,9 @@ export class EmployerLogService {
     //TODO: Inserire il metodo del service rest-request che effettua il logout
   }
 
-  utenteLog() : User{
-    return this.utenteLoggato;
-  }
-
   isManager() : boolean{
     var result = false;
-    if( this.utenteLoggato.ruolo == 'Manager'){
+    if( this.utenteLoggato.ruolo == 'manager'){
       result = true;
     }
     return result;
