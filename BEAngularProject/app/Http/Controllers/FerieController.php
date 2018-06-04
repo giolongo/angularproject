@@ -7,8 +7,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Models\Dipendente;
-use App\Permessi;
-use App\Sottoposti;
+use App\Models\Permessi;
+use App\Models\Sottoposti;
 use Carbon\Carbon;
 /**
  *
