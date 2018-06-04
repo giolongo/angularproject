@@ -33,23 +33,14 @@ export class RestRequestService {
         'codice_fiscale' : username,
         'password' : password
       }
-      return this.http.post(this.endpoint['login'], credential, httpOptions).subscribe(function(response){
-        this.utenteLoggato = new User();
-        this.utenteLoggato.token = response['data'].token;
-        this.utenteLoggato.nome = response['data'].nome;
-        this.utenteLoggato.cognome = response['data'].cognome;
-        this.utenteLoggato.ruolo = response['data'].ruolo;
-        console.log(this.utenteLoggato);
-        //redirect...
-        //this.router.navigate(['/']);
-      });
+      return this.http.post(this.endpoint['login'], credential, httpOptions);
   }
 
   registraDipendente(user:any):any{
-    return this.http.post(this.endpoint['register'], user, httpOptions);
+    return this.http.post(this.context+'register',user,httpOptions);
   }
 
-  registraStanza(stanza:any):any{
+  registraFerie(stanza:any):any{
     //return this.http.post(this.context+'register',stanza,httpOptions); 
   }
 }

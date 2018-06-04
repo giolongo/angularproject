@@ -12,16 +12,11 @@ export class AppComponent {
   csrf_token : String; //For Laravel autentication
   searchField;
   isLogoutVisible;
-  title = 'Rooms And Employer Manager';
+  title = 'Employer Manager';
   private isLogin : boolean;
   private name : String;
   private isManager : boolean;
   constructor(private userService : EmployerLogService){
-    userService.isLogged().subscribe(userService => this.isLogin = userService);
-    if(this.isLogin){
-      this.name = this.userService.utenteLog().nome;
-      this.isManager = this.userService.isManager();
-    }
   }
   
   search() {
@@ -38,7 +33,24 @@ export class AppComponent {
 
   logout(){
     this.userService.logOut();
-    this.userService.isLogged().subscribe(userService => this.isLogin = userService);
+  }
+
+/*   setUser(nome : String, isManager : boolean){
+    this.name = nome;
+    this.isManager = isManager;
+  } */
+
+  ngOnInit(){
+      this.userService.isLogged().subscribe(
+        function(response){
+          if(response){
+            this.name = this.userService.nome;
+            this.isManager = this.userService.isManager();
+            console.log("loggato");
+          }else{
+            console.log("non loggato");
+          }
+        });
   }
 
 }

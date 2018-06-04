@@ -21,9 +21,11 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  login() : boolean{
+  login(){
+/*     this.user.logIn(this.codiceFiscale, this.password).subscribe((data:any)=>{
+      this.router.navigate(['/index']);
+    }) */
     this.user.logIn(this.codiceFiscale, this.password);
-    return;
   }
 
 }

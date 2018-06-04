@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use App\Dipendente;
+use App\Models\Dipendente;
 use App\Permessi;
 use App\Sottoposti;
 use App\Skill;
@@ -22,16 +22,15 @@ class SkillAndTeamController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
     }
     public function generateMockDataGiovanni(Request $request)
     {
-        Dipendente::truncate();
+/*         Dipendente::truncate();
         Permessi::truncate();
         Skill::truncate();
         SkillDipendente::truncate();
         Team::truncate();
-        TeamDipendente::truncate();
+        TeamDipendente::truncate(); */
 
         $skillMockList = [
             ['nome' => 'Angular'],

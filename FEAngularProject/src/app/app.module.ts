@@ -10,6 +10,8 @@ import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { VistaPrincipaleComponent } from './vista-principale/vista-principale.component';
 import { RegisterComponent } from './register/register.component';
+import { CoreModule } from './common/core-module';
+
 
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ import { RegisterComponent } from './register/register.component';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    CoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]

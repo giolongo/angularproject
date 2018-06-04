@@ -36,11 +36,14 @@
       <div class="card-header">
         <ul class="nav nav-tabs card-header-tabs">
           <li class="nav-item">
-            <a [ngClass]="dipendente ? 'nav-link active' : 'nav-link'" (click)="room = false; dipendente = true;">Dipendente</a>
+            <a class="cursor-pointer" [ngClass]="dipendente ? 'nav-link active' : 'nav-link'" (click)="teamVisible=false; ferieVisible = false; dipendente = true;">Dipendente</a>
           </li>
           <li class="nav-item">
-            <a [ngClass]="room ? 'nav-link active' : 'nav-link'" (click)="room = true; dipendente = false;">Stanza</a>
+            <a class="cursor-pointer" [ngClass]="ferieVisible ? 'nav-link active' : 'nav-link'" (click)="teamVisible=false; ferieVisible = true; dipendente = false;">Ferie</a>
           </li>
+          <li class="nav-item">
+              <a class="cursor-pointer" [ngClass]="teamVisible ? 'nav-link active' : 'nav-link'" (click)="teamVisible=true; ferieVisible = false; dipendente = false;">Team</a>
+            </li>
         </ul>
       </div>
 
@@ -64,36 +67,35 @@
       </div>
     </div>
 
-    <div  *ngIf="room">
+    <div  *ngIf="ferieVisible">
       <div class="card" style="width: 30rem; margin-top: 5rem;">
         <div class="card-body">
-          <label>Nome stanza</label>
-          <input type="text" class="input-text" [(ngModel)]="stanza.nome">
-          <label>Numero di Posti</label>
-          <input type="text" class="input-text" [(ngModel)]="stanza.posti">
-          <label style="margin-right:10%;">Dispositivi Disponibili</label>
+          <label>Codice Fiscale/Id Dipendente</label>
+          <input type="text" class="input-text" [(ngModel)]="ferie.codiceFiscaleId">
+          <label>Inizio Ferie</label>
+          <input type="date" class="input-text" [(ngModel)]="ferie.inizio">
+          <label>Fine Ferie</label>
+          <input type="date" class="input-text" [(ngModel)]="ferie.fine">
           <div class="radio">
-            <label><input type="radio" name="dispostivi1" [value]="true" [(ngModel)]="stanza.TV">TV</label>
+            <label><input type="radio" name="dispostivi1" [value]="true" [(ngModel)]="ferie.malattia">Malattia</label>
           </div>
-          <div class="radio">
-            <label><input type="radio" name="dispostivi2" [value]="true" [(ngModel)]="stanza.proiettore">Proiettore</label>
-          </div>
-          <div class="radio">
-            <label><input type="radio" name="dispostivi3" [value]="true" [(ngModel)]="stanza.lavagna">Lavagna</label>
-          </div>
-          <div class="radio">
-            <label><input type="radio" name="dispostivi4" [value]="true" [(ngModel)]="stanza.lavagnaMultimediale">Lavagna Multimediale</label>
-          </div>
-          <div class="radio">
-            <label><input type="radio" name="dispostivi5" [value]="true" [(ngModel)]="stanza.ethernet">Ethernet</label>
-          </div>
-          <div class="radio">
-            <label><input type="radio" name="dispostivi6" [value]="true" [(ngModel)]="stanza.wiFi">WiFi</label>
-          </div>
-          <div class="row" style="padding-top:1rem; padding-left:1rem;"><button class="btn btn-primary" (click)="registraStanza()">Registra</button></div>
+          <div class="row" style="padding-top:1rem; padding-left:1rem;"><button class="btn btn-primary" (click)="registraFerie()">Registra</button></div>
         </div>
       </div>
     </div>
 
+    <div  *ngIf="teamVisible">
+        <div class="card" style="width: 30rem; margin-top: 5rem;">
+          <div class="card-body">
+            <label>Nome Team</label>
+            <input type="text" class="input-text" [(ngModel)]="team.nome">
+            <label>Nome Dipendente</label>
+<!--             <div *ngFor="var i=0;i<numberOfDipendents;i++"> -->
+              <input type="text" class="input-text" [(ngModel)]="team.dipendente[i]">
+<!--             </div> -->
+            <div class="row" style="padding-top:1rem; padding-left:1rem;"><button class="btn btn-primary" (click)="registraTeam()">Registra</button></div>
+          </div>
+        </div>
+      </div>
   </div>
 </div>
