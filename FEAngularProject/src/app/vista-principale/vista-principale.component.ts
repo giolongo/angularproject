@@ -9,9 +9,7 @@ import { EmployerLogService } from '../../service/employer-log.service';
 })
 export class VistaPrincipaleComponent implements OnInit {
   private isLogin : boolean;
-  constructor(private router: Router, private userService : EmployerLogService) {
-
-   }
+  constructor(private router: Router, private userService : EmployerLogService) {}
 
   ngOnInit() {
     if(this.userService){
