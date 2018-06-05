@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { EmployerLogService } from '../../service/employer-log.service';
 import { Router } from "@angular/router";
 import { RestRequestService } from '../../service/rest-request.service';
+import { EmployerLogService } from '../../service/employer-log.service';
 
 
 @Component({
@@ -9,7 +9,6 @@ import { RestRequestService } from '../../service/rest-request.service';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-//È il caso di sostituire any con una classe apposita? Eventualmente va sostiuito qui, e su httpRequestService
 export class RegisterComponent implements OnInit {
   private user : any;
   private ferie : any;
@@ -20,7 +19,7 @@ export class RegisterComponent implements OnInit {
   private dipendente : boolean;
   private ferieVisible : boolean;
   private teamVisible : boolean;
-  constructor(private router: Router, private http:RestRequestService, private userService:EmployerLogService) {
+  constructor(private userService : EmployerLogService, private router : Router, private http : RestRequestService) {
     this.isLogin = false;
     this.dipendente = true;
     this.ferieVisible = false;

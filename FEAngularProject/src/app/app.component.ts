@@ -40,17 +40,5 @@ export class AppComponent {
     this.isManager = isManager;
   } */
 
-  ngOnInit(){
-      this.userService.isLogged().subscribe(
-        function(response){
-          if(response){
-            this.name = this.userService.nome;
-            this.isManager = this.userService.isManager();
-            console.log("loggato");
-          }else{
-            console.log("non loggato");
-          }
-        });
-  }
 
 }

@@ -8,7 +8,7 @@ import { Router } from "@angular/router";
 })
 export class EmployerLogService {
 
-   utenteLoggato : User;
+  utenteLoggato : User;
 
   constructor(private httpService : RestRequestService, private router: Router) {}
   
