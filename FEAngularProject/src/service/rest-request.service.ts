@@ -26,6 +26,7 @@ export class RestRequestService {
     this.endpoint['login'] = this.context+'/login';
     this.endpoint['register'] = this.context+'/register';
     this.endpoint['validateToken'] = this.context+'/validateToken';
+    this.endpoint['getDatiUtente'] = this.context+'/getDatiUtente';
    }
 
   login(username: String, password: String) : any{
@@ -50,6 +51,13 @@ export class RestRequestService {
       'token' : token
     }
     return this.http.post(this.endpoint['validateToken'], tokenJson, httpOptions);
+  }
+
+  getDatiUtente(){
+    var parameter = {
+      'token' : sessionStorage.getItem("token")
+    }
+    return this.http.post(this.endpoint['getDatiUtente'],parameter, httpOptions);
   }
 }
 
