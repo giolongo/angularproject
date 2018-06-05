@@ -39,3 +39,4 @@ Route::get('/getListaRichiesteDipendente', 'FerieController@getListaRichiesteDip
 
 //Routes Giovanni Emanuele Longo
 Route::match(array('GET','POST'),'generateMockDataGiovanni', 'SkillAndTeamController@generateMockDataGiovanni');
+Route::match(array('GET','POST'),'getDatiUtente', 'HomeController@getDatiUtente')->middleware('jwt.auth');

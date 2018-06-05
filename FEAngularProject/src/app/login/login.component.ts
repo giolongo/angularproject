@@ -11,13 +11,13 @@ export class LoginComponent implements OnInit {
   isLogin : boolean;
   codiceFiscale : String;
   password: String;
-  constructor(private user : EmployerLogService, private router: Router) {
-    user.isLogged().subscribe(userService => this.isLogin = userService);
+  constructor(private userService : EmployerLogService, private router: Router) {
+    userService.isLogged().subscribe(userService => this.isLogin = userService);
   }
 
   ngOnInit() {
-    if(this.isLogin){
-      this.router.navigate(['/index']);
+    if(this.isLogin || this.userService.utenteLoggato || sessionStorage.getItem("token")){
+      this.router.navigate(['']);
     }
   }
 
@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
 /*     this.user.logIn(this.codiceFiscale, this.password).subscribe((data:any)=>{
       this.router.navigate(['/index']);
     }) */
-    this.user.logIn(this.codiceFiscale, this.password);
+    this.userService.logIn(this.codiceFiscale, this.password);
   }
 
 }
