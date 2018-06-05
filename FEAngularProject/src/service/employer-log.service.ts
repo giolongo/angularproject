@@ -55,6 +55,7 @@ export class EmployerLogService {
     this.utenteLoggato.nome = response['data'].nome;
     this.utenteLoggato.cognome = response['data'].cognome;
     this.utenteLoggato.ruolo = response['data'].ruolo;
+    console.log(response['data'].token);
     return true;
   }
 

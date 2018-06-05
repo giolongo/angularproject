@@ -14,7 +14,14 @@
         <a class="nav-link" href="#">Visualizza e prenota stanze</a>
       </li>
       <li class="nav-item" *ngIf="userService.isManager()">
-        <a class="nav-link" routerLink="/register">Registra nuovo dipendente, Team o Ferie</a>
+          <div ngbDropdown>
+            <a class="nav-link" routerLink="/register" id="dropdownConfig" ngbDropdownToggle>Registra</a>
+            <div ngbDropdownMenu aria-labelledby="dropdownConfig">
+              <a class="dropdown-item">Utente</a>
+              <a class="dropdown-item">Team</a>
+              <a class="dropdown-item">Permessi</a>
+            </div>
+          </div>
       </li>
     </ul>
     <form class="form-inline">
