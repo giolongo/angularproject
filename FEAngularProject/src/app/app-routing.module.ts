@@ -7,9 +7,9 @@ import { RegisterComponent } from './register/register.component';
 
 
 const appRoutes: Routes = [
-    { path: 'login', component: LoginComponent},
-    { path: 'register', component: RegisterComponent},
-    { path: 'index', component: VistaPrincipaleComponent},
+    { path: 'login', component: LoginComponent, pathMatch: 'full'},
+    { path: 'register', component: RegisterComponent, pathMatch: 'full'},
+    { path: 'index', component: VistaPrincipaleComponent, pathMatch: 'full'},
     { path: '', redirectTo: '/index', pathMatch: 'full'},
     //{ path: '**', component: PageNotFoundComponent }
 ];
