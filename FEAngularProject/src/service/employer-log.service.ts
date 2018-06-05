@@ -22,12 +22,16 @@ export class EmployerLogService {
   }
 
   logIn(username: String, password: String){
-    if((!this.utenteLoggato || !this.utenteLoggato.token) && !sessionStorage.getItem("token")){
+    if((!this.utenteLoggato || !this.utenteLoggato.token)){
       this.httpService.login(username, password).subscribe(function(response){
         this.caricaUtenteLoggato(response);
         this.router.navigate(['/index']);
       }.bind(this))
-    }else if(sessionStorage.getItem("token")){
+    }
+  }
+
+  refreshSessionByToken(){
+    if(sessionStorage.getItem("token")){
       this.httpService.validateToken(sessionStorage.getItem("token")).subscribe(function(response){
         this.caricaUtenteLoggato(response);
       })

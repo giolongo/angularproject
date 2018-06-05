@@ -35,7 +35,11 @@ export class RegisterComponent implements OnInit {
     //Controllo che l'utente sia loggato
     if(!this.userService.utenteLoggato){
       //Se non lo è lo riporto alla pagina di Login
-      this.router.navigate(['/login']);
+      if(!sessionStorage.getItem("token")){
+        this.router.navigate(['/login']);
+      }else{
+        this.userService.refreshSessionByToken();
+      }
     }else{
       //Vedo se è un Manager; Questa funzionalità è abilitata solo ai Manager
       this.isManager = this.userService.isManager();

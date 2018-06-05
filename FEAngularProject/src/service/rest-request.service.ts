@@ -25,6 +25,7 @@ export class RestRequestService {
     this.endpoint = new Map<String, String>();
     this.endpoint['login'] = this.context+'/login';
     this.endpoint['register'] = this.context+'/register';
+    this.endpoint['validateToken'] = this.context+'/validateToken';
    }
 
   login(username: String, password: String) : any{
@@ -37,7 +38,7 @@ export class RestRequestService {
   }
 
   registraDipendente(user:any):any{
-    return this.http.post(this.context+'register',user,httpOptions);
+    return this.http.post(this.endpoint['register'],user,httpOptions);
   }
 
   registraFerie(stanza:any):any{
