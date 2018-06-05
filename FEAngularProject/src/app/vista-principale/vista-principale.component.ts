@@ -9,7 +9,7 @@ import { EmployerLogService } from '../../service/employer-log.service';
 })
 export class VistaPrincipaleComponent implements OnInit {
   private isLogin : boolean;
-  constructor(private router: Router, private userService : EmployerLogService,) {
+  constructor(private router: Router, private userService : EmployerLogService) {
 
    }
 
@@ -17,7 +17,7 @@ export class VistaPrincipaleComponent implements OnInit {
     if(this.userService){
       this.userService.isLogged().subscribe(userService => this.isLogin = userService);
     }
-    if(!this.isLogin){
+    if(!this.userService.utenteLoggato){
       //Se non lo è lo riporto alla pagina di Login
       this.router.navigate(['/login']);
     }
