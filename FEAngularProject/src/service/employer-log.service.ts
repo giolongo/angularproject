@@ -22,24 +22,32 @@ export class EmployerLogService {
   }
 
   logIn(username: String, password: String){
-    if(!this.utenteLoggato || !this.utenteLoggato.token){
+    if((!this.utenteLoggato || !this.utenteLoggato.token) && !sessionStorage.getItem("token")){
       this.httpService.login(username, password).subscribe(function(response){
-        this.utenteLoggato = new User();
-        this.utenteLoggato.token = response['data'].token;
-        this.utenteLoggato.nome = response['data'].nome;
-        this.utenteLoggato.cognome = response['data'].cognome;
-        this.utenteLoggato.ruolo = response['data'].ruolo;
+        this.caricaUtenteLoggato(response);
         this.router.navigate(['/index']);
       }.bind(this))
+    }else if(sessionStorage.getItem("token")){
+      this.httpService.validateToken(sessionStorage.getItem("token")).subscribe(function(response){
+        this.caricaUtenteLoggato(response);
+      })
     }
   }
-
 
   logOut() : boolean{
     delete this.utenteLoggato;
     this.router.navigate(['/login']);
     return;
     //TODO: Inserire il metodo del service rest-request che effettua il logout
+  }
+
+  caricaUtenteLoggato(response : any){
+    this.utenteLoggato = new User();
+    this.utenteLoggato.token = response['data'].token;
+    sessionStorage.setItem("token",response['data'].token);
+    this.utenteLoggato.nome = response['data'].nome;
+    this.utenteLoggato.cognome = response['data'].cognome;
+    this.utenteLoggato.ruolo = response['data'].ruolo;
   }
 
   isManager() : boolean{

@@ -43,6 +43,13 @@ export class RestRequestService {
   registraFerie(stanza:any):any{
     //return this.http.post(this.context+'register',stanza,httpOptions); 
   }
+
+  validateToken(token : String) : any{
+    var tokenJson = {
+      'token' : token
+    }
+    return this.http.post(this.endpoint['validateToken'], tokenJson, httpOptions);
+  }
 }
 
 interface UserCredential{
