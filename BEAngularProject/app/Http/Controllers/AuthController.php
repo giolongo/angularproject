@@ -8,6 +8,7 @@ use Validator, DB, Hash, Mail;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\Auth;
+use App\angularproject\CommonFunction;
 
 class AuthController extends Controller
 {
@@ -205,6 +206,25 @@ class AuthController extends Controller
             }else{
                 return response()->json(['success' => false, 'error' => 'Generic error.'], 500);
             }
+        }
+    }
+
+
+    public function validateToken(Request $request){
+        $token = $request->get('token');
+        $user = CommonFunction::tokenToDipendente($token);
+        if(empty($user)){
+            return response()->json(['success' => false, 'error' => 'Invalid token']);
+        }else{
+            return response()->json([
+                'success' => true, 
+                'data'=> [ 
+                    'token' => $token,
+                    'nome' => $user->nome,
+                    'cognome' => $user->cognome,
+                    'ruolo' => $user->ruolo,
+                ]
+            ]);
         }
     }
 }

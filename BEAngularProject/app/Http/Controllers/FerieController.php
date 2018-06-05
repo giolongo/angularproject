@@ -10,6 +10,7 @@ use App\Models\Dipendente;
 use App\Models\Permessi;
 use App\Models\Sottoposti;
 use Carbon\Carbon;
+use App\angularproject\CommonFunction;
 /**
  *
  *@deprecated See WebHookVotaController
@@ -18,8 +19,18 @@ class FerieController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        //$this->middleware('auth');
     }
+
+    public function getListaRichiesteDipendente(Request $request){
+        $user = CommonFunction::tokenToDipendente($request->get('token'));
+        if(empty($user)){
+            return CommonFunction::genericUnauthorizedAccess();
+        }
+        $permessi = Permessi::where('id_dipendente', '=', $user->id)->where('stato', '!=', 'approvato')->get()->toArray();
+        return response()->json(['success' => true, 'message' => json_encode($permessi)]);
+    }
+
     public function generateMockData(Request $request)
     {
         //endpoint
