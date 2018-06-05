@@ -1,10 +1,13 @@
-
+<form #userlogin = "ngForm" (ngSubmit) = "login()">
   <div class="card" style="width: 18rem; margin-top: 10rem;">
-  <div class="card-body">
-      <label>Codice Fiscale</label>
-      <input type="text"class="input-text" [(ngModel)]="codiceFiscale">
-      <label>Password</label>
-      <input type="text" class="input-text" [(ngModel)]="password">
-      <div class="row" style="padding-top:1rem; padding-left:1rem;"><button class="btn btn-primary" (click)="login()">Login</button></div>
+    <div class="card-body">
+        <label>Codice Fiscale</label>
+        <input type="text" name="codiceFiscale" class="input-text" [(ngModel)]="codiceFiscale">
+        <label>Password</label>
+        <input type="password" name="password" class="input-text" [(ngModel)]="password">
+        <div class="row" style="padding-top:1rem; padding-left:1rem;">
+          <input type="submit" class="btn btn-primary" value="Login">
+        </div>
+    </div>
   </div>
-</div>
+</form>

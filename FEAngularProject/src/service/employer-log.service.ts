@@ -30,28 +30,32 @@ export class EmployerLogService {
     }
   }
 
-  refreshSessionByToken(){
+  refreshSessionByTokenRequest(){
     if(sessionStorage.getItem("token")){
-      this.httpService.validateToken(sessionStorage.getItem("token")).subscribe(function(response){
-        this.caricaUtenteLoggato(response);
-      })
+      return this.httpService.validateToken(sessionStorage.getItem("token"));
     }
+    return null;
   }
 
   logOut() : boolean{
     delete this.utenteLoggato;
+    sessionStorage.removeItem('token');
     this.router.navigate(['/login']);
     return;
     //TODO: Inserire il metodo del service rest-request che effettua il logout
   }
 
   caricaUtenteLoggato(response : any){
+    if(!response['success']){
+      return false;
+    }
     this.utenteLoggato = new User();
     this.utenteLoggato.token = response['data'].token;
-    sessionStorage.setItem("token",response['data'].token);
+    sessionStorage.setItem("token", response['data'].token);
     this.utenteLoggato.nome = response['data'].nome;
     this.utenteLoggato.cognome = response['data'].cognome;
     this.utenteLoggato.ruolo = response['data'].ruolo;
+    return true;
   }
 
   isManager() : boolean{

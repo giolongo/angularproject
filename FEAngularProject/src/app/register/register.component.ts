@@ -38,7 +38,13 @@ export class RegisterComponent implements OnInit {
       if(!sessionStorage.getItem("token")){
         this.router.navigate(['/login']);
       }else{
-        this.userService.refreshSessionByToken();
+        this.userService.refreshSessionByTokenRequest().subscribe(function(response){
+          if(!this.userService.caricaUtenteLoggato(response)){
+            this.router.navigate(['/login']);
+          }else if(response['data'].ruolo == 'manager'){
+              this.isManager = true;
+          }
+        }.bind(this));
       }
     }else{
       //Vedo se è un Manager; Questa funzionalità è abilitata solo ai Manager
