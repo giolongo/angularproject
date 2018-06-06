@@ -7,8 +7,14 @@
             {{employerLogService.getNomeUtente()}} {{employerLogService.getCognomeUtente()}}
           </a>
           <div ngbDropdownMenu>
-            <a class="dropdown-item" routerLink="/visualizzaProfilo"><i class="material-icons hand">face</i>Profilo utente</a>
-            <a class="dropdown-item" routerLink="/logout">Esci</a>
+            <a class="dropdown-item" routerLink="/visualizzaProfilo">
+              <i class="material-icons" title="Info">perm_identity</i>
+              Profilo utente
+            </a>
+            <a class="dropdown-item" routerLink="/logout">
+              <i class="material-icons" title="Logout">power_settings_new</i>
+              Esci
+            </a>
             <!-- <a class="dropdown-item" routerLink="/registraPermessi">Permessi</a> -->
           </div>
         </div>

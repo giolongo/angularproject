@@ -11,3 +11,8 @@
 .hand{
     cursor: pointer;
 }
+
+ul a i{
+    display: inline-flex;
+    vertical-align: middle;
+}
