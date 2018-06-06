@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VistaPrincipaleComponent } from './vista-principale.component';
+import { RegistraPermessiComponent } from './registra-permessi.component';
 
-describe('VistaPrincipaleComponent', () => {
-  let component: VistaPrincipaleComponent;
-  let fixture: ComponentFixture<VistaPrincipaleComponent>;
+describe('RegistraPermessiComponent', () => {
+  let component: RegistraPermessiComponent;
+  let fixture: ComponentFixture<RegistraPermessiComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ VistaPrincipaleComponent ]
+      declarations: [ RegistraPermessiComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(VistaPrincipaleComponent);
+    fixture = TestBed.createComponent(RegistraPermessiComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

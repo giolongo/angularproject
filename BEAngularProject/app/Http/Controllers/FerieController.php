@@ -6,11 +6,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 use App\Models\Dipendente;
 use App\Models\Permessi;
 use App\Models\Sottoposti;
 use Carbon\Carbon;
 use App\angularproject\CommonFunction;
+use Hash;
 /**
  *
  *@deprecated See WebHookVotaController
@@ -37,9 +39,11 @@ class FerieController extends Controller
         //http://localhost/angularproject/be/generateMockData
 
         //Empty DB
+        DB::statement("SET foreign_key_checks=0");
         Dipendente::truncate();
         Sottoposti::truncate();
         Permessi::truncate();
+        DB::statement("SET foreign_key_checks=1");
         
         //Fill DB
         $mockList = [
@@ -47,31 +51,51 @@ class FerieController extends Controller
                 'nome' => 'Orazio',
                 'cognome' => 'Contarino',
                 'email' => 'ocontarino@gmail.com',
-                'ruolo' => 'manager'
+                'ruolo' => 'manager',
+                'codice_fiscale' => 'cntrzo94p28c351t', 
+                'data_nascita' => Carbon::now(), 
+                'password' => Hash::make('orazio'),
+                'is_verified' => 1
             ],
             [
                 'nome' => 'Giovanni',
                 'cognome' => 'Longo',
                 'email' => 'aaa@gmail.com',
-                'ruolo' => 'manager'
+                'ruolo' => 'manager',
+                'codice_fiscale' => 'cntrzo94p28c352t', 
+                'data_nascita' => Carbon::now(), 
+                'password' => Hash::make('orazio'),
+                'is_verified' => 1
             ],
             [
                 'nome' => 'Mario',
                 'cognome' => 'Rossi',
                 'email' => 'bbb@gmail.com',
-                'ruolo' => 'dipendente'
+                'ruolo' => 'dipendente',
+                'codice_fiscale' => 'cntrzo94p28c353t', 
+                'data_nascita' => Carbon::now(), 
+                'password' => Hash::make('orazio'),
+                'is_verified' => 1
             ],
             [
                 'nome' => 'Turi',
                 'cognome' => 'Bianchi',
                 'email' => 'ccc@gmail.com',
-                'ruolo' => 'dipendente'
+                'ruolo' => 'dipendente',
+                'codice_fiscale' => 'cntrzo94p28c354t', 
+                'data_nascita' => Carbon::now(), 
+                'password' => Hash::make('orazio'),
+                'is_verified' => 1
             ],
             [
                 'nome' => 'Carmelo',
                 'cognome' => 'Verdi',
                 'email' => 'ddd@gmail.com',
-                'ruolo' => 'dipendente'
+                'ruolo' => 'dipendente',
+                'codice_fiscale' => 'cntrzo94p28c355t', 
+                'data_nascita' => Carbon::now(), 
+                'password' => Hash::make('orazio'),
+                'is_verified' => 1
             ],
         ];
 

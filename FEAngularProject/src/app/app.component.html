@@ -1,27 +1,30 @@
-<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;" *ngIf = "userService.utenteLoggato">
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;" *ngIf = "employerLogService.isLogged()">
   <i (click)="visibleLogout()" class="material-icons hand">face</i>
-  <label (click)="visibleLogout()" class="name hand">{{userService.utenteLoggato.nome}} {{userService.utenteLoggato.cognome}}</label>
+  <label (click)="visibleLogout()" class="name hand">{{employerLogService.getNomeUtente()}} {{employerLogService.getCognomeUtente()}}</label>
   <button class="button-logout hand" *ngIf="isLogoutVisible" (click)="logout()"><i class="material-icons">exit_to_app</i></button>
   <div class="collapse navbar-collapse" id="navbarColor03">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="#">Visualizza Skills</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Visualizza Team</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Visualizza e prenota stanze</a>
-      </li>
-      <li class="nav-item" *ngIf="userService.isManager()">
+      <li class="nav-item" *ngIf="employerLogService.isManager()">
           <div ngbDropdown>
-            <a class="nav-link" routerLink="/register" id="dropdownConfig" ngbDropdownToggle>Registra</a>
+            <a class="nav-link" id="dropdownConfig" ngbDropdownToggle>Registra</a>
             <div ngbDropdownMenu aria-labelledby="dropdownConfig">
-              <a class="dropdown-item">Utente</a>
-              <a class="dropdown-item">Team</a>
-              <a class="dropdown-item">Permessi</a>
+              <a class="dropdown-item" routerLink="/registraUtente">Utente</a>
+              <a class="dropdown-item" routerLink="/registraTeam">Team</a>
+              <a class="dropdown-item" routerLink="/registraPermessi">Permessi</a>
             </div>
           </div>
+      </li>
+      <li class="nav-item" *ngIf="employerLogService.isManager()">
+          <div ngbDropdown>
+            <a class="nav-link" id="dropdownConfig" ngbDropdownToggle>Gestione dipendenti</a>
+            <div ngbDropdownMenu aria-labelledby="dropdownConfig">
+              <a class="dropdown-item" routerLink="/visualizzaSkills">Visualizza Skills</a>
+              <a class="dropdown-item" routerLink="/visualizzaTeam">Visualizza Team</a>
+            </div>
+          </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/gestionePermessi">Gestione permessi</a>
       </li>
     </ul>
     <form class="form-inline">

@@ -3,15 +3,13 @@ import { EmployerLogService } from '../../service/employer-log.service';
 import { Router } from "@angular/router";
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-dashboard',
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.css']
 })
-export class LoginComponent implements OnInit {
-  codiceFiscale : String;
-  password: String;
-  constructor(private employerLogService : EmployerLogService, private router: Router) {
-  }
+export class DashboardComponent implements OnInit {
+
+  constructor(private employerLogService : EmployerLogService, private router: Router) { }
 
   ngOnInit() {
     if(!this.employerLogService.isLogged()){
@@ -26,13 +24,6 @@ export class LoginComponent implements OnInit {
         }.bind(this));
       }
     }
-  }
-
-  login(){
-/*     this.user.logIn(this.codiceFiscale, this.password).subscribe((data:any)=>{
-      this.router.navigate(['/index']);
-    }) */
-    this.employerLogService.logIn(this.codiceFiscale, this.password);
   }
 
 }

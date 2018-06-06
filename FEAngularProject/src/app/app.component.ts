@@ -3,6 +3,7 @@ import { EmployerLogService } from '../service/employer-log.service';
 import { NgModel } from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
+import { Router } from "@angular/router";
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -10,14 +11,10 @@ import {NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
   providers: [NgbDropdownConfig] // add NgbDropdownConfig to the component providers
 })
 export class AppComponent {
-  csrf_token : String; //For Laravel autentication
   searchField;
   isLogoutVisible;
   title = 'Employer Manager';
-  private isLogin : boolean;
-  private name : String;
-  private isManager : boolean;
-  constructor(private userService : EmployerLogService, config: NgbDropdownConfig) {
+  constructor(private employerLogService : EmployerLogService, config: NgbDropdownConfig, private router: Router) {
     // customize default values of dropdowns used by this component tree
     config.placement = 'bottom-left';
     config.autoClose = true;
@@ -36,13 +33,20 @@ export class AppComponent {
   }
 
   logout(){
-    this.userService.logOut();
+    this.employerLogService.logOut();
   }
-
-/*   setUser(nome : String, isManager : boolean){
-    this.name = nome;
-    this.isManager = isManager;
-  } */
-
-
+  ngOnInit() {
+    if(!this.employerLogService.isLogged()){
+      //Se non lo è lo riporto alla pagina di Login
+      if(!sessionStorage.getItem("token")){
+        this.router.navigate(['/login']);
+      }else{
+        this.employerLogService.refreshSessionByTokenRequest().subscribe(function(response){
+          if(!this.employerLogService.caricaUtenteLoggato(response)){
+            this.router.navigate(['/login']);
+          }
+        }.bind(this));
+      }
+    }
+  }
 }

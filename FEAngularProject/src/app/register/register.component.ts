@@ -13,14 +13,12 @@ export class RegisterComponent implements OnInit {
   private user : any;
   private ferie : any;
   private team : any;
-  private isManager;
-  private isLogin;
   private numberOfDipendents: Number;
   private dipendente : boolean;
   private ferieVisible : boolean;
   private teamVisible : boolean;
   constructor(private userService : EmployerLogService, private router : Router, private http : RestRequestService) {
-    this.isLogin = false;
+    //this.isLogin = false;
     this.dipendente = true;
     this.ferieVisible = false;
     this.teamVisible = false;
@@ -32,7 +30,7 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit() {
-    //Controllo che l'utente sia loggato
+/*    //Controllo che l'utente sia loggato
     if(!this.userService.utenteLoggato){
       //Se non lo è lo riporto alla pagina di Login
       if(!sessionStorage.getItem("token")){
@@ -50,7 +48,7 @@ export class RegisterComponent implements OnInit {
       //Vedo se è un Manager; Questa funzionalità è abilitata solo ai Manager
       this.isManager = this.userService.isManager();
     }
-  }
+*/ }
 
   registraDipendente():boolean{
     console.log(this.user);

@@ -8,25 +8,21 @@ import { Router } from "@angular/router";
 })
 export class EmployerLogService {
 
-  utenteLoggato : User;
+  private utenteLoggato : User;
 
   constructor(private httpService : RestRequestService, private router: Router) {}
   
 
-  isLogged() : Observable<boolean>{
-    var logged = false;
-    if(this.utenteLoggato){
-      logged= true;
-    }
-    return of(logged);
+  isLogged() : boolean{
+    return this.utenteLoggato ? true : false;
   }
 
   logIn(username: String, password: String){
     if((!this.utenteLoggato || !this.utenteLoggato.token)){
       this.httpService.login(username, password).subscribe(function(response){
         this.caricaUtenteLoggato(response);
-        this.router.navigate(['/index']);
-      }.bind(this))
+        this.router.navigate(['/dashboard']);
+      }.bind(this));
     }
   }
 
@@ -60,10 +56,13 @@ export class EmployerLogService {
   }
 
   isManager() : boolean{
-    var result = false;
-    if( this.utenteLoggato.ruolo == 'manager'){
-      result = true;
-    }
-    return result;
+    return this.utenteLoggato.ruolo == 'manager';
+  }
+  
+  getNomeUtente() : String {
+    return this.utenteLoggato.nome;
+  }
+  getCognomeUtente() : String {
+    return this.utenteLoggato.cognome;
   }
 }
