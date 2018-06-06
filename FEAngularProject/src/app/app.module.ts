@@ -8,7 +8,6 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { EmployerLogService } from '../service/employer-log.service';
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { RegistraUtenteComponent } from './registra-utente/registra-utente.component';
@@ -22,7 +21,6 @@ import { GestionePermessiComponent } from './gestione-permessi/gestione-permessi
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterComponent,
     DashboardComponent,
     RegistraUtenteComponent,
     RegistraTeamComponent,
