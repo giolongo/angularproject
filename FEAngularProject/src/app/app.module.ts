@@ -16,6 +16,7 @@ import { RegistraPermessiComponent } from './registra-permessi/registra-permessi
 import { VisualizzaSkillComponent } from './visualizza-skill/visualizza-skill.component';
 import { VisualizzaTeamComponent } from './visualizza-team/visualizza-team.component';
 import { GestionePermessiComponent } from './gestione-permessi/gestione-permessi.component';
+import { ProfiloUtenteComponent } from './profilo-utente/profilo-utente.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { GestionePermessiComponent } from './gestione-permessi/gestione-permessi
     RegistraPermessiComponent,
     VisualizzaSkillComponent,
     VisualizzaTeamComponent,
-    GestionePermessiComponent
+    GestionePermessiComponent,
+    ProfiloUtenteComponent
   ],
   imports: [
     BrowserModule,
