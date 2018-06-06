@@ -8,6 +8,12 @@ import { Router } from "@angular/router";
   styleUrls: ['./registra-utente.component.css']
 })
 export class RegistraUtenteComponent implements OnInit {
+  public nome : String;
+  public cognome: String;
+  public codiceFiscale: String;
+  public dataDiNascita: String;
+  public email: String;
+  public password: String;
 
   constructor(private employerLogService : EmployerLogService, private router: Router) { }
 
@@ -24,6 +30,15 @@ export class RegistraUtenteComponent implements OnInit {
         }.bind(this));
       }
     }
+  }
+
+  public registraDipendente(){
+    console.log(this.nome);
+    console.log(this.cognome);
+    console.log(this.codiceFiscale);
+    console.log(this.dataDiNascita);
+    console.log(this.email);
+    console.log(this.password);
   }
 
 }

@@ -10,8 +10,16 @@
         </div>
     </div>
     <div *ngIf="employerLogService.isManager()">
-    <p>
-        registra-team works!
-    </p>
+        <form #creaTeam = "ngForm" (ngSubmit) = "registraTeam()">
+            <div class="card" style="width: 30rem; margin-top: 5rem;">
+                <div class="card-body">
+                    <label>Nome team</label>
+                    <input type="text" class="input-text" name="nomeTeam" [(ngModel)]="nomeTeam">
+                    <div class="row" style="padding-top:1rem; padding-left:1rem;">
+                        <input type="submit" class="btn btn-primary" value="Crea">
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
