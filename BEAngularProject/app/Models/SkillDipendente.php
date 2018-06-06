@@ -21,7 +21,7 @@ class SkillDipendente extends Model
 
     public function skill()
     {
-        return $this->hasMany('App\Skill', 'id_skill', 'id_skill');
+        return $this->hasMany('App\Models\Skill', 'id_skill', 'id_skill');
     }
 
     public function dipendente()

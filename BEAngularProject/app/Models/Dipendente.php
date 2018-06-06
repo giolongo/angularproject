@@ -43,7 +43,7 @@ class Dipendente extends Authenticatable implements JWTSubject
 
     public function skill()
     {
-        return $this->hasMany('App\SkillDipendente', 'id_dipendente', 'id_dipendente');
+        return $this->hasMany('App\Models\SkillDipendente', 'id_dipendente', 'id_dipendente');
     }
 
     public function teamDipendente(){

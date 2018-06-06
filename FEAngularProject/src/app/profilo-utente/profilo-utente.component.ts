@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EmployerLogService } from '../../service/employer-log.service';
+import { RestRequestService } from '../../service/rest-request.service';
 import { Router } from "@angular/router";
 
 @Component({
@@ -11,15 +12,16 @@ export class ProfiloUtenteComponent implements OnInit {
   public nome : String;
   public cognome : String;
   public codiceFiscale : String;
-  public dataDiNascita : String;
+  public dataDiNascita : Date;
   public email : String;
   public password : String;
-  constructor(private employerLogService : EmployerLogService, private router: Router) { 
+  public skills : any;
+  constructor(private employerLogService : EmployerLogService, private router: Router, private restRequestService:RestRequestService) { 
     this.nome = employerLogService.getNomeUtente();
     this.cognome = employerLogService.getCognomeUtente();
-    this.codiceFiscale = "MOCK";
-    this.dataDiNascita = "MOCK";
-    this.email = "MOCK";
+    this.codiceFiscale =  employerLogService.getCodiceFiscale();
+    this.dataDiNascita = employerLogService.getDataDiNascita();
+    this.email = employerLogService.getEmail();
   }
 
   ngOnInit() {
@@ -35,7 +37,14 @@ export class ProfiloUtenteComponent implements OnInit {
         }.bind(this));
       }
     }
+
+    this.restRequestService.getSkills().subscribe(function(response){
+      this.skills = response['data'];
+      console.log(this.skills);
+    }.bind(this));
   }
+
+
 
   public aggiornaDipendente(){
     console.log("Nuovi dati: ");
@@ -45,5 +54,7 @@ export class ProfiloUtenteComponent implements OnInit {
     console.log(this.email);
     console.log(this.password);
   }
+
+
 
 }

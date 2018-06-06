@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;" *ngIf = "employerLogService.isLogged()">
   <ul class="navbar-nav mr-auto">
-    <li class="nav-item" *ngIf="employerLogService.isManager()">
+    <li class="nav-item">
         <div ngbDropdown>
           <a class="name hand nav-link" ngbDropdownToggle>
             <i class="material-icons hand">face</i>
@@ -40,7 +40,7 @@
             </div>
           </div>
       </li>
-      <li class="nav-item" *ngIf="employerLogService.isManager()">
+<!--       <li class="nav-item">
           <div ngbDropdown>
             <a class="nav-link" id="dropdownConfig" ngbDropdownToggle>
                 <i class="material-icons" title="Gestione dipendenti">dashboard</i>
@@ -57,7 +57,7 @@
               </a>
             </div>
           </div>
-      </li>
+      </li> -->
       <li class="nav-item">
         <a class="nav-link" routerLink="/gestionePermessi">
           <i class="material-icons" title="Gestione permessi">event_note</i>

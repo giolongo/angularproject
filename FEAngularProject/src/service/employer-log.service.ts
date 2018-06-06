@@ -22,7 +22,7 @@ export class EmployerLogService {
       return this.restRequestService.login(username, password);
     }
   }
-  
+
   loginHandler(response){
     this.caricaUtenteLoggato(response);
     this.router.navigate(['/dashboard']);
@@ -53,6 +53,9 @@ export class EmployerLogService {
     this.utenteLoggato.nome = response['data'].nome;
     this.utenteLoggato.cognome = response['data'].cognome;
     this.utenteLoggato.ruolo = response['data'].ruolo;
+    this.utenteLoggato.email = response['data'].email;
+    this.utenteLoggato.codiceFiscale = response['data'].codiceFiscale;
+    this.utenteLoggato.dataDiNascita = response['data'].dataDiNascita;
     console.log(response['data'].token);
     return true;
   }
@@ -66,5 +69,17 @@ export class EmployerLogService {
   }
   getCognomeUtente() : String {
     return this.utenteLoggato.cognome;
+  }
+
+  getEmail() : String {
+    return this.utenteLoggato.email;
+  }
+
+  getCodiceFiscale() : String {
+    return this.utenteLoggato.codiceFiscale;
+  }
+
+  getDataDiNascita() : Date {
+    return this.utenteLoggato.dataDiNascita;
   }
 }

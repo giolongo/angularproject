@@ -136,6 +136,9 @@ class AuthController extends Controller
                     'nome' => $user->nome,
                     'cognome' => $user->cognome,
                     'ruolo' => $user->ruolo,
+                    'email'=>$user->email,
+                    'codiceFiscale'=>$user->codice_fiscale,
+                    'dataDiNascita'=>$user->data_nascita
                 ]
             ]);
         }catch(\Exception $e){
@@ -223,6 +226,9 @@ class AuthController extends Controller
                     'nome' => $user->nome,
                     'cognome' => $user->cognome,
                     'ruolo' => $user->ruolo,
+                    'email'=>$user->email,     
+                    'codiceFiscale'=>$user->codice_fiscale,
+                    'dataDiNascita'=>$user->data_nascita
                 ]
             ]);
         }
