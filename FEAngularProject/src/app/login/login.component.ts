@@ -29,10 +29,9 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
-/*     this.user.logIn(this.codiceFiscale, this.password).subscribe((data:any)=>{
-      this.router.navigate(['/index']);
-    }) */
-    this.employerLogService.logIn(this.codiceFiscale, this.password);
+    this.employerLogService.logIn(this.codiceFiscale, this.password).subscribe(function(response){
+      this.employerLogService.loginHandler(response);
+    }.bind(this));
   }
 
 }

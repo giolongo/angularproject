@@ -9,8 +9,8 @@ import { Router } from "@angular/router";
 export class EmployerLogService {
 
   private utenteLoggato : User;
-
-  constructor(private httpService : RestRequestService, private router: Router) {}
+  constructor(private restRequestService : RestRequestService, private router: Router) {
+  }
   
 
   isLogged() : boolean{
@@ -19,16 +19,17 @@ export class EmployerLogService {
 
   logIn(username: String, password: String){
     if((!this.utenteLoggato || !this.utenteLoggato.token)){
-      this.httpService.login(username, password).subscribe(function(response){
-        this.caricaUtenteLoggato(response);
-        this.router.navigate(['/dashboard']);
-      }.bind(this));
+      return this.restRequestService.login(username, password);
     }
+  }
+  loginHandler(response){
+    this.caricaUtenteLoggato(response);
+    this.router.navigate(['/dashboard']);
   }
 
   refreshSessionByTokenRequest(){
     if(sessionStorage.getItem("token")){
-      return this.httpService.validateToken(sessionStorage.getItem("token"));
+      return this.restRequestService.validateToken(sessionStorage.getItem("token"));
     }
     return null;
   }
