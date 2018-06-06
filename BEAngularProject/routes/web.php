@@ -15,31 +15,28 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::match(array('GET','POST'),'urlDaInvocare1', 'FerieController@test1');
-Route::match(array('GET','POST'),'urlDaInvocare2', 'FerieController@test2');
-Route::match(array('GET','POST'),'generateMockData', 'FerieController@generateMockData');
-Route::match(array('GET','POST'),'selectSottoposti', 'FerieController@selectSottoposti');
-Route::match(array('GET','POST'),'generateMockDataGiovanni', 'SkillAndTeamController@generateMockDataGiovanni');
-
-
-
-//Auth::routes();
-
+//Auth routes
+Route::match(array('GET','POST'), 'validateToken', 'AuthController@validateToken');
 Route::post('register', 'AuthController@register');
 Route::post('login', 'AuthController@login');
-Route::post('recover', 'AuthController@recover');
+//Route::post('recover', 'AuthController@recover');
 Route::group(['middleware' => ['jwt.auth']], function() {
     Route::get('logout', 'AuthController@logout');
     Route::get('test', function(){
         return response()->json(['foo'=>'bar']);
     });
 });
+//Route::get('user/verify/{verification_code}', 'AuthController@verifyUser');
+//Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.request');
+//Route::post('password/reset', 'Auth\ResetPasswordController@postReset')->name('password.reset');
 
-Route::get('user/verify/{verification_code}', 'AuthController@verifyUser');
-Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.request');
-Route::post('password/reset', 'Auth\ResetPasswordController@postReset')->name('password.reset');
+//Routes Orazio Contarino (Gestione permessi)
+Route::match(array('GET','POST'),'urlDaInvocare1', 'FerieController@test1');
+Route::match(array('GET','POST'),'urlDaInvocare2', 'FerieController@test2');
+Route::match(array('GET','POST'),'generateMockData', 'FerieController@generateMockData');
+Route::match(array('GET','POST'),'selectSottoposti', 'FerieController@selectSottoposti');
+Route::match(array('GET','POST'),'/getListaRichiesteDipendente', 'FerieController@getListaRichiesteDipendente')->middleware('jwt.auth');
 
-//...
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/getToken', 'CommonController@getToken')->name('getToken');
-Route::post('/customLogin', 'CommonController@customLogin')->name('customLogin');
+//Routes Giovanni Emanuele Longo
+Route::match(array('GET','POST'),'generateMockDataGiovanni', 'SkillAndTeamController@generateMockDataGiovanni');
+Route::match(array('GET','POST'),'getDatiUtente', 'HomeController@getDatiUtente')->middleware('jwt.auth');

@@ -6,13 +6,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use App\Dipendente;
-use App\Permessi;
-use App\Sottoposti;
-use App\Skill;
-use App\SkillDipendente;
-use App\Team;
-use App\TeamDipendente;
+use App\Models\Dipendente;
+use App\Models\Permessi;
+use App\Models\Sottoposti;
+use App\Models\Skill;
+use App\Models\SkillDipendente;
+use App\Models\Team;
+use App\Models\TeamDipendente;
 use Carbon\Carbon;
 /**
  *
@@ -22,16 +22,15 @@ class SkillAndTeamController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
     }
     public function generateMockDataGiovanni(Request $request)
     {
-        Dipendente::truncate();
+/*         Dipendente::truncate();
         Permessi::truncate();
         Skill::truncate();
         SkillDipendente::truncate();
         Team::truncate();
-        TeamDipendente::truncate();
+        TeamDipendente::truncate(); */
 
         $skillMockList = [
             ['nome' => 'Angular'],

@@ -1,13 +1,14 @@
 <?php
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-use App\Dipendente;
+use App\Models\Dipendente;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Validator, DB, Hash, Mail;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\Auth;
+use App\angularproject\CommonFunction;
 
 class AuthController extends Controller
 {
@@ -60,8 +61,9 @@ class AuthController extends Controller
                 $mail->to($email, $name);
                 $mail->subject($subject);
             });
-        */
         return response()->json(['success'=> true, 'message'=> 'Thanks for signing up! Please check your email to complete your registration.']);
+        */
+        return response()->json(['success'=> true, 'message'=> 'Registrazione completata! Da questo momento potrai accedere al tuo pannello personale.']);
     }
 
     /**
@@ -125,20 +127,20 @@ class AuthController extends Controller
         //return response()->json(['success' => true, 'data'=> [ 'token' => $token ]]);
                 // all good so return user info
 
-                try{
-                    $user = Auth::user();
-                    return response()->json([
-                        'success' => true, 
-                        'data'=> [ 
-                            'token' => $token,
-                            'nome' => $user->nome,
-                            'cognome' => $user->cognome,
-                            'ruolo' => $user->ruolo,
-                        ]
-                    ]);
-                }catch(\Exception $e){
-                    return response()->json(['success' => false, 'error' => 'Failed to login, please try again.'], 500);
-                }
+        try{
+            $user = Auth::user();
+            return response()->json([
+                'success' => true, 
+                'data'=> [ 
+                    'token' => $token,
+                    'nome' => $user->nome,
+                    'cognome' => $user->cognome,
+                    'ruolo' => $user->ruolo,
+                ]
+            ]);
+        }catch(\Exception $e){
+            return response()->json(['success' => false, 'error' => 'Failed to login, please try again.'], 500);
+        }
     }
     /**
      * Log out
@@ -204,6 +206,25 @@ class AuthController extends Controller
             }else{
                 return response()->json(['success' => false, 'error' => 'Generic error.'], 500);
             }
+        }
+    }
+
+
+    public function validateToken(Request $request){
+        $token = $request->get('token');
+        $user = CommonFunction::tokenToDipendente($token);
+        if(empty($user)){
+            return response()->json(['success' => false, 'error' => 'Invalid token']);
+        }else{
+            return response()->json([
+                'success' => true, 
+                'data'=> [ 
+                    'token' => $token,
+                    'nome' => $user->nome,
+                    'cognome' => $user->cognome,
+                    'ruolo' => $user->ruolo,
+                ]
+            ]);
         }
     }
 }

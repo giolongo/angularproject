@@ -5,11 +5,12 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-
+import { EmployerLogService } from '../service/employer-log.service';
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { VistaPrincipaleComponent } from './vista-principale/vista-principale.component';
 import { RegisterComponent } from './register/register.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -22,9 +23,10 @@ import { RegisterComponent } from './register/register.component';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    NgbModule.forRoot()
   ],
-  providers: [],
+  providers: [EmployerLogService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { EmployerLogService } from '../../service/employer-log.service';
+import { RestRequestService } from '../../service/rest-request.service';
 
 @Component({
   selector: 'app-vista-principale',
@@ -9,19 +10,23 @@ import { EmployerLogService } from '../../service/employer-log.service';
 })
 export class VistaPrincipaleComponent implements OnInit {
   private isLogin : boolean;
-  constructor(private router: Router, private userService : EmployerLogService,) {
-
-   }
+  constructor(private router: Router, private userService : EmployerLogService, private httpService : RestRequestService) {}
 
   ngOnInit() {
-    if(this.userService){
-      this.userService.isLogged().subscribe(userService => this.isLogin = userService);
-    }
-    if(!this.isLogin){
-      //Se non lo è lo riporto alla pagina di Login
-      this.router.navigate(['/login']);
-    }
-    
+    if(!this.userService.utenteLoggato){
+      if(sessionStorage.getItem("token")){
+        this.userService.refreshSessionByTokenRequest().subscribe(function(response){
+          if(!this.userService.caricaUtenteLoggato(response)){
+            this.router.navigate(['/login']);
+          }
+        }.bind(this));
+        }else{
+          this.router.navigate(['/login']);
+        }
+    }  
+    this.httpService.getDatiUtente().subscribe(function(response){
+      console.log(response);
+    });
   }
 
 }

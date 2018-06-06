@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { EmployerLogService } from '../../service/employer-log.service';
 import { Router } from "@angular/router";
 import { RestRequestService } from '../../service/rest-request.service';
+import { EmployerLogService } from '../../service/employer-log.service';
 
 
 @Component({
@@ -9,29 +9,43 @@ import { RestRequestService } from '../../service/rest-request.service';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-//È il caso di sostituire any con una classe apposita? Eventualmente va sostiuito qui, e su httpRequestService
 export class RegisterComponent implements OnInit {
   private user : any;
-  private stanza : any;
+  private ferie : any;
+  private team : any;
   private isManager;
   private isLogin;
+  private numberOfDipendents: Number;
   private dipendente : boolean;
-  private room : boolean;
-  constructor(private userService : EmployerLogService,  private router: Router, private http:RestRequestService) {
+  private ferieVisible : boolean;
+  private teamVisible : boolean;
+  constructor(private userService : EmployerLogService, private router : Router, private http : RestRequestService) {
     this.isLogin = false;
     this.dipendente = true;
+    this.ferieVisible = false;
+    this.teamVisible = false;
     this.user = {};
-    this.stanza = {};
+    this.ferie = {};
+    this.team = {};
+    this.team.dipendente=[];
+    this.numberOfDipendents = 1;
   }
 
   ngOnInit() {
     //Controllo che l'utente sia loggato
-    if(this.userService){
-      this.userService.isLogged().subscribe(userService => this.isLogin = userService);
-    }
-    if(!this.isLogin){
+    if(!this.userService.utenteLoggato){
       //Se non lo è lo riporto alla pagina di Login
-      this.router.navigate(['/login']);
+      if(!sessionStorage.getItem("token")){
+        this.router.navigate(['/login']);
+      }else{
+        this.userService.refreshSessionByTokenRequest().subscribe(function(response){
+          if(!this.userService.caricaUtenteLoggato(response)){
+            this.router.navigate(['/login']);
+          }else if(response['data'].ruolo == 'manager'){
+              this.isManager = true;
+          }
+        }.bind(this));
+      }
     }else{
       //Vedo se è un Manager; Questa funzionalità è abilitata solo ai Manager
       this.isManager = this.userService.isManager();
@@ -44,9 +58,14 @@ export class RegisterComponent implements OnInit {
     return;
   }
 
-  registraStanza():boolean{
-    console.log(this.stanza);
-    this.http.registraStanza(this.stanza);
+  registraFerie():boolean{
+    console.log(this.ferie);
+    this.http.registraFerie(this.ferie);
+    return;
+  }
+
+  registraTeam():boolean{
+    console.log(this.team);
     return;
   }
 
