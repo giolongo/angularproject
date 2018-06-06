@@ -9,6 +9,7 @@ import { RegistraPermessiComponent } from './registra-permessi/registra-permessi
 import { VisualizzaSkillComponent } from './visualizza-skill/visualizza-skill.component';
 import { VisualizzaTeamComponent } from './visualizza-team/visualizza-team.component';
 import { GestionePermessiComponent } from './gestione-permessi/gestione-permessi.component';
+import { ProfiloUtenteComponent } from './profilo-utente/profilo-utente.component';
 
 
 const appRoutes: Routes = [
@@ -20,6 +21,7 @@ const appRoutes: Routes = [
     { path: 'visualizzaSkills', component: VisualizzaSkillComponent, pathMatch: 'full'},
     { path: 'visualizzaTeam', component: VisualizzaTeamComponent, pathMatch: 'full'},
     { path: 'gestionePermessi', component: GestionePermessiComponent, pathMatch: 'full'},
+    { path: 'visualizzaProfilo', component: ProfiloUtenteComponent, pathMatch: 'full'},
     { path: '', redirectTo: '/dashboard', pathMatch: 'full'},
     //{ path: '**', component: PageNotFoundComponent }
 ];
