@@ -12,7 +12,6 @@ import { Router } from "@angular/router";
 })
 export class AppComponent {
   searchField;
-  isLogoutVisible;
   title = 'Employer Manager';
   constructor(private employerLogService : EmployerLogService, config: NgbDropdownConfig, private router: Router) {
     // customize default values of dropdowns used by this component tree
@@ -24,13 +23,6 @@ export class AppComponent {
     console.log(this.searchField);
   }
 
-  visibleLogout(){
-    if(!this.isLogoutVisible){
-      this.isLogoutVisible = true;
-    }else{
-      this.isLogoutVisible = false;
-    }
-  }
 
   logout(){
     this.employerLogService.logOut();

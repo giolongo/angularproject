@@ -61,7 +61,3 @@ export class RestRequestService {
   }
 }
 
-interface UserCredential{
-  username : String;
-  password : String;
-}

@@ -22,6 +22,7 @@ export class EmployerLogService {
       return this.restRequestService.login(username, password);
     }
   }
+  
   loginHandler(response){
     this.caricaUtenteLoggato(response);
     this.router.navigate(['/dashboard']);
