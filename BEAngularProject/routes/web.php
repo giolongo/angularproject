@@ -41,3 +41,4 @@ Route::match(array('GET','POST'),'/getListaRichiesteDipendente', 'FerieControlle
 Route::match(array('GET','POST'),'generateMockDataGiovanni', 'SkillAndTeamController@generateMockDataGiovanni');
 Route::match(array('GET','POST'),'getDatiUtente', 'HomeController@getDatiUtente')->middleware('jwt.auth');
 Route::match(array('GET','POST'),'getSkills', 'SkillsController@getSkills')->middleware('jwt.auth');
+Route::match(array('GET'),'getListSkills', 'SkillsController@getListSkills');

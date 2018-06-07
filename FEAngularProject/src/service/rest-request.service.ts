@@ -28,6 +28,7 @@ export class RestRequestService {
     this.endpoint['validateToken'] = this.context+'/validateToken';
     this.endpoint['getDatiUtente'] = this.context+'/getDatiUtente';
     this.endpoint['getSkills'] = this.context+'/getSkills';
+    this.endpoint['getListSkills'] = this.context+'/getListSkills';
    }
 
   login(username: String, password: String) : any{
@@ -66,6 +67,10 @@ export class RestRequestService {
       'token' : sessionStorage.getItem("token")
     }
     return this.http.post(this.endpoint['getSkills'],parameter, httpOptions);
+  }
+
+  caricaSkills(){
+    return this.http.get(this.endpoint['getListSkills']);
   }
 }
 

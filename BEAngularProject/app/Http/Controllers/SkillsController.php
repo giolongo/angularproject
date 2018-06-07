@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\angularproject\CommonFunction;
 use App\Models\SkillDipendente;
+use App\Models\Skill;
 class SkillsController extends Controller
 {
     public function __construct()
@@ -21,5 +22,13 @@ class SkillsController extends Controller
                 'data'=> $skill_list->toArray()
             ]);
         }
+    }
+
+    public function getListSkills(){
+        $skill_list = Skill::get();
+        return response()->json([
+            'success' => true, 
+            'data'=> $skill_list->toArray()
+        ]);
     }
 }

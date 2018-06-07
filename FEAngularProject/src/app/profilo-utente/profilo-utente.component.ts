@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EmployerLogService } from '../../service/employer-log.service';
 import { RestRequestService } from '../../service/rest-request.service';
+import { SkillsService } from '../../service/skills.service';
 import { Router } from "@angular/router";
 
 @Component({
@@ -16,12 +17,11 @@ export class ProfiloUtenteComponent implements OnInit {
   public email : String;
   public password : String;
   public skills : any;
-  constructor(private employerLogService : EmployerLogService, private router: Router, private restRequestService:RestRequestService) { 
-    this.nome = employerLogService.getNomeUtente();
-    this.cognome = employerLogService.getCognomeUtente();
-    this.codiceFiscale =  employerLogService.getCodiceFiscale();
-    this.dataDiNascita = employerLogService.getDataDiNascita();
-    this.email = employerLogService.getEmail();
+  constructor(private employerLogService : EmployerLogService, private router: Router, 
+    private restRequestService:RestRequestService, private skillsService:SkillsService) { 
+      if(this.employerLogService.isLogged()){
+        this.initUtente();
+      }
   }
 
   ngOnInit() {
@@ -34,15 +34,22 @@ export class ProfiloUtenteComponent implements OnInit {
           if(!this.employerLogService.caricaUtenteLoggato(response)){
             this.router.navigate(['/login']);
           }
+          this.initUtente();
         }.bind(this));
       }
     }
 
     this.restRequestService.getSkills().subscribe(function(response){
       this.skills = response['data'];
-      console.log(this.skills);
     }.bind(this));
-  }
+
+    if(!this.skillsService.getSkills()){
+      this.skillsService.richiediSkills().subscribe(function(response){
+        this.skillsService.caricaSkills(response);
+        console.log(this.skillsService.getSkills());
+     }.bind(this));
+    }
+}
 
 
 
@@ -53,6 +60,14 @@ export class ProfiloUtenteComponent implements OnInit {
     console.log(this.dataDiNascita);
     console.log(this.email);
     console.log(this.password);
+  }
+
+  initUtente(){
+    this.nome = this.employerLogService.getNomeUtente();
+    this.cognome = this.employerLogService.getCognomeUtente();
+    this.codiceFiscale =  this.employerLogService.getCodiceFiscale();
+    this.dataDiNascita = this.employerLogService.getDataDiNascita();
+    this.email = this.employerLogService.getEmail();
   }
 
 
