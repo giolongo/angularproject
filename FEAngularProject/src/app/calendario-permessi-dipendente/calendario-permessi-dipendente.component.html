@@ -1,15 +1,19 @@
 <div class="calendario">
   <div class="card">
     <div class="card-header">
-        <h5 class="card-title">Calendario</h5>
-    </div>
-    <div class="card-body">
-      <div class="calendar">
-        <div class="calendar-navs">
+        <a><i class="material-icons hand calendar-nav-icon" title="before">navigate_before</i></a> 
+        <span class="calendar-nav-month"><strong>{{ currentDate.format('MMMM') | uppercase }}</strong></span>
+        <a><i class="material-icons hand calendar-nav-icon" title="next">navigate_next</i></a>
+        
+      
+      <div class="calendar-navs">
           <div class="month-nav">
+            <!--
             <button (click)="prevMonth()">&lt;</button>
-            <span class="p4">{{ currentDate.format('MMMM') }}</span>
+            -->
+            <!--
             <button (click)="nextMonth()">&gt;</button>
+            -->
           </div>
           <div class="year-nav">
             <button (click)="prevYear()">&lt;</button>
@@ -17,6 +21,10 @@
             <button (click)="nextYear()">&gt;</button>
           </div>
         </div>
+        
+    </div>
+    <div class="card-body">
+      <div class="calendar">
         <div class="month-grid">
           <div class="day-names">
             <div *ngFor="let name of dayNames" class="day-name p9">
