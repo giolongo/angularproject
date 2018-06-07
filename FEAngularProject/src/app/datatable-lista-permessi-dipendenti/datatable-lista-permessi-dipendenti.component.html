@@ -1,0 +1,30 @@
+
+<div class="listaPermessiDipendente">
+  <div class="card">
+    <div class="card-header">
+      <h5 class="card-title">Elenco delle ferie richieste</h5>
+    </div>
+    <div class="card-body">
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+        <thead>
+          <tr>
+            <th *ngFor="let header of headers">{{header}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of rows">
+            <td>{{row.id}}</td>
+            <td>{{row.dataRichiesta}}</td>
+            <td>{{row.statoRIchiesta}}</td>
+            <td>{{row.dataInizio}}</td>
+            <td>{{row.dataFine}}</td>
+            <td>{{row.totaleGiorni}}</td>
+            <td><i class="material-icons" title="annulla">undo</i></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+

@@ -17,7 +17,15 @@ import { VisualizzaSkillComponent } from './visualizza-skill/visualizza-skill.co
 import { VisualizzaTeamComponent } from './visualizza-team/visualizza-team.component';
 import { GestionePermessiComponent } from './gestione-permessi/gestione-permessi.component';
 import { ProfiloUtenteComponent } from './profilo-utente/profilo-utente.component';
-
+import { RegistraPermessoComponent } from './registra-permesso/registra-permesso.component';
+import { VisualizzaPermessiRichiestiComponent } from './visualizza-permessi-richiesti/visualizza-permessi-richiesti.component';
+import { GestionePermessiDipendentiComponent } from './gestione-permessi-dipendenti/gestione-permessi-dipendenti.component';
+import { GestionePermessiManagerComponent } from './gestione-permessi-manager/gestione-permessi-manager.component';
+import { DatatableListaPermessiManagerComponent } from './datatable-lista-permessi-manager/datatable-lista-permessi-manager.component';
+import { DatatableListaPermessiDipendentiComponent } from './datatable-lista-permessi-dipendenti/datatable-lista-permessi-dipendenti.component';
+import { DataTablesModule } from 'angular-datatables';
+import { CalendarioPermessiDipendenteComponent } from './calendario-permessi-dipendente/calendario-permessi-dipendente.component';
+import { CalendarModule } from 'angular-calendar';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,14 +37,23 @@ import { ProfiloUtenteComponent } from './profilo-utente/profilo-utente.componen
     VisualizzaSkillComponent,
     VisualizzaTeamComponent,
     GestionePermessiComponent,
-    ProfiloUtenteComponent
+    ProfiloUtenteComponent,
+    RegistraPermessoComponent,
+    VisualizzaPermessiRichiestiComponent,
+    GestionePermessiDipendentiComponent,
+    GestionePermessiManagerComponent,
+    DatatableListaPermessiManagerComponent,
+    DatatableListaPermessiDipendentiComponent,
+    CalendarioPermessiDipendenteComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
-    NgbModule.forRoot()
+    DataTablesModule,
+    NgbModule.forRoot(),
+    CalendarModule.forRoot()
   ],
   providers: [EmployerLogService],
   bootstrap: [AppComponent]

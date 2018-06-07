@@ -1,12 +1,22 @@
 <div *ngIf = "employerLogService.isLogged()">
-    <div *ngIf="employerLogService.isManager()">
-        <p>
-            gestione-permessi MANAGER works!
-        </p>
-      </div>
-    <div *ngIf="!employerLogService.isManager()">
-      <p>
-          gestione-permessi UTENTE works!
-      </p>
-    </div>
+    <div *ngIf="employerLogService.isManager()" class = "row">
+        <div class="col-md-2"></div>
+        <div class="col-md-5">
+            <app-gestione-permessi-manager></app-gestione-permessi-manager>
+        </div>
+        <div class="col-md-5">
+            CALENDARIO MOCK
+        </div>
+    </div> 
+
+    <div *ngIf="!employerLogService.isManager()" class = "row">
+        <div class="col-md-2"></div>
+        <div class="col-md-5">
+            <app-gestione-permessi-dipendenti></app-gestione-permessi-dipendenti>
+        </div>
+        <div class="col-md-5">
+            <app-calendario-permessi-dipendente></app-calendario-permessi-dipendente>
+        </div>
+    </div> 
 </div>
+

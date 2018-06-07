@@ -23,7 +23,7 @@
     <ul class="navbar-nav mr-auto">
       <li class="nav-item" *ngIf="employerLogService.isManager()">
           <div ngbDropdown>
-            <a class="nav-link" id="dropdownConfig" ngbDropdownToggle>
+            <a class="nav-link hand" id="dropdownConfig" ngbDropdownToggle>
                 <i class="material-icons" title="Registra">add</i> 
                 Registra
             </a>
@@ -59,7 +59,7 @@
           </div>
       </li> -->
       <li class="nav-item">
-        <a class="nav-link" routerLink="/gestionePermessi">
+        <a class="nav-link hand" routerLink="/gestionePermessi">
           <i class="material-icons" title="Gestione permessi">event_note</i>
           Gestione permessi
         </a>
@@ -71,7 +71,6 @@
     </form>
   </div>
 </nav>
-
-
+<div  *ngIf = "!employerLogService.isLogged()" class="loader"></div>
 <router-outlet></router-outlet>
 

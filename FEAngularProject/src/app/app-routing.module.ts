@@ -13,6 +13,7 @@ import { ProfiloUtenteComponent } from './profilo-utente/profilo-utente.componen
 
 
 const appRoutes: Routes = [
+    { path: '', redirectTo: '/dashboard', pathMatch: 'full'},
     { path: 'login', component: LoginComponent, pathMatch: 'full'},
     { path: 'dashboard', component: DashboardComponent, pathMatch: 'full'},
     { path: 'registraUtente', component: RegistraUtenteComponent, pathMatch: 'full'},
@@ -22,7 +23,6 @@ const appRoutes: Routes = [
     { path: 'visualizzaTeam', component: VisualizzaTeamComponent, pathMatch: 'full'},
     { path: 'gestionePermessi', component: GestionePermessiComponent, pathMatch: 'full'},
     { path: 'visualizzaProfilo', component: ProfiloUtenteComponent, pathMatch: 'full'},
-    { path: '', redirectTo: '/dashboard', pathMatch: 'full'},
     //{ path: '**', component: PageNotFoundComponent }
 ];
 @NgModule({
