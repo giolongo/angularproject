@@ -8,3 +8,5 @@
         <p>Tramite questo pannello puoi gestire le tue informazioni ed i tuoi permessi</p>
     </div>
 </div>
+
+<div  *ngIf = "!employerLogService.isLogged()" class="loader"></div>
