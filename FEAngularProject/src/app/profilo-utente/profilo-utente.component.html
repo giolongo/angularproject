@@ -35,24 +35,28 @@
                     </div>
                     <div class="card-body">
                             <table class="table table-bordered">
-
-                                    <!--Table head-->
                                     <thead>
                                         <tr>
                                             <th>Nome Skill</th>
                                             <th>Seniority</th>
                                         </tr>
                                     </thead>
-                                    <!--Table head-->
-                                
-                                    <!--Table body-->
                                     <tbody>
                                         <tr *ngFor="let skill of skills">
-                                            <td>{{skill.skill[0].nome}}</td>
-                                            <td>{{skill.seniority}}</td>
+                                            <td>
+<!--                                                 <select [(ngModel)] ="skill.skill[0].id_skill" name="{skill.skill[0].id_skill}">
+                                                    <option *ngFor="let skillAvaible of skillsService.getSkills()" [value]="skillAvaible.id_skill">{{skillAvaible.nome}}</option>
+                                                </select> -->
+                                                {{skill.skill[0].nome}}
+                                            </td>
+                                            <td>
+                                                <select [(ngModel)] ="skill.seniority" name="{{skill.skill[0].id_skill}}">
+                                                    <option value="Junior">Junior</option>
+                                                    <option value="Senior">Senior</option>
+                                                </select>
+                                            </td>
                                         </tr>
                                     </tbody>
-                                    <!--Table body-->
                                 
                                 </table>
                         <div class="row" style="padding-top:1rem; padding-left:1rem;">
