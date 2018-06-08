@@ -1,0 +1,14 @@
+<form #userlogin = "ngForm" (ngSubmit) = "registraPermesso()">
+  <div class="card" style="width: 18rem; margin-top: 10rem;">
+    <div class="card-body">
+
+        <label>Data fine</label>
+        <input type="text" name="dataFine" class="input-text" [(ngModel)]="dataFine">
+        <label>Certificato</label>
+        <input type="text" name="certificato" class="input-text" [(ngModel)]="certificato">
+        <div class="row" style="padding-top:1rem; padding-left:1rem;">
+          <input type="submit" class="btn btn-primary" value="Inoltra richiesta">
+        </div>
+    </div>
+  </div>
+</form>

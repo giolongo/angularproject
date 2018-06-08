@@ -10,6 +10,7 @@ import { VisualizzaSkillComponent } from './visualizza-skill/visualizza-skill.co
 import { VisualizzaTeamComponent } from './visualizza-team/visualizza-team.component';
 import { GestionePermessiComponent } from './gestione-permessi/gestione-permessi.component';
 import { ProfiloUtenteComponent } from './profilo-utente/profilo-utente.component';
+import { ModuloRichiestaPermessoDipendenteComponent } from './modulo-richiesta-permesso-dipendente/modulo-richiesta-permesso-dipendente.component';
 
 
 const appRoutes: Routes = [
@@ -21,8 +22,10 @@ const appRoutes: Routes = [
     { path: 'registraPermessi', component: RegistraPermessiComponent, pathMatch: 'full'},
     { path: 'visualizzaSkills', component: VisualizzaSkillComponent, pathMatch: 'full'},
     { path: 'visualizzaTeam', component: VisualizzaTeamComponent, pathMatch: 'full'},
-    { path: 'gestionePermessi', component: GestionePermessiComponent, pathMatch: 'full'},
     { path: 'visualizzaProfilo', component: ProfiloUtenteComponent, pathMatch: 'full'},
+    { path: 'gestionePermessiDipendente', component: GestionePermessiComponent, pathMatch: 'full'},
+    { path: 'moduloRichiestaPermessoDipendente', component: ModuloRichiestaPermessoDipendenteComponent, pathMatch: 'full'},
+    
     //{ path: '**', component: PageNotFoundComponent }
 ];
 @NgModule({

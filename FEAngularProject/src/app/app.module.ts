@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
@@ -26,6 +27,7 @@ import { DatatableListaPermessiDipendentiComponent } from './datatable-lista-per
 import { DataTablesModule } from 'angular-datatables';
 import { CalendarioPermessiDipendenteComponent } from './calendario-permessi-dipendente/calendario-permessi-dipendente.component';
 import { CalendarModule } from 'angular-calendar';
+import { ModuloRichiestaPermessoDipendenteComponent } from './modulo-richiesta-permesso-dipendente/modulo-richiesta-permesso-dipendente.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,8 +47,9 @@ import { CalendarModule } from 'angular-calendar';
     DatatableListaPermessiManagerComponent,
     DatatableListaPermessiDipendentiComponent,
     CalendarioPermessiDipendenteComponent,
+    ModuloRichiestaPermessoDipendenteComponent,
   ],
-  imports: [
+  imports: [    
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,

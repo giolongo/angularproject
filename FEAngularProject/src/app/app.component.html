@@ -36,11 +36,10 @@
                 <i class="material-icons" title="Registra team">group_add</i>
                 Team
               </a>
-              <!-- <a class="dropdown-item" routerLink="/registraPermessi">Permessi</a> -->
             </div>
           </div>
       </li>
-<!--       <li class="nav-item">
+<!--    <li class="nav-item">
           <div ngbDropdown>
             <a class="nav-link" id="dropdownConfig" ngbDropdownToggle>
                 <i class="material-icons" title="Gestione dipendenti">dashboard</i>
@@ -58,12 +57,27 @@
             </div>
           </div>
       </li> -->
+      
+              <!-- <a class="dropdown-item" routerLink="/registraPermessi">Permessi</a> -->
       <li class="nav-item">
-        <a class="nav-link hand" routerLink="/gestionePermessi">
-          <i class="material-icons" title="Gestione permessi">event_note</i>
-          Gestione permessi
-        </a>
+        <div ngbDropdown>
+          <a class="nav-link hand" id="dropdownConfig" ngbDropdownToggle>
+              <i class="material-icons" title="Gestione permessi">event_note</i> 
+              Gestione permessi
+          </a>
+          <div ngbDropdownMenu aria-labelledby="dropdownConfig">
+            <a class="dropdown-item" routerLink="/moduloRichiestaPermessoDipendente">
+              <i class="material-icons" title="Richiedi permesso">event_available</i>
+              Richiedi un permesso
+            </a>
+            <a class="dropdown-item" routerLink="/gestionePermessiDipendente">
+              <i class="material-icons" title="Riepilogo permesso">folder_open</i>
+              Riepilogo permessi
+            </a>
+          </div>
+        </div>
       </li>
+
     </ul>
     <form class="form-inline">
       <input class="form-control mr-sm-2" [(ngModel)]="searchField" name="search" type="search" placeholder="Team, utente" aria-label="Search">
