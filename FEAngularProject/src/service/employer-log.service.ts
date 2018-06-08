@@ -82,4 +82,8 @@ export class EmployerLogService {
   getDataDiNascita() : Date {
     return this.utenteLoggato.dataDiNascita;
   }
+
+  getUtenteLoggato() : User {
+    return this.utenteLoggato;
+  }
 }

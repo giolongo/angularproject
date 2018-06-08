@@ -28,6 +28,8 @@ import { DataTablesModule } from 'angular-datatables';
 import { CalendarioPermessiDipendenteComponent } from './calendario-permessi-dipendente/calendario-permessi-dipendente.component';
 import { CalendarModule } from 'angular-calendar';
 import { ModuloRichiestaPermessoDipendenteComponent } from './modulo-richiesta-permesso-dipendente/modulo-richiesta-permesso-dipendente.component';
+import { ProfiloUtenteDatiPersonaliComponent } from './profilo-utente-dati-personali/profilo-utente-dati-personali.component';
+import { ProfiloUtenteSkillsComponent } from './profilo-utente-skills/profilo-utente-skills.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,6 +50,8 @@ import { ModuloRichiestaPermessoDipendenteComponent } from './modulo-richiesta-p
     DatatableListaPermessiDipendentiComponent,
     CalendarioPermessiDipendenteComponent,
     ModuloRichiestaPermessoDipendenteComponent,
+    ProfiloUtenteDatiPersonaliComponent,
+    ProfiloUtenteSkillsComponent,
   ],
   imports: [    
     BrowserModule,
