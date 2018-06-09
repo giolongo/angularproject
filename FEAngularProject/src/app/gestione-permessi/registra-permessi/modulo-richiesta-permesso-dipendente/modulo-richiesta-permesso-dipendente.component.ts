@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { RestRequestService } from '../../../../service/rest-request.service';
 
 @Component({
   selector: 'app-modulo-richiesta-permesso-dipendente',
   templateUrl: './modulo-richiesta-permesso-dipendente.component.html',
   styleUrls: ['./modulo-richiesta-permesso-dipendente.component.css']
-})
+}) 
 export class ModuloRichiestaPermessoDipendenteComponent implements OnInit {
   dataInizio : any;
   dataFine : any;
@@ -14,7 +15,7 @@ export class ModuloRichiestaPermessoDipendenteComponent implements OnInit {
   permessiEnumArray : any;
   tipologia : String;
   note : String;
-  constructor(private restRequestService : RestRequestService) { 
+  constructor(private restRequestService : RestRequestService, private router: Router) { 
     this.nomeCertificatoCaricato = "";
     this.restRequestService.getPermessiEnumArray().subscribe(function(result){
       this.permessiEnumArray = result['data'];
@@ -42,7 +43,7 @@ export class ModuloRichiestaPermessoDipendenteComponent implements OnInit {
   }
   registraPermesso(){
     this.restRequestService.registraPermesso(this.dataInizio, this.dataFine, this.note, this.tipologia, this.certificatoBase64).subscribe(function(){
-
+      this.router.navigate(['/gestionePermessiDipendente']);
     }.bind(this));
   }
 }
