@@ -28,6 +28,41 @@ class GestionePermessiController extends Controller
         return response()->json(['success' => true, 'data'=> Permessi::getPermessiEnumArray()]);
     }
 
+    public function getListaPermessiDipendente(Request $request){
+        /*
+        { 
+            'id': '4',
+            "dataRichiesta": "07/06/2018", 
+            "statoRichiesta": "Approvata", 
+            "dataInizio": "02/08/2018", 
+            "dataFine": "26/07/2018", 
+            "totaleGiorni": "7", 
+        }*/
+
+        $params = $request->only('token');
+        $user = CommonFunction::tokenToDipendente($params['token']);
+        if(empty($user)){
+            return response()->json(['success' => false, 'error' => 'Invalid token']);
+        }
+
+        $rawPermessi = Permessi::where('id_dipendente', '=', $user->id_dipendente)->get();
+        $fixedPermessi = [];
+        foreach($rawPermessi as $permesso){
+            $data_inizio = new Carbon($permesso->data_inizio);
+            $data_fine = new Carbon($permesso->data_fine);
+            $element = [
+                'id' => $permesso->id,
+                'data_inizio' => $data_inizio->format('d-m-Y'),
+                'data_fine' => $data_fine->format('d-m-Y'),
+                'totale_giorni' => $data_inizio->diffInDays($data_fine, false),
+                'stato_richiesta' => $permesso->stato,
+                'certificatoBase64' => $permesso->certificatoBase64
+            ];
+            array_push($fixedPermessi, $element);
+        }
+        return response()->json(['success' => true, 'data' => $fixedPermessi]);
+    }
+
     public function registraPermesso(Request $request){
         $params = $request->all();
         $dataInizio = Carbon::createFromDate(

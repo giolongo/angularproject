@@ -31,6 +31,20 @@ export class ModuloRichiestaPermessoDipendenteComponent implements OnInit {
   setFileName(event){
     var file = event.target.files[0];
     this.nomeCertificatoCaricato = file.name;
+    
+    var ext = this.nomeCertificatoCaricato.match(/\.([^\.]+)$/)[1];
+    switch(ext)
+    {
+        case 'jpg':
+        case 'jpeg':
+        case 'png':
+        case 'txt':
+          break;
+        default:
+            alert('Accettiamo solo file jpg, jpeg, png, txt');
+            this.nomeCertificatoCaricato='';
+            return;
+    }
 
     var reader = new FileReader();
     reader.readAsDataURL(file);

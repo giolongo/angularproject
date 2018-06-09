@@ -4,6 +4,7 @@ import { NgModel } from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
 import { Router } from "@angular/router";
+import * as $ from 'jquery';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

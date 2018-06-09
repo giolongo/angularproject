@@ -32,6 +32,7 @@ export class RestRequestService {
     //Gestione permessi
     this.endpoint['getPermessiEnumArray'] = this.context+'/getPermessiEnumArray';
     this.endpoint['registraPermesso'] = this.context+'/registraPermesso';
+    this.endpoint['getListaPermessiDipendente'] = this.context+'/getListaPermessiDipendente';
    }
 
   login(username: String, password: String) : any{
@@ -91,8 +92,13 @@ export class RestRequestService {
       'tipologia': tipologia,
       'certificatoBase64': certificatoBase64,
     }
-    console.log(parameter);
     return this.http.post(this.endpoint['registraPermesso'], parameter, httpOptions);
+  }
+  getListaPermessiDipendente(){
+    var parameter = {
+      'token' : sessionStorage.getItem("token")
+    }
+    return this.http.post(this.endpoint['getListaPermessiDipendente'], parameter, httpOptions);
   }
 }
 

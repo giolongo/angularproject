@@ -34,6 +34,8 @@ Route::group(['middleware' => ['jwt.auth']], function() {
 //Registra permesso
 Route::match(array('GET','POST'),'getPermessiEnumArray', 'GestionePermessiController@getPermessiEnumArray');
 Route::match(array('GET','POST'),'registraPermesso', 'GestionePermessiController@registraPermesso');
+Route::match(array('GET','POST'),'getListaPermessiDipendente', 'GestionePermessiController@getListaPermessiDipendente');
+
 //deprecati
 Route::match(array('GET','POST'),'urlDaInvocare1', 'GestionePermessiController@test1');
 Route::match(array('GET','POST'),'urlDaInvocare2', 'GestionePermessiController@test2');
