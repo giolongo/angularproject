@@ -2,24 +2,24 @@
   <div class="card">
     <div class="card-header">
       <div class="row text-center">
-        <div class="col-md-2">
+        <div class="col-md-2 col-sm-2">
           <a (click)="prevMonth()"><i class="material-icons hand calendar-nav-icon" title="before">navigate_before</i></a> 
         </div>
-        <div class="col-md-8">
+        <div class="col-md-8 col-sm-8">
           <span class="calendar-nav-month"><strong>{{ currentDate.format('MMMM') | uppercase }}</strong></span>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-2 col-sm-2">
           <a (click)="nextMonth()"><i class="material-icons hand calendar-nav-icon" title="next">navigate_next</i></a>
         </div>
       </div>
       <div class="row text-center">
-        <div class="col-md-2">
+        <div class="col-md-2 col-sm-2">
           <a (click)="prevYear()"><i class="material-icons hand calendar-nav-icon" title="before">navigate_before</i></a> 
         </div>
-        <div class="col-md-8">
+        <div class="col-md-8 col-sm-8">
           <span class="calendar-nav-month"><strong>{{ currentDate.format('YYYY') }}</strong></span>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-2 col-sm-2">
           <a (click)="nextYear()"><i class="material-icons hand calendar-nav-icon" title="next">navigate_next</i></a>
         </div>
       </div>

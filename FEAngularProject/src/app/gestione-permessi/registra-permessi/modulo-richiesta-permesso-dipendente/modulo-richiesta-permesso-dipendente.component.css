@@ -46,3 +46,8 @@
  :-ms-input-placeholder {  
     text-align: center; 
  }
+
+ .moduloRichiestaPermesso{
+    padding: 25px;
+    width: 100%;
+ }

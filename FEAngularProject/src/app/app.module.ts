@@ -27,9 +27,8 @@ import { GestionePermessiDipendentiComponent } from './gestione-permessi/gestion
 import { GestionePermessiManagerComponent } from './gestione-permessi/gestione-permessi-manager/gestione-permessi-manager.component';
 import { DatatableListaPermessiManagerComponent } from './gestione-permessi/gestione-permessi-manager/datatable-lista-permessi-manager/datatable-lista-permessi-manager.component';
 import { DatatableListaPermessiDipendentiComponent } from './gestione-permessi/gestione-permessi-dipendenti/datatable-lista-permessi-dipendenti/datatable-lista-permessi-dipendenti.component';
-import { ModuloRichiestaPermessoDipendenteComponent } from './gestione-permessi/modulo-richiesta-permesso-dipendente/modulo-richiesta-permesso-dipendente.component';
+import { ModuloRichiestaPermessoDipendenteComponent } from './gestione-permessi/registra-permessi/modulo-richiesta-permesso-dipendente/modulo-richiesta-permesso-dipendente.component';
 //Gestione permessi - deprecati
-import { RegistraPermessoComponent } from './gestione-permessi/registra-permesso/registra-permesso.component';
 import { VisualizzaPermessiRichiestiComponent } from './gestione-permessi/visualizza-permessi-richiesti/visualizza-permessi-richiesti.component';
 import { RegistraPermessiComponent } from './gestione-permessi/registra-permessi/registra-permessi.component';
 @NgModule({
@@ -44,7 +43,6 @@ import { RegistraPermessiComponent } from './gestione-permessi/registra-permessi
     VisualizzaTeamComponent,
     GestionePermessiComponent,
     ProfiloUtenteComponent,
-    RegistraPermessoComponent,
     VisualizzaPermessiRichiestiComponent,
     GestionePermessiDipendentiComponent,
     GestionePermessiManagerComponent,

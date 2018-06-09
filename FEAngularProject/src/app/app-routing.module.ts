@@ -8,9 +8,8 @@ import { RegistraTeamComponent } from './registra-team/registra-team.component';
 import { RegistraPermessiComponent } from './gestione-permessi/registra-permessi/registra-permessi.component';
 import { VisualizzaSkillComponent } from './visualizza-skill/visualizza-skill.component';
 import { VisualizzaTeamComponent } from './visualizza-team/visualizza-team.component';
-import { GestionePermessiComponent } from './gestione-permessi/gestione-permessi.component';
 import { ProfiloUtenteComponent } from './profilo-utente/profilo-utente.component';
-import { ModuloRichiestaPermessoDipendenteComponent } from './gestione-permessi/modulo-richiesta-permesso-dipendente/modulo-richiesta-permesso-dipendente.component';
+import { GestionePermessiComponent } from './gestione-permessi/gestione-permessi.component';
 
 
 const appRoutes: Routes = [
@@ -24,7 +23,6 @@ const appRoutes: Routes = [
     { path: 'visualizzaTeam', component: VisualizzaTeamComponent, pathMatch: 'full'},
     { path: 'visualizzaProfilo', component: ProfiloUtenteComponent, pathMatch: 'full'},
     { path: 'gestionePermessiDipendente', component: GestionePermessiComponent, pathMatch: 'full'},
-    { path: 'moduloRichiestaPermessoDipendente', component: ModuloRichiestaPermessoDipendenteComponent, pathMatch: 'full'},
     
     //{ path: '**', component: PageNotFoundComponent }
 ];

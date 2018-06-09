@@ -1,17 +1,14 @@
 <div *ngIf = "employerLogService.isLogged()">
-    <div *ngIf = "!employerLogService.isManager()">
-        <div class="row">
-            <i class="material-icons" style="margin:auto; font-size: 17rem;">error_outline</i>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-5">
+            <app-modulo-richiesta-permesso-dipendente></app-modulo-richiesta-permesso-dipendente>
         </div>
-        <div class="row">
-            <p style="margin:auto; font-size: 2rem;">
-            <strong>Solo i manager possono registrare!</strong>
-            </p>
+        <div class="col-md-5">
+            <app-calendario-permessi-dipendente></app-calendario-permessi-dipendente>
         </div>
+        <div class="col-md-1"></div>
     </div>
-    <div *ngIf="employerLogService.isManager()">
-    <p>
-        registra-permessi works!
-    </p>
-    </div>
+    
 </div>
+
