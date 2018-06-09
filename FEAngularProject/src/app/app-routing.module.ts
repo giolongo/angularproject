@@ -5,12 +5,12 @@ import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { RegistraUtenteComponent } from './registra-utente/registra-utente.component';
 import { RegistraTeamComponent } from './registra-team/registra-team.component';
-import { RegistraPermessiComponent } from './registra-permessi/registra-permessi.component';
+import { RegistraPermessiComponent } from './gestione-permessi/registra-permessi/registra-permessi.component';
 import { VisualizzaSkillComponent } from './visualizza-skill/visualizza-skill.component';
 import { VisualizzaTeamComponent } from './visualizza-team/visualizza-team.component';
 import { GestionePermessiComponent } from './gestione-permessi/gestione-permessi.component';
 import { ProfiloUtenteComponent } from './profilo-utente/profilo-utente.component';
-import { ModuloRichiestaPermessoDipendenteComponent } from './modulo-richiesta-permesso-dipendente/modulo-richiesta-permesso-dipendente.component';
+import { ModuloRichiestaPermessoDipendenteComponent } from './gestione-permessi/modulo-richiesta-permesso-dipendente/modulo-richiesta-permesso-dipendente.component';
 
 
 const appRoutes: Routes = [
