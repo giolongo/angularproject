@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RestRequestService } from '../../../../service/rest-request.service';
 
 @Component({
   selector: 'app-modulo-richiesta-permesso-dipendente',
@@ -8,23 +9,22 @@ import { Component, OnInit } from '@angular/core';
 export class ModuloRichiestaPermessoDipendenteComponent implements OnInit {
   dataInizio : any;
   dataFine : any;
-  fileBase64 : String;
+  certificatoBase64 : String;
   nomeCertificatoCaricato : String;
-  constructor() { 
-    this.dataInizio = {
-      "giorno" : "",
-      "mese" : "",
-      "anno" : ""
-    };
-    this.dataFine = {
-      "giorno" : "",
-      "mese" : "",
-      "anno" : ""
-    };
+  permessiEnumArray : any;
+  tipologia : String;
+  note : String;
+  constructor(private restRequestService : RestRequestService) { 
     this.nomeCertificatoCaricato = "";
+    this.restRequestService.getPermessiEnumArray().subscribe(function(result){
+      this.permessiEnumArray = result['data'];
+      console.log(result);
+    }.bind(this));
+
   }
 
   ngOnInit() {
+
   }
 
   setFileName(event){
@@ -34,12 +34,15 @@ export class ModuloRichiestaPermessoDipendenteComponent implements OnInit {
     var reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = function () {
-      this.fileBase64 = reader.result;
-      //enable send button
-      console.log(this.fileBase64);
+      this.certificatoBase64 = reader.result;
     }.bind(this);
     reader.onerror = function (error) {
       alert('Error: '+ error);
     };
+  }
+  registraPermesso(){
+    this.restRequestService.registraPermesso(this.dataInizio, this.dataFine, this.note, this.tipologia, this.certificatoBase64).subscribe(function(){
+
+    }.bind(this));
   }
 }

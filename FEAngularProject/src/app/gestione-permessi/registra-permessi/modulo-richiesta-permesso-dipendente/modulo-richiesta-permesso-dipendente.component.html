@@ -1,20 +1,33 @@
 <form #userlogin = "ngForm" (ngSubmit) = "registraPermesso()" class="moduloRichiestaPermesso">
   <div class="card">
     <div class="card-body">
-        <label>Data Inizio</label>
           <div class="row">
-            <div class="col-md-12">
-              <input type="text" name="dataInizioGiorno" class="input-date input-date-left" placeholder="gg" [(ngModel)]="dataInizio.giorno">&nbsp;/
-              <input type="text" name="dataInizioMese" class="input-date input-date-middle" placeholder="mm" [(ngModel)]="dataInizio.mese">&nbsp;/
-              <input type="text" name="dataInizioAnno" class="input-date input-date-right" placeholder="aaaa" [(ngModel)]="dataInizio.anno">
+            <div class="col-md-6">
+              <div class="col-md-12"><label>Data Inizio</label></div>
+              <div class="col-md-12">
+                <ngb-datepicker [(ngModel)]="dataInizio" name="dataInizio"></ngb-datepicker>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="col-md-12"><label>Data Fine</label></div>
+              <div class="col-md-12">
+                <ngb-datepicker [(ngModel)]="dataFine" name="dataFine"></ngb-datepicker>
+              </div>
             </div>
           </div>
-          <label>Data fine</label>
+          <div class="row">&nbsp;</div>
+          <label>Note</label>
           <div class="row">
             <div class="col-md-12">
-              <input type="text" name="dataFineGiorno" class="input-date input-date-left" placeholder="gg" [(ngModel)]="dataFineGiorno">&nbsp;/
-              <input type="text" name="dataFineMese" class="input-date input-date-middle" placeholder="mm" [(ngModel)]="dataFineMese">&nbsp;/
-              <input type="text" name="dataFineAnno" class="input-date input-date-right" placeholder="aaaa" [(ngModel)]="dataFineAnno">
+              <input type="text" name="note" class="input-text" placeholder="note" [(ngModel)]="note">
+            </div>
+          </div>
+          <label>Tipologia</label>
+          <div class="row">
+            <div class="col-md-12">
+              <select name="tipologia" class="input-text" [(ngModel)]="tipologia">
+                  <option *ngFor="let nomePermesso of permessiEnumArray" value="{{nomePermesso}}">{{ nomePermesso }}</option>
+              </select>
             </div>
           </div>
           <label>Carica certificato</label>
@@ -34,5 +47,3 @@
     </div>
   </div>
 </form>
-
-

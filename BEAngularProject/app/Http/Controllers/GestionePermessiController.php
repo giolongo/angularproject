@@ -17,12 +17,72 @@ use Hash;
  *
  *@deprecated See WebHookVotaController
  */
-class FerieController extends Controller
+class GestionePermessiController extends Controller
 {
     public function __construct()
     {
-        //$this->middleware('auth');
+        //$this->middleware('jwt.auth');
     }
+
+    public function getPermessiEnumArray(){
+        return response()->json(['success' => true, 'data'=> Permessi::getPermessiEnumArray()]);
+    }
+
+    public function registraPermesso(Request $request){
+        $params = $request->all();
+        $dataInizio = Carbon::createFromDate(
+            $params['dataInizio']['year'], 
+            $params['dataInizio']['month'],
+            $params['dataInizio']['day']
+        );  
+        $dataFine = Carbon::createFromDate(
+            $params['dataFine']['year'], 
+            $params['dataFine']['month'],
+            $params['dataFine']['day']
+        );  
+        $user = CommonFunction::tokenToDipendente($params['token']);
+        
+        if(empty($user)){
+            return response()->json(['success' => false, 'error' => 'Invalid token']);
+        }else if($dataInizio > $dataFine){
+            return response()->json(['success' => false, 'error' => 'Form non compilato correttamente, verifica i campi relativi alle date!']);
+        }
+        else{
+            $soab = Carbon::now()->endOfDay()->toDateTimeString();
+            $soab2 = Carbon::now()->toDateTimeString();
+            $permesso = [
+                'id_dipendente' => $user->id_dipendente,
+                'data_inizio' => $dataInizio,
+                'data_fine' => $dataFine,
+                'note' => $params['note'],
+                'tipologia' => $params['tipologia'],
+                'stato' => 'pending',
+                'certificatoBase64' => $params['certificatoBase64'],
+            ];
+            Permessi::create($permesso);
+            return response()->json(['success' => true, 'data' => 'Permesso registrato']);
+        }
+
+
+
+
+        if($validator->fails()) {
+            return response()->json(['success'=> false, 'error'=> $validator->messages()]);
+        }
+        
+        $dipendente = Dipendente::create([
+            'nome' => $credentials['nome'], 
+            'cognome' => $credentials['cognome'], 
+            'email' => $credentials['email'], 
+            'codice_fiscale' => $credentials['codiceFiscale'], 
+            'data_nascita' => $credentials['dataDiNascita'], 
+            'password' => Hash::make($credentials['password']),
+            'is_verified' => 1
+        ]);
+    }
+
+
+//deprecati
 
     public function getListaRichiesteDipendente(Request $request){
         $user = CommonFunction::tokenToDipendente($request->get('token'));
@@ -116,7 +176,8 @@ class FerieController extends Controller
                     'data_fine' => Carbon::tomorrow(),
                     'note' => 'Nota di prova',
                     'tipologia' => 'ferie',
-                    'stato' => 'approvato'
+                    'stato' => 'approvato',
+                    'certificatoBase64' => 'x'
                 ]); 
                 
                 Permessi::create([
@@ -125,7 +186,8 @@ class FerieController extends Controller
                     'data_fine' => Carbon::tomorrow(),
                     'note' => 'Nota di prova',
                     'tipologia' => 'ferie',
-                    'stato' => 'rifiutato'
+                    'stato' => 'rifiutato',
+                    'certificatoBase64' => 'x'
                 ]); 
 
                 Permessi::create([
@@ -134,7 +196,8 @@ class FerieController extends Controller
                     'data_fine' => Carbon::tomorrow(),
                     'note' => 'Nota di prova',
                     'tipologia' => 'ferie',
-                    'stato' => 'pending'
+                    'stato' => 'pending',
+                    'certificatoBase64' => 'x'
                 ]); 
 
                 Permessi::create([
@@ -143,7 +206,8 @@ class FerieController extends Controller
                     'data_fine' => Carbon::tomorrow(),
                     'note' => 'Nota di prova',
                     'tipologia' => 'malattia',
-                    'stato' => 'approvato'
+                    'stato' => 'approvato',
+                    'certificatoBase64' => 'x'
                 ]); 
                 
                 Permessi::create([
@@ -152,7 +216,8 @@ class FerieController extends Controller
                     'data_fine' => Carbon::tomorrow(),
                     'note' => 'Nota di prova',
                     'tipologia' => 'malattia',
-                    'stato' => 'rifiutato'
+                    'stato' => 'rifiutato',
+                    'certificatoBase64' => 'x'
                 ]); 
 
                 Permessi::create([
@@ -161,7 +226,8 @@ class FerieController extends Controller
                     'data_fine' => Carbon::tomorrow(),
                     'note' => 'Nota di prova',
                     'tipologia' => 'malattia',
-                    'stato' => 'pending'
+                    'stato' => 'pending',
+                    'certificatoBase64' => 'x'
                 ]); 
             }
         }

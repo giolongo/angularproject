@@ -31,11 +31,15 @@ Route::group(['middleware' => ['jwt.auth']], function() {
 //Route::post('password/reset', 'Auth\ResetPasswordController@postReset')->name('password.reset');
 
 //Routes Orazio Contarino (Gestione permessi)
-Route::match(array('GET','POST'),'urlDaInvocare1', 'FerieController@test1');
-Route::match(array('GET','POST'),'urlDaInvocare2', 'FerieController@test2');
-Route::match(array('GET','POST'),'generateMockData', 'FerieController@generateMockData');
-Route::match(array('GET','POST'),'selectSottoposti', 'FerieController@selectSottoposti');
-Route::match(array('GET','POST'),'/getListaRichiesteDipendente', 'FerieController@getListaRichiesteDipendente')->middleware('jwt.auth');
+//Registra permesso
+Route::match(array('GET','POST'),'getPermessiEnumArray', 'GestionePermessiController@getPermessiEnumArray');
+Route::match(array('GET','POST'),'registraPermesso', 'GestionePermessiController@registraPermesso');
+//deprecati
+Route::match(array('GET','POST'),'urlDaInvocare1', 'GestionePermessiController@test1');
+Route::match(array('GET','POST'),'urlDaInvocare2', 'GestionePermessiController@test2');
+Route::match(array('GET','POST'),'generateMockData', 'GestionePermessiController@generateMockData');
+Route::match(array('GET','POST'),'selectSottoposti', 'GestionePermessiController@selectSottoposti');
+Route::match(array('GET','POST'),'/getListaRichiesteDipendente', 'GestionePermessiController@getListaRichiesteDipendente')->middleware('jwt.auth');
 
 //Routes Giovanni Emanuele Longo
 Route::match(array('GET','POST'),'generateMockDataGiovanni', 'SkillAndTeamController@generateMockDataGiovanni');

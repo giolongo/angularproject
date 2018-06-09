@@ -29,6 +29,9 @@ export class RestRequestService {
     this.endpoint['getDatiUtente'] = this.context+'/getDatiUtente';
     this.endpoint['getSkills'] = this.context+'/getSkills';
     this.endpoint['getListSkills'] = this.context+'/getListSkills';
+    //Gestione permessi
+    this.endpoint['getPermessiEnumArray'] = this.context+'/getPermessiEnumArray';
+    this.endpoint['registraPermesso'] = this.context+'/registraPermesso';
    }
 
   login(username: String, password: String) : any{
@@ -71,6 +74,25 @@ export class RestRequestService {
 
   caricaSkills(){
     return this.http.get(this.endpoint['getListSkills']);
+  }
+
+  getPermessiEnumArray(){
+    var parameter = {
+      'token' : sessionStorage.getItem("token")
+    }
+    return this.http.post(this.endpoint['getPermessiEnumArray'], parameter, httpOptions);
+  }
+  registraPermesso(dataInizio, dataFine, note, tipologia, certificatoBase64){
+    var parameter = {
+      'token' : sessionStorage.getItem("token"),
+      'dataInizio': dataInizio,
+      'dataFine': dataFine,
+      'note': note,
+      'tipologia': tipologia,
+      'certificatoBase64': certificatoBase64,
+    }
+    console.log(parameter);
+    return this.http.post(this.endpoint['registraPermesso'], parameter, httpOptions);
   }
 }
 
