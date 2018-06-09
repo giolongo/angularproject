@@ -11,11 +11,10 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 //Common
 import { EmployerLogService } from '../service/employer-log.service';
 import { LoginComponent } from './login/login.component';
+import { RegistraUtenteComponent } from './registra-utente/registra-utente.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 //Gestione dipendenti
-import { RegistraUtenteComponent } from './registra-utente/registra-utente.component';
 import { RegistraTeamComponent } from './registra-team/registra-team.component';
-import { RegistraPermessiComponent } from './registra-permessi/registra-permessi.component';
 import { VisualizzaSkillComponent } from './visualizza-skill/visualizza-skill.component';
 import { VisualizzaTeamComponent } from './visualizza-team/visualizza-team.component';
 import { ProfiloUtenteComponent } from './profilo-utente/profilo-utente.component';
@@ -28,10 +27,11 @@ import { GestionePermessiDipendentiComponent } from './gestione-permessi/gestion
 import { GestionePermessiManagerComponent } from './gestione-permessi/gestione-permessi-manager/gestione-permessi-manager.component';
 import { DatatableListaPermessiManagerComponent } from './gestione-permessi/gestione-permessi-manager/datatable-lista-permessi-manager/datatable-lista-permessi-manager.component';
 import { DatatableListaPermessiDipendentiComponent } from './gestione-permessi/gestione-permessi-dipendenti/datatable-lista-permessi-dipendenti/datatable-lista-permessi-dipendenti.component';
-import { ModuloRichiestaPermessoDipendenteComponent } from './modulo-richiesta-permesso-dipendente/modulo-richiesta-permesso-dipendente.component';
+import { ModuloRichiestaPermessoDipendenteComponent } from './gestione-permessi/modulo-richiesta-permesso-dipendente/modulo-richiesta-permesso-dipendente.component';
 //Gestione permessi - deprecati
-import { RegistraPermessoComponent } from './registra-permesso/registra-permesso.component';
-import { VisualizzaPermessiRichiestiComponent } from './visualizza-permessi-richiesti/visualizza-permessi-richiesti.component';
+import { RegistraPermessoComponent } from './gestione-permessi/registra-permesso/registra-permesso.component';
+import { VisualizzaPermessiRichiestiComponent } from './gestione-permessi/visualizza-permessi-richiesti/visualizza-permessi-richiesti.component';
+import { RegistraPermessiComponent } from './gestione-permessi/registra-permessi/registra-permessi.component';
 @NgModule({
   declarations: [
     AppComponent,
