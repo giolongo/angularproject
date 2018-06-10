@@ -1,37 +1,40 @@
-<form #modificaSkillUtente = "ngForm" (ngSubmit) = "aggiornaSkillDipendente()">
-    <div class="card" style="width: 30rem; margin-top: 5rem;">
-        <div class="card-header">
-            <h5 class="card-title">Skills</h5>
+
+<div class="card" style="width: 30rem; margin-top: 5rem;">
+    <div class="card-header">
+        <h5 class="card-title">Skills</h5>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Nome Skill</th>
+                    <th>Seniority</th>
+                    <th>Salva/Modifica</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let skill of skills">
+                    <td>
+                        {{skill.skill[0].nome}}
+                    </td>
+                    <td>
+                        <select [(ngModel)] ="skill.seniority" (change)="skill.changed=true" name="{{skill.skill[0].id_skill}}">
+                            <option value="Junior">Junior</option>
+                            <option value="Senior">Senior</option>
+                        </select>
+                    </td>
+                    <td>
+                        <button (click)="modifica(skill)" [disabled]="!skill.changed">Modifica</button>
+                        <button (click)="rimuovi(skill)">Rimuovi</button>
+                    </td>
+                </tr>
+            </tbody>       
+        </table>
         </div>
-        <div class="card-body">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Nome Skill</th>
-                        <th>Seniority</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let skill of skills">
-                        <td>
-                             <!--<select [(ngModel)] ="skill.skill[0].id_skill" name="{skill.skill[0].id_skill}">
-                                <option *ngFor="let skillAvaible of skillsService.getSkills()" [value]="skillAvaible.id_skill">{{skillAvaible.nome}}</option>
-                            </select> -->
-                            {{skill.skill[0].nome}}
-                        </td>
-                        <td>
-                            <select [(ngModel)] ="skill.seniority" name="{{skill.skill[0].id_skill}}">
-                                <option value="Junior">Junior</option>
-                                <option value="Senior">Senior</option>
-                            </select>
-                        </td>
-                    </tr>
-                </tbody>       
-            </table>
-            </div>
+        <div *ngIf="allSkill && allSkill.length > 0">
             <div>
                 <select [(ngModel)] ="newSkill.id" value="newSkill.id" name="{newSkill.id}">
-                    <option *ngFor="let skillAvaible of skillsService.getSkills()" [value]="[skillAvaible.id_skill,skillAvaible.nome]">{{skillAvaible.nome}}</option>
+                    <option *ngFor="let skillAvaible of allSkill" [value]="skillAvaible.id_skill">{{skillAvaible.nome}}</option>
                 </select>
                 <select [(ngModel)] ="newSkill.seniority" name="{newSkill.seniority}">
                     <option value="Junior">Junior</option>
@@ -42,5 +45,5 @@
             <div class="row" style="padding-top:1rem; padding-left:1rem;">
                 <input type="submit" class="btn btn-primary" value="Salva">
             </div>
-    </div>
-</form>
+        </div>
+</div>

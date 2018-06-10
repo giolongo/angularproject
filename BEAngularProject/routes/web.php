@@ -48,3 +48,5 @@ Route::match(array('GET','POST'),'generateMockDataGiovanni', 'SkillAndTeamContro
 Route::match(array('GET','POST'),'getDatiUtente', 'HomeController@getDatiUtente')->middleware('jwt.auth');
 Route::match(array('GET','POST'),'getSkills', 'SkillsController@getSkills')->middleware('jwt.auth');
 Route::match(array('GET'),'getListSkills', 'SkillsController@getListSkills');
+Route::match(array('POST'),'aggiungiModificaSkill', 'SkillsController@aggiungiModificaSkill');
+Route::match(array('POST'),'rimuoviSkill', 'SkillsController@rimuoviSkill');

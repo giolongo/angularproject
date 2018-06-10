@@ -30,6 +30,7 @@ export class ProfiloUtenteComponent implements OnInit {
     }
 
     if(!this.skillsService.getSkills()){
+      //Carica lista delle skill
       this.restRequestService.caricaSkills().subscribe(function(response){
         this.skillsService.caricaSkills(response);
      }.bind(this));

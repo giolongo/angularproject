@@ -29,6 +29,8 @@ export class RestRequestService {
     this.endpoint['getDatiUtente'] = this.context+'/getDatiUtente';
     this.endpoint['getSkills'] = this.context+'/getSkills';
     this.endpoint['getListSkills'] = this.context+'/getListSkills';
+    this.endpoint['aggiungiModificaSkills'] = this.context+'/aggiungiModificaSkill';
+    this.endpoint['rimuoviSkill'] = this.context+'/rimuoviSkill';
     //Gestione permessi
     this.endpoint['getPermessiEnumArray'] = this.context+'/getPermessiEnumArray';
     this.endpoint['registraPermesso'] = this.context+'/registraPermesso';
@@ -99,6 +101,29 @@ export class RestRequestService {
       'token' : sessionStorage.getItem("token")
     }
     return this.http.post(this.endpoint['getListaPermessiDipendente'], parameter, httpOptions);
+  }
+  aggiungiSkill(newSkill:any){
+    var parameter = {
+      'token' : sessionStorage.getItem("token"),
+      'id_skill': newSkill.id,
+      'seniority':newSkill.seniority
+    }
+    return this.http.post(this.endpoint['aggiungiModificaSkills'], parameter, httpOptions);
+  }
+  modificaSkill(newSkill:any){
+    var parameter = {
+      'token' : sessionStorage.getItem("token"),
+      'id_skill': newSkill.id_skill,
+      'seniority':newSkill.seniority
+    }
+    return this.http.post(this.endpoint['aggiungiModificaSkills'], parameter, httpOptions);
+  }
+  rimuoviSkill(idSkill:String){
+    var parameter = {
+      'token' : sessionStorage.getItem("token"),
+      'id_skill': idSkill
+    }
+    return this.http.post(this.endpoint['rimuoviSkill'], parameter, httpOptions);
   }
 }
 
