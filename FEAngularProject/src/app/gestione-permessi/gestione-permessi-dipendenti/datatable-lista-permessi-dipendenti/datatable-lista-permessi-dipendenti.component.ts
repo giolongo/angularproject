@@ -90,7 +90,10 @@ export class DatatableListaPermessiDipendentiComponent implements OnDestroy, OnI
 
 
         var download_link = "<a href=\""+base64+"\" download=\"file"+ext+"\"><button class=\"btn btn-info material-icons\">attach_file</button></a>";
-        
+        var abilitaCancellaPermesso = "";
+        if(row['stato_richiesta'] == 'approvato'){
+          abilitaCancellaPermesso = 'disabled';
+        }
         var myrow = [
           row['id'],
           row['stato_richiesta'],
@@ -99,7 +102,7 @@ export class DatatableListaPermessiDipendentiComponent implements OnDestroy, OnI
           row['totale_giorni'],
           //'<i class="material-icons scarica_certificato" title="scarica certificato" id_certificato=\''+row['id']+'\' file='+row['certificatoBase64']+'>attach_file</i>',
           download_link,
-          '<i class="btn btn-danger material-icons undo_request" id_richiesta=\''+row['id']+'\' title="annulla">undo</i>'
+          '<button class="btn btn-danger material-icons undo_request" id_richiesta=\''+row['id']+'\' title="annulla" '+abilitaCancellaPermesso+'>undo</button>'
         ];
         dtInstance.row.add(myrow).draw();
       });
@@ -110,9 +113,13 @@ export class DatatableListaPermessiDipendentiComponent implements OnDestroy, OnI
     $('body').on('click', '.undo_request', function(){
       var id_permesso = $(this).attr('id_richiesta');
       var rowInstance = this;
-      __this.restRequestService.cancellaPermesso(id_permesso).toPromise().then(function(res){
-        var row = dtInstance.row($(rowInstance).parents('tr')).remove();
-        dtInstance.draw();
+      __this.restRequestService.cancellaPermesso(id_permesso).toPromise().then(function(response){
+        if(!response['success']){
+          console.log(response['error']);
+        }else{
+          var row = dtInstance.row($(rowInstance).parents('tr')).remove();
+          dtInstance.draw();
+        }
       }).catch(function(e){
         console.log(e);
       });

@@ -24,6 +24,7 @@ class GestionePermessiController extends Controller
         //$this->middleware('jwt.auth');
     }
 
+    
     public function getPermessiEnumArray(){
         return response()->json(['success' => true, 'data'=> Permessi::getPermessiEnumArray()]);
     }
@@ -34,6 +35,13 @@ class GestionePermessiController extends Controller
 
         if(empty($user)){
             return response()->json(['success' => false, 'error' => 'Invalid token']);
+        }
+        $count =  Permessi::where('id', '=', $params['id_permesso'])
+            ->where('id_dipendente', '=', $user->id_dipendente)
+            ->where('stato', '!=', 'approvato')
+            ->count();
+        if($count == 0){
+            return response()->json(['success' => false, 'error' => 'Non puoi elminare ferie approvate!']);
         }
         $rawPermessi = Permessi::where('id', '=', $params['id_permesso'])->where('id_dipendente', '=', $user->id_dipendente)->delete();
         return response()->json(['success' => true, 'data' => 'Permesso eliminato']);

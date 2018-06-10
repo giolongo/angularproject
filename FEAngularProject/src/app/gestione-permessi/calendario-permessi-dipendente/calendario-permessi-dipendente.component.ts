@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import {RestRequestService} from '../../../service/rest-request.service' 
 import * as moment from 'moment';
 import * as _ from 'lodash';
 
@@ -20,17 +21,24 @@ export class CalendarioPermessiDipendenteComponent implements OnInit, OnChanges 
   dayNames = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
   weeks: CalendarDate[][] = [];
   sortedDates: CalendarDate[] = [];
-
+  datePermessi = [];
   @Input() selectedDates: CalendarDate[] = [];
   @Output() onSelectDate = new EventEmitter<CalendarDate>();
 
-  constructor() {
+  constructor(private restRequestService : RestRequestService) {
     this.currentDate.locale("it");
-    //console.log(this.currentDate.weekdays(true));
   }
 
   ngOnInit(): void {
-    this.generateCalendar();
+    this.restRequestService.getListaPermessiDipendente().subscribe(function(response){
+      response['data'].forEach(function (row) {
+        if(row['stato_richiesta']=='approvato'){
+          this.enumerateDaysBetweenDates(this, row['data_inizio'], row['data_fine']);
+          this.generateCalendar();
+        }
+      }.bind(this));
+      this.generateCalendar();
+    }.bind(this));
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -119,21 +127,9 @@ export class CalendarioPermessiDipendenteComponent implements OnInit, OnChanges 
             });
   }
 
-  getClasses(mDate, eventMap={}){
-    //mock
-    eventMap = {
-      '2018-07-26': true,
-      '2018-07-27': true,
-      '2018-07-28': true,
-      '2018-07-29': true,
-      '2018-07-30': true,
-      '2018-07-31': true,
-      '2018-08-01': true,
-      '2018-08-02': true,
-    }
-
+  getClasses(mDate){
     var currentCalendarDate = this.formatDate(mDate._d.getDate(), mDate._d.getMonth(), mDate._d.getFullYear());
-    return eventMap[currentCalendarDate]===undefined ? false: true;
+    return this.datePermessi[currentCalendarDate]===undefined ? false: true;
   }
   formatDate(day, month, year){    
     //fix month start from 0
@@ -142,5 +138,24 @@ export class CalendarioPermessiDipendenteComponent implements OnInit, OnChanges 
     month = month < 9 ? "0" + month : month;
     return year + "-" + month + "-" + day;
   }
+  dmyToYmd(date){
+    var component = date.split('-');
+    return component[2]+"-"+component[1]+"-"+component[0];
+  }
+
+  enumerateDaysBetweenDates = function(__this, startDate, endDate) {
+      var currDate = moment(__this.dmyToYmd(startDate)).startOf('day');
+      var lastDate = moment(__this.dmyToYmd(endDate)).startOf('day');
+      currDate.subtract(1, 'months');
+      lastDate.subtract(1, 'months');
+      lastDate.add(1, 'days');
+      while(currDate.add(1, 'days').diff(lastDate) <= 0) {
+        var day = currDate.date() - 1;
+        var month = currDate.month() +1;
+        var year = currDate.year();
+        console.log(day+"-"+month+"-"+year);
+        __this.datePermessi[__this.formatDate(day, month, year)] = true;
+      }
+  };
   
 }
