@@ -153,7 +153,7 @@ export class CalendarioPermessiDipendenteComponent implements OnInit, OnChanges 
         var day = currDate.date() - 1;
         var month = currDate.month() +1;
         var year = currDate.year();
-        console.log(day+"-"+month+"-"+year);
+        //console.log(day+"-"+month+"-"+year);
         __this.datePermessi[__this.formatDate(day, month, year)] = true;
       }
   };

@@ -34,9 +34,12 @@ export class RestRequestService {
     this.endpoint['updateUser']= this.context+'/updateUser';
     //Gestione permessi
     this.endpoint['getPermessiEnumArray'] = this.context+'/getPermessiEnumArray';
-    this.endpoint['registraPermesso'] = this.context+'/registraPermesso';
     this.endpoint['getListaPermessiDipendente'] = this.context+'/getListaPermessiDipendente';
+    this.endpoint['getListaPermessiSubordinati'] = this.context+'/getListaPermessiSubordinati';
+    this.endpoint['registraPermesso'] = this.context+'/registraPermesso';
     this.endpoint['cancellaPermesso'] = this.context+'/cancellaPermesso';
+    this.endpoint['approvaPermesso'] = this.context+'/approvaPermesso';
+    this.endpoint['rifiutaPermesso'] = this.context+'/rifiutaPermesso';
    }
 
   login(username: String, password: String) : any{
@@ -137,6 +140,27 @@ export class RestRequestService {
 
   updateUtente(parameter : any){
     return this.http.put(this.endpoint['updateUser'], parameter, httpOptions);
+  }
+
+  getListaPermessiSubordinati(){
+    var parameter = {
+      'token' : sessionStorage.getItem("token")
+    }
+    return this.http.post(this.endpoint['getListaPermessiSubordinati'], parameter, httpOptions);
+  }
+  approvaPermesso(idPermesso:String){
+    var parameter = {
+      'token' : sessionStorage.getItem("token"),
+      'id_permesso': idPermesso
+    }
+    return this.http.post(this.endpoint['approvaPermesso'], parameter, httpOptions);
+  }
+  rifiutaPermesso(idPermesso:String){
+    var parameter = {
+      'token' : sessionStorage.getItem("token"),
+      'id_permesso': idPermesso
+    }
+    return this.http.post(this.endpoint['rifiutaPermesso'], parameter, httpOptions);
   }
 }
 

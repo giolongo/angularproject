@@ -13,6 +13,7 @@ use App\Models\Sottoposti;
 use Carbon\Carbon;
 use App\angularproject\CommonFunction;
 use Hash;
+use JWTAuth;
 /**
  *
  *@deprecated See WebHookVotaController
@@ -24,7 +25,32 @@ class GestionePermessiController extends Controller
         //$this->middleware('jwt.auth');
     }
 
-    
+    public function approvaPermesso(Request $request){
+        return $this->cambiaStatoPermesso($request, 'approvato');
+    }
+    public function rifiutaPermesso(Request $request){
+        return $this->cambiaStatoPermesso($request, 'rifiutato');
+    }
+
+    private function cambiaStatoPermesso(Request $request, $nuovoStato){
+        $params = $request->only('token', 'id_permesso');
+        $user = CommonFunction::tokenToDipendente($params['token']);
+
+        if(empty($user)){
+            return response()->json(['success' => false, 'error' => 'Invalid token']);
+        }
+        $idList = Sottoposti::where('id_capo', '=', $user->id_dipendente)->pluck('id_dipendente');
+        $count = Permessi::where('id', '=', $params['id_permesso'])
+            ->whereIn('id_dipendente', $idList)
+            ->where('stato', '=', 'pending')
+            ->count();
+        if($count == 0){
+            return response()->json(['success' => false, 'error' => 'Non puoi eseguire questa operazione[ cambio stato in '.$nuovoStato.']']);
+        }
+        Permessi::where('id', '=', $params['id_permesso'])->update(['stato' => $nuovoStato]);
+        return response()->json(['success' => true, 'data' => 'Operazione completata']);
+    }
+
     public function getPermessiEnumArray(){
         return response()->json(['success' => true, 'data'=> Permessi::getPermessiEnumArray()]);
     }
@@ -53,8 +79,27 @@ class GestionePermessiController extends Controller
         if(empty($user)){
             return response()->json(['success' => false, 'error' => 'Invalid token']);
         }
+        return $this->getPermessi($request, [$user->id_dipendente]);
+    }
 
-        $rawPermessi = Permessi::where('id_dipendente', '=', $user->id_dipendente)->get();
+    public function getListaPermessiSubordinati(Request $request){
+        $params = $request->only('token');
+        $user = CommonFunction::tokenToDipendente($params['token']);
+        if(empty($user)){
+            return response()->json(['success' => false, 'error' => 'Invalid token']);
+        }
+        $idList = Sottoposti::where('id_capo', '=', $user->id_dipendente)->pluck('id_dipendente')->toArray();
+        return $this->getPermessi($request, $idList);
+    }
+
+    private function getPermessi(Request $request, $idList){
+        $ruolo = JWTAuth::user()->ruolo;
+        $rawPermessi;
+        if($ruolo == 'manager'){
+            $rawPermessi = Permessi::whereIn('id_dipendente', $idList)->with('dipendente')->get();
+        }else{
+            $rawPermessi = Permessi::whereIn('id_dipendente', $idList)->get();
+        }
         $fixedPermessi = [];
         foreach($rawPermessi as $permesso){
             $data_inizio = new Carbon($permesso->data_inizio);
@@ -67,6 +112,11 @@ class GestionePermessiController extends Controller
                 'stato_richiesta' => $permesso->stato,
                 'certificatoBase64' => $permesso->certificatoBase64
             ];
+            if($ruolo == 'manager'){
+                $element['codice_fiscale']=$permesso->dipendente->codice_fiscale;
+                $element['nome']=$permesso->dipendente->nome;
+                $element['cognome']=$permesso->dipendente->cognome;
+            }
             array_push($fixedPermessi, $element);
         }
         return response()->json(['success' => true, 'data' => $fixedPermessi]);
@@ -127,15 +177,6 @@ class GestionePermessiController extends Controller
 
 
 //deprecati
-
-    public function getListaRichiesteDipendente(Request $request){
-        $user = CommonFunction::tokenToDipendente($request->get('token'));
-        if(empty($user)){
-            return CommonFunction::genericUnauthorizedAccess();
-        }
-        $permessi = Permessi::where('id_dipendente', '=', $user->id)->where('stato', '!=', 'approvato')->get()->toArray();
-        return response()->json(['success' => true, 'message' => json_encode($permessi)]);
-    }
 
     public function generateMockData(Request $request)
     {
@@ -276,39 +317,5 @@ class GestionePermessiController extends Controller
             }
         }
 
-    }
-
-    public function selectSottoposti(Request $request){
-        $managers_list = Dipendente::where('ruolo', '=', 'manager')->get();
-        $json_response = [];
-        foreach($managers_list as $element){
-            Log::debug("Nome: ".$element->nome." cognome: ".$element->cognome);
-            $sottoposti_list = Dipendente::where("id_dipendente", "=", $element->id_dipendente)->with('sottoposti.dipendente')->get()->toArray();
-            Log::debug(print_r($sottoposti_list,true));
-        }
-        //Logs in angularproject/BEAngularProject/storage/logs/laravel.log
-        return response("Success!", 200);
-    }
-    public function test1(Request $request)
-    {
-        //$data = $request->all();
-        //$data['banana'];
-        //return response('OK!', 200);
-        //return response('Banana non trovata', 404);
-        return 'test1';
-    }
-    
-    public function test2(Request $request)
-    {
-        //Dipendente::where('id_dipendente', '=', 1)->orderBy('nome', 'ask')->get()->toArray();
-        //$dipendenti = Dipendente::where('id_dipendente', '=', 1)->orderBy('nome', 'ask')->get();
-        /*
-        foreach($dipendenti as $dipendente){
-            $dipendente->nome = $dipendente->nome.'banana!';
-            $dipendente->save();
-        }
-        
-        */
-        return 'test2';
     }
 }
