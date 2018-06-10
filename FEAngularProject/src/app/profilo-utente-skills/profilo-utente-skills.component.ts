@@ -53,10 +53,13 @@ export class ProfiloUtenteSkillsComponent implements OnInit {
   rimuovi(skill:any){
     console.log(skill);
     this.restRequestService.rimuoviSkill(skill.id_skill).subscribe(function(response){
-      this.restRequestService.getSkills().subscribe(function(response){
-        this.skills = response['data'];
-        this.allSkill = this.skillsService.getSkills();
-        this.rimuoviSkillPresenti();
+        this.restRequestService.getSkills().subscribe(function(response){
+          this.skills = response['data'];
+          this.restRequestService.caricaSkills().subscribe(function(response){
+            this.skillsService.caricaSkills(response);
+            this.allSkill = this.skillsService.getSkills();
+            this.rimuoviSkillPresenti();
+          }.bind(this));
         }.bind(this));
     }.bind(this));
   }
