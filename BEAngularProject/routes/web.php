@@ -50,3 +50,4 @@ Route::match(array('GET','POST'),'getSkills', 'SkillsController@getSkills')->mid
 Route::match(array('GET'),'getListSkills', 'SkillsController@getListSkills');
 Route::match(array('POST'),'aggiungiModificaSkill', 'SkillsController@aggiungiModificaSkill');
 Route::match(array('POST'),'rimuoviSkill', 'SkillsController@rimuoviSkill');
+Route::match(array('PUT'),'updateUser', 'UtenteController@updateUser');
