@@ -31,6 +31,7 @@ export class RestRequestService {
     this.endpoint['getListSkills'] = this.context+'/getListSkills';
     this.endpoint['aggiungiModificaSkills'] = this.context+'/aggiungiModificaSkill';
     this.endpoint['rimuoviSkill'] = this.context+'/rimuoviSkill';
+    this.endpoint['updateUser']= this.context+'/updateUser';
     //Gestione permessi
     this.endpoint['getPermessiEnumArray'] = this.context+'/getPermessiEnumArray';
     this.endpoint['registraPermesso'] = this.context+'/registraPermesso';
@@ -132,6 +133,10 @@ export class RestRequestService {
       'id_permesso': idPermesso
     }
     return this.http.post(this.endpoint['cancellaPermesso'], parameter, httpOptions);
+  }
+
+  updateUtente(parameter : any){
+    return this.http.put(this.endpoint['updateUser'], parameter, httpOptions);
   }
 }
 
