@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { EmployerLogService } from '../../../service/employer-log.service';
+import { Router } from "@angular/router";
+
 
 @Component({
   selector: 'app-gestione-permessi-manager',
@@ -7,9 +10,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GestionePermessiManagerComponent implements OnInit {
 
-  constructor() { }
+  constructor(private employerLogService : EmployerLogService, private router: Router) { }
 
   ngOnInit() {
   }
+  openTab(element){
+    $('.tab-header').removeClass('active');
+    $('.tab-header[tab-name="'+element+'"]').addClass('active');
 
+    $('.tab-body').addClass('hidden');
+    $('.tab-body[tab-name="'+element+'"]').removeClass('hidden');
+  }
 }
