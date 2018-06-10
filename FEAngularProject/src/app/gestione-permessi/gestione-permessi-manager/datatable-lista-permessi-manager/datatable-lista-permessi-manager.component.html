@@ -1,3 +1,21 @@
-<p>
-  datatable-lista-permessi-manager works!
-</p>
+
+<div class="listaPermessiManager">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="card-title">Elenco dei permessi richiesti dai subordinati</h5>
+      </div>
+      <div class="card-body">
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+          <thead>
+            <tr>
+              <th *ngFor="let header of headers">{{header}}</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  
+  
+  
