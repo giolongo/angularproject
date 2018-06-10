@@ -28,17 +28,18 @@ class GestionePermessiController extends Controller
         return response()->json(['success' => true, 'data'=> Permessi::getPermessiEnumArray()]);
     }
 
-    public function getListaPermessiDipendente(Request $request){
-        /*
-        { 
-            'id': '4',
-            "dataRichiesta": "07/06/2018", 
-            "statoRichiesta": "Approvata", 
-            "dataInizio": "02/08/2018", 
-            "dataFine": "26/07/2018", 
-            "totaleGiorni": "7", 
-        }*/
+    public function cancellaPermesso(Request $request){
+        $params = $request->only('token', 'id_permesso');
+        $user = CommonFunction::tokenToDipendente($params['token']);
 
+        if(empty($user)){
+            return response()->json(['success' => false, 'error' => 'Invalid token']);
+        }
+        $rawPermessi = Permessi::where('id', '=', $params['id_permesso'])->where('id_dipendente', '=', $user->id_dipendente)->delete();
+        return response()->json(['success' => true, 'data' => 'Permesso eliminato']);
+    }
+
+    public function getListaPermessiDipendente(Request $request){
         $params = $request->only('token');
         $user = CommonFunction::tokenToDipendente($params['token']);
         if(empty($user)){

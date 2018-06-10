@@ -35,6 +35,7 @@ export class RestRequestService {
     this.endpoint['getPermessiEnumArray'] = this.context+'/getPermessiEnumArray';
     this.endpoint['registraPermesso'] = this.context+'/registraPermesso';
     this.endpoint['getListaPermessiDipendente'] = this.context+'/getListaPermessiDipendente';
+    this.endpoint['cancellaPermesso'] = this.context+'/cancellaPermesso';
    }
 
   login(username: String, password: String) : any{
@@ -124,6 +125,13 @@ export class RestRequestService {
       'id_skill': idSkill
     }
     return this.http.post(this.endpoint['rimuoviSkill'], parameter, httpOptions);
+  }
+  cancellaPermesso(idPermesso:String){
+    var parameter = {
+      'token' : sessionStorage.getItem("token"),
+      'id_permesso': idPermesso
+    }
+    return this.http.post(this.endpoint['cancellaPermesso'], parameter, httpOptions);
   }
 }
 

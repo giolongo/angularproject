@@ -17,7 +17,6 @@ export class DatatableListaPermessiDipendentiComponent implements OnDestroy, OnI
 
   headers = [
     '',
-    'Data richiesta',
     'Stato richiesta',
     'Data inizio',
     'Data fine',
@@ -34,7 +33,7 @@ export class DatatableListaPermessiDipendentiComponent implements OnDestroy, OnI
     this.initDatatable();
     this.restRequestService.getListaPermessiDipendente().subscribe(function(response){
       this.rows = response["data"];
-      this.rerender();
+      this.render(this);
     }.bind(this));
   }
   ngOnDestroy(): void {
@@ -56,6 +55,10 @@ export class DatatableListaPermessiDipendentiComponent implements OnDestroy, OnI
         {
         "targets": -2,
         "orderable": false
+        },
+        {
+          className: "text-center",
+          "targets": [0,1,2,3,4,5,6],
         }
       ],
       language: {
@@ -64,7 +67,7 @@ export class DatatableListaPermessiDipendentiComponent implements OnDestroy, OnI
     };
   }
 
-  rerender(): void {
+  render(__this): void {
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
       // Destroy the table first
       dtInstance.clear().draw();
@@ -86,26 +89,33 @@ export class DatatableListaPermessiDipendentiComponent implements OnDestroy, OnI
         base64 = baseFile+';base64,'+strippedFile;
 
 
-        var download_link = "<a href=\""+base64+"\" download=\"file"+ext+"\"><button class=\"material-icons\">attach_file</button></a>";
-
+        var download_link = "<a href=\""+base64+"\" download=\"file"+ext+"\"><button class=\"btn btn-info material-icons\">attach_file</button></a>";
+        
         var myrow = [
           row['id'],
-          '',
           row['stato_richiesta'],
           row['data_inizio'],
           row['data_fine'],
           row['totale_giorni'],
           //'<i class="material-icons scarica_certificato" title="scarica certificato" id_certificato=\''+row['id']+'\' file='+row['certificatoBase64']+'>attach_file</i>',
           download_link,
-          '<i class="material-icons undo_request" id_richiesta=\''+row['id']+'\' title="annulla">undo</i>'
+          '<i class="btn btn-danger material-icons undo_request" id_richiesta=\''+row['id']+'\' title="annulla">undo</i>'
         ];
         dtInstance.row.add(myrow).draw();
       });
-        $('body').on('click', '.undo_request', function(){
-          console.log($(this).attr('id_richiesta'));
-        });
-
+      __this.bindCancellaPermesso(__this, dtInstance);
     });
-
+  }
+  bindCancellaPermesso(__this, dtInstance){
+    $('body').on('click', '.undo_request', function(){
+      var id_permesso = $(this).attr('id_richiesta');
+      var rowInstance = this;
+      __this.restRequestService.cancellaPermesso(id_permesso).toPromise().then(function(res){
+        var row = dtInstance.row($(rowInstance).parents('tr')).remove();
+        dtInstance.draw();
+      }).catch(function(e){
+        console.log(e);
+      });
+    });
   }
 }

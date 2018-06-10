@@ -26,17 +26,14 @@ Route::group(['middleware' => ['jwt.auth']], function() {
         return response()->json(['foo'=>'bar']);
     });
 });
-//Route::get('user/verify/{verification_code}', 'AuthController@verifyUser');
-//Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.request');
-//Route::post('password/reset', 'Auth\ResetPasswordController@postReset')->name('password.reset');
 
 //Routes Orazio Contarino (Gestione permessi)
-//Registra permesso
+//----Registra permesso
 Route::match(array('GET','POST'),'getPermessiEnumArray', 'GestionePermessiController@getPermessiEnumArray');
 Route::match(array('GET','POST'),'registraPermesso', 'GestionePermessiController@registraPermesso');
 Route::match(array('GET','POST'),'getListaPermessiDipendente', 'GestionePermessiController@getListaPermessiDipendente');
-
-//deprecati
+Route::match(array('GET','POST'),'cancellaPermesso', 'GestionePermessiController@cancellaPermesso');
+//----deprecati
 Route::match(array('GET','POST'),'urlDaInvocare1', 'GestionePermessiController@test1');
 Route::match(array('GET','POST'),'urlDaInvocare2', 'GestionePermessiController@test2');
 Route::match(array('GET','POST'),'generateMockData', 'GestionePermessiController@generateMockData');
