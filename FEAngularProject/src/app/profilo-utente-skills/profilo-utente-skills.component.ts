@@ -66,7 +66,7 @@ export class ProfiloUtenteSkillsComponent implements OnInit {
 
   rimuoviSkillPresenti(){
     for (var i = 0;this.allSkill[i] && i< this.allSkill.length ; i++){
-      for(var j = 0;j< this.skills.length ; j++){
+      for(var j = 0;this.allSkill[i] && j< this.skills.length ; j++){
         if(this.allSkill[i].id_skill == this.skills[j].skill[0].id_skill){
           console.log(true);
           this.allSkill.splice(i,1);

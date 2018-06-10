@@ -14,6 +14,9 @@ export class ProfiloUtenteDatiPersonaliComponent implements OnInit {
   public dataDiNascita : Date;
   public email : String;
   public password : String;
+  public iban : String;
+  public banca : String;
+  public bbc : String;
   public user : User;
   constructor(employerLogService:EmployerLogService) { 
     this.nome = employerLogService.getNomeUtente();
@@ -21,6 +24,9 @@ export class ProfiloUtenteDatiPersonaliComponent implements OnInit {
     this.codiceFiscale = employerLogService.getCodiceFiscale();
     this.dataDiNascita = employerLogService.getDataDiNascita();
     this.email = employerLogService.getEmail();
+    this.iban = employerLogService.getIban();
+    this.banca = employerLogService.getBanca();
+    this.bbc = employerLogService.getBbc();
   }
 
   ngOnInit() {

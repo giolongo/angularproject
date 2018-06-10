@@ -9,7 +9,7 @@
                 <tr>
                     <th>Nome Skill</th>
                     <th>Seniority</th>
-                    <th>Salva/Modifica</th>
+                    <th>Azioni</th>
                 </tr>
             </thead>
             <tbody>
@@ -18,32 +18,44 @@
                         {{skill.skill[0].nome}}
                     </td>
                     <td>
-                        <select [(ngModel)] ="skill.seniority" (change)="skill.changed=true" name="{{skill.skill[0].id_skill}}">
+                        <select class="input-text" [(ngModel)] ="skill.seniority" (change)="skill.changed=true" name="{{skill.skill[0].id_skill}}">
                             <option value="Junior">Junior</option>
                             <option value="Senior">Senior</option>
                         </select>
                     </td>
                     <td>
-                        <button (click)="modifica(skill)" [disabled]="!skill.changed">Modifica</button>
-                        <button (click)="rimuovi(skill)">Rimuovi</button>
+                        <a *ngIf="!skill.changed" class="disabled" >
+                            <i class="material-icons md-dark md-inactive"  title="Effettua delle modifiche per abilitare l'azione">save</i> 
+                        </a>
+                        <a *ngIf="skill.changed" (click)="modifica(skill)" class="valid-action" >
+                            <i class="material-icons md-blue" title="Salva Modfiche">save</i> 
+                        </a>
+
+                        <a (click)="rimuovi(skill)" class="valid-action" >
+                            <i class="material-icons md-red" title="Rimuovi Skill">delete</i> 
+                        </a>
                     </td>
                 </tr>
             </tbody>       
         </table>
-        </div>
         <div *ngIf="allSkill && allSkill.length > 0">
-            <div>
-                <select [(ngModel)] ="newSkill.id" value="newSkill.id" name="{newSkill.id}">
-                    <option *ngFor="let skillAvaible of allSkill" [value]="skillAvaible.id_skill">{{skillAvaible.nome}}</option>
-                </select>
-                <select [(ngModel)] ="newSkill.seniority" name="{newSkill.seniority}">
-                    <option value="Junior">Junior</option>
-                    <option value="Senior">Senior</option>
-                </select>
+            <h5 class="card-title">Aggiungi Skill</h5>
+            <div class="row">
+                <div class="col-sm-2"><label>Nome: </label></div>
+                <div class="col-sm-4">
+                    <select class="input-text" [(ngModel)] ="newSkill.id" value="newSkill.id" name="{newSkill.id}">
+                        <option *ngFor="let skillAvaible of allSkill" [value]="skillAvaible.id_skill">{{skillAvaible.nome}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-2"><label>Seniority: </label></div>
+                <div class="col-sm-4">
+                    <select class="input-text" [(ngModel)] ="newSkill.seniority" name="{newSkill.seniority}">
+                        <option value="Junior">Junior</option>
+                        <option value="Senior">Senior</option>
+                    </select>
+                </div>
             </div>
-            <button (click)="aggiungi()">Aggiungi</button>
-            <div class="row" style="padding-top:1rem; padding-left:1rem;">
-                <input type="submit" class="btn btn-primary" value="Salva">
-            </div>
+            <button  class="btn btn-primary" (click)="aggiungi()">Aggiungi</button>
         </div>
+    </div>
 </div>
