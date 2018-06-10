@@ -6,4 +6,7 @@ export class User{
     public token : String;
     public codiceFiscale : String;
     public dataDiNascita : Date;
+    public iban : String;
+    public banca : String;
+    public bbc : String;
 }

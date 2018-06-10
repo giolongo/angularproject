@@ -56,6 +56,9 @@ export class EmployerLogService {
     this.utenteLoggato.email = response['data'].email;
     this.utenteLoggato.codiceFiscale = response['data'].codiceFiscale;
     this.utenteLoggato.dataDiNascita = response['data'].dataDiNascita;
+    this.utenteLoggato.iban =  response['data'].iban;
+    this.utenteLoggato.banca =  response['data'].banca;
+    this.utenteLoggato.bbc =  response['data'].bbc;
     console.log(response['data'].token);
     return true;
   }
@@ -81,6 +84,18 @@ export class EmployerLogService {
 
   getDataDiNascita() : Date {
     return this.utenteLoggato.dataDiNascita;
+  }
+
+  getIban() : String {
+    return this.utenteLoggato.iban;
+  }
+
+  getBanca() : String {
+    return this.utenteLoggato.banca;
+  }
+
+  getBbc() : String {
+    return this.utenteLoggato.bbc;
   }
 
   getUtenteLoggato() : User {

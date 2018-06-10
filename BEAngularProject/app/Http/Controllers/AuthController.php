@@ -138,7 +138,10 @@ class AuthController extends Controller
                     'ruolo' => $user->ruolo,
                     'email'=>$user->email,
                     'codiceFiscale'=>$user->codice_fiscale,
-                    'dataDiNascita'=>$user->data_nascita
+                    'dataDiNascita'=>$user->data_nascita,
+                    'iban'=>$user->iban,
+                    'banca'=>$user->banca,
+                    'bbc'=>$user->bbc
                 ]
             ]);
         }catch(\Exception $e){
@@ -228,7 +231,10 @@ class AuthController extends Controller
                     'ruolo' => $user->ruolo,
                     'email'=>$user->email,     
                     'codiceFiscale'=>$user->codice_fiscale,
-                    'dataDiNascita'=>$user->data_nascita
+                    'dataDiNascita'=>$user->data_nascita,
+                    'iban'=>$user->iban,
+                    'banca'=>$user->banca,
+                    'bbc'=>$user->bbc
                 ]
             ]);
         }

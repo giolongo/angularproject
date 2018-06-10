@@ -14,3 +14,7 @@
     border: solid 1px #ccc;
     border-radius: 10px;
 }
+
+.valid-action{
+    cursor: pointer;
+ }
