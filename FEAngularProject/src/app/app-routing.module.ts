@@ -10,6 +10,7 @@ import { VisualizzaSkillComponent } from './visualizza-skill/visualizza-skill.co
 import { VisualizzaTeamComponent } from './visualizza-team/visualizza-team.component';
 import { ProfiloUtenteComponent } from './profilo-utente/profilo-utente.component';
 import { GestionePermessiComponent } from './gestione-permessi/gestione-permessi.component';
+import { RicercaComponent } from './ricerca/ricerca.component';
 
 
 const appRoutes: Routes = [
@@ -23,6 +24,7 @@ const appRoutes: Routes = [
     { path: 'visualizzaTeam', component: VisualizzaTeamComponent, pathMatch: 'full'},
     { path: 'visualizzaProfilo', component: ProfiloUtenteComponent, pathMatch: 'full'},
     { path: 'gestionePermessiDipendente', component: GestionePermessiComponent, pathMatch: 'full'},
+    { path: 'ricercaRisultati', component: RicercaComponent, pathMatch:'full'}
     
     //{ path: '**', component: PageNotFoundComponent }
 ];

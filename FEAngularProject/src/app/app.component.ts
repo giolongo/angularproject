@@ -21,7 +21,8 @@ export class AppComponent {
   }
   
   search() {
-    console.log(this.searchField);
+    if(!this.searchField) this.searchField="Team, Dipendente";
+    this.router.navigate(['/ricercaRisultati']);
   }
 
 

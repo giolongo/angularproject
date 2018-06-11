@@ -20,12 +20,12 @@ class TeamDipendente extends Model
 
     public function dipendente()
     {
-        return $this->hasOne('App\Dipendente', 'id_dipendente', 'id_dipendente');
+        return $this->hasOne('App\Models\Dipendente', 'id_dipendente', 'id_dipendente');
     }
 
     public function team()
     {
-        return $this->hasOne('App\Team', 'id_team', 'id_team');
+        return $this->hasOne('App\Models\Team', 'id_team', 'id_team');
     }
     /* RELATION EXAMPLES */
     /*

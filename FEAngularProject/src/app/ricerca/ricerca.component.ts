@@ -1,20 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { EmployerLogService } from '../../service/employer-log.service';
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute, ParamMap } from "@angular/router";
 import { RestRequestService } from '../../service/rest-request.service';
 
 @Component({
-  selector: 'app-registra-team',
-  templateUrl: './registra-team.component.html',
-  styleUrls: ['./registra-team.component.css']
+  selector: 'app-ricerca',
+  templateUrl: './ricerca.component.html',
+  styleUrls: ['./ricerca.component.css']
 })
-export class RegistraTeamComponent implements OnInit {
- 
-  public nomeTeam : String;
+export class RicercaComponent implements OnInit {
+  private resultRicercaDipendenti : any;
 
-  constructor(private employerLogService : EmployerLogService, private router: Router, private restRequestService:RestRequestService) { }
-  
-  ngOnInit() {
+  constructor(private employerLogService : EmployerLogService,private activatedRoute: ActivatedRoute, 
+    private router: Router, private restRequestService:RestRequestService) {
     if(!this.employerLogService.isLogged()){
       //Se non lo è lo riporto alla pagina di Login
       if(!sessionStorage.getItem("token")){
@@ -28,8 +26,8 @@ export class RegistraTeamComponent implements OnInit {
       }
     }
   }
-  public registraTeam(){
-    
+
+  ngOnInit() {
   }
 
 }
