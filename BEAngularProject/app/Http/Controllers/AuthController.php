@@ -141,7 +141,8 @@ class AuthController extends Controller
                     'dataDiNascita'=>$user->data_nascita,
                     'iban'=>$user->iban,
                     'banca'=>$user->banca,
-                    'bbc'=>$user->bbc
+                    'bbc'=>$user->bbc,
+                    'id'=>$user->id_dipendente
                 ]
             ]);
         }catch(\Exception $e){
@@ -234,7 +235,8 @@ class AuthController extends Controller
                     'dataDiNascita'=>$user->data_nascita,
                     'iban'=>$user->iban,
                     'banca'=>$user->banca,
-                    'bbc'=>$user->bbc
+                    'bbc'=>$user->bbc,
+                    'id'=>$user->id_dipendente
                 ]
             ]);
         }

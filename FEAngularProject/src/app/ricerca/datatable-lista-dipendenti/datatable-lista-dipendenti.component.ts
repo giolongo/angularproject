@@ -17,6 +17,7 @@ export class DatatableListaDipendentiComponent implements OnDestroy, OnInit {
 
   headers = [
     'Action',
+    'Id',
     'Nome',
     'Cognome',
     'Ruolo'
@@ -26,9 +27,8 @@ export class DatatableListaDipendentiComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
-    console.log("gonna fire getListaPermessiDipendente");
     this.initDatatable();
-    this.restRequestService.ricerca().subscribe(function(response){
+    this.restRequestService.ricerca('dipendenti').subscribe(function(response){
       this.rows = response["data"];
       this.render(this);
     }.bind(this));
@@ -47,15 +47,23 @@ export class DatatableListaDipendentiComponent implements OnDestroy, OnInit {
         },
         {
         "targets": -1,
-        "orderable": false
+        "orderable": true
         },
         {
         "targets": -2,
-        "orderable": false
+        "orderable": true
+        },
+        {
+        "targets": -3,
+        "orderable": true
+        },
+        {
+          "targets": -4,
+          "orderable": true
         },
         {
           className: "text-center",
-          "targets": [0,1,2,3],
+          "targets": [0,1,2,3,4],
         }
       ],
       language: {
@@ -71,22 +79,23 @@ export class DatatableListaDipendentiComponent implements OnDestroy, OnInit {
       this.rows.forEach(function (row) {
 
         var myrow = [
-          '<i class="material-icons" title="Visualizza dettagli" (click)="this.dettagli(row)">visibility</i>',
+          '<i class="material-icons view_dettagli" id_dipendente=\''+row['id_dipendente']+'\' title="Visualizza Skill">visibility</button>',
           row['id_dipendente'],
           row['nome'],
           row['cognome'],
           row['ruolo']
-
-          //'<i class="material-icons scarica_certificato" title="scarica certificato" id_certificato=\''+row['id']+'\' file='+row['certificatoBase64']+'>attach_file</i>',
-          //download_link,
-          //'<button class="btn btn-danger material-icons undo_request" id_richiesta=\''+row['id']+'\' title="annulla" '+abilitaCancellaPermesso+'>undo</button>'
         ];
         dtInstance.row.add(myrow).draw();
       });
+      __this.bindBottoni(__this, dtInstance);
     });
   }
-
-  dettagli(row:any){
-    console.log(row);
+  bindBottoni(__this, dtInstance){
+    $('body').on('click', '.view_dettagli', function(){
+      var id_dipendente = $(this).attr('id_dipendente');
+      var rowInstance = this;
+      console.log(id_dipendente);
+      __this.router.navigate(['/skillDipendente/'+id_dipendente]);
+    });
   }
 }

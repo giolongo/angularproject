@@ -1,4 +1,5 @@
 export class User{
+    public id : String;
     public nome : String;
     public cognome : String;
     public ruolo : String;

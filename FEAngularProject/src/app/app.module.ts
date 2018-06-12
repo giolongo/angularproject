@@ -15,8 +15,6 @@ import { RegistraUtenteComponent } from './registra-utente/registra-utente.compo
 import { DashboardComponent } from './dashboard/dashboard.component';
 //Gestione dipendenti
 import { RegistraTeamComponent } from './registra-team/registra-team.component';
-import { VisualizzaSkillComponent } from './visualizza-skill/visualizza-skill.component';
-import { VisualizzaTeamComponent } from './visualizza-team/visualizza-team.component';
 import { ProfiloUtenteComponent } from './profilo-utente/profilo-utente.component';
 import { ProfiloUtenteDatiPersonaliComponent } from './profilo-utente-dati-personali/profilo-utente-dati-personali.component';
 import { ProfiloUtenteSkillsComponent } from './profilo-utente-skills/profilo-utente-skills.component';
@@ -32,7 +30,8 @@ import { ModuloRichiestaPermessoDipendenteComponent } from './gestione-permessi/
 import { RegistraPermessiComponent } from './gestione-permessi/registra-permessi/registra-permessi.component';
 import { RicercaComponent } from './ricerca/ricerca.component';
 import { DatatableListaDipendentiComponent } from './ricerca/datatable-lista-dipendenti/datatable-lista-dipendenti.component';
-import { DatatableListaTeamComponent } from './ricerca/datatable-lista-team/datatable-lista-team.component';@NgModule({
+import { DatatableListaTeamComponent } from './ricerca/datatable-lista-team/datatable-lista-team.component';
+import { SkillDipendenteComponent } from './skill-dipendente/skill-dipendente.component';@NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
@@ -40,8 +39,6 @@ import { DatatableListaTeamComponent } from './ricerca/datatable-lista-team/data
     RegistraUtenteComponent,
     RegistraTeamComponent,
     RegistraPermessiComponent,
-    VisualizzaSkillComponent,
-    VisualizzaTeamComponent,
     GestionePermessiComponent,
     ProfiloUtenteComponent,
     GestionePermessiDipendentiComponent,
@@ -55,6 +52,7 @@ import { DatatableListaTeamComponent } from './ricerca/datatable-lista-team/data
     RicercaComponent,
     DatatableListaDipendentiComponent,
     DatatableListaTeamComponent,
+    SkillDipendenteComponent,
   ],
   imports: [    
     BrowserModule,

@@ -16,9 +16,7 @@ export class DatatableListaTeamComponent implements OnInit {
 
   headers = [
     '',
-    'Nome',
-    'Cognome',
-    'Ruolo'
+    'Nome'
   ];
   rows = [];
   constructor(private restRequestService : RestRequestService, private router: Router) { 
@@ -27,7 +25,8 @@ export class DatatableListaTeamComponent implements OnInit {
   ngOnInit(): void {
     console.log("gonna fire getListaPermessiDipendente");
     this.initDatatable();
-    this.restRequestService.ricerca().subscribe(function(response){
+    this.restRequestService.ricerca('team').subscribe(function(response){
+      console.log(response["data"]);
       this.rows = response["data"];
       this.render(this);
     }.bind(this));
@@ -41,20 +40,16 @@ export class DatatableListaTeamComponent implements OnInit {
       pageLength: 2,
       columnDefs: [
         {
-        "targets": 0,
-        "orderable": false
-        },
-        {
-        "targets": -1,
-        "orderable": false
-        },
-        {
-        "targets": -2,
-        "orderable": false
-        },
+          "targets": 0,
+          "orderable": false
+          },
+          {
+          "targets": -1,
+          "orderable": true
+          },
         {
           className: "text-center",
-          "targets": [0,1,2,3],
+          "targets": [0,1],
         }
       ],
       language: {
@@ -70,10 +65,8 @@ export class DatatableListaTeamComponent implements OnInit {
       this.rows.forEach(function (row) {
 
         var myrow = [
-          row['id_dipendente'],
+          '<i class="material-icons view_dettagli" id_team=\''+row['id_team']+'\' title="Visualizza Skill">visibility</button>',
           row['nome'],
-          row['cognome'],
-          row['ruolo']
 
           //'<i class="material-icons scarica_certificato" title="scarica certificato" id_certificato=\''+row['id']+'\' file='+row['certificatoBase64']+'>attach_file</i>',
           //download_link,
@@ -81,6 +74,15 @@ export class DatatableListaTeamComponent implements OnInit {
         ];
         dtInstance.row.add(myrow).draw();
       });
+      __this.bindBottoni(__this, dtInstance);
+    });
+  }
+  bindBottoni(__this, dtInstance){
+    $('body').on('click', '.view_dettagli', function(){
+      var id_team = $(this).attr('id_team');
+      var rowInstance = this;
+      console.log(id_team);
+      __this.router.navigate(['/skillDipendente/'+id_team]);
     });
   }
 }

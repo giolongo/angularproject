@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VisualizzaSkillComponent } from './visualizza-skill.component';
+import { SkillDipendenteComponent } from './skill-dipendente.component';
 
-describe('VisualizzaSkillComponent', () => {
-  let component: VisualizzaSkillComponent;
-  let fixture: ComponentFixture<VisualizzaSkillComponent>;
+describe('SkillDipendenteComponent', () => {
+  let component: SkillDipendenteComponent;
+  let fixture: ComponentFixture<SkillDipendenteComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ VisualizzaSkillComponent ]
+      declarations: [ SkillDipendenteComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(VisualizzaSkillComponent);
+    fixture = TestBed.createComponent(SkillDipendenteComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

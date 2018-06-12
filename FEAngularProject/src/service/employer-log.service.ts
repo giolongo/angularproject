@@ -59,6 +59,7 @@ export class EmployerLogService {
     this.utenteLoggato.iban =  response['data'].iban;
     this.utenteLoggato.banca =  response['data'].banca;
     this.utenteLoggato.bbc =  response['data'].bbc;
+    this.utenteLoggato.id =  response['data'].id;
     console.log(response['data'].token);
     return true;
   }
@@ -98,7 +99,12 @@ export class EmployerLogService {
     return this.utenteLoggato.bbc;
   }
 
+  getId() : String {
+    return this.utenteLoggato.id;
+  }
+
   getUtenteLoggato() : User {
     return this.utenteLoggato;
   }
+
 }

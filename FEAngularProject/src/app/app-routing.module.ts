@@ -6,11 +6,10 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { RegistraUtenteComponent } from './registra-utente/registra-utente.component';
 import { RegistraTeamComponent } from './registra-team/registra-team.component';
 import { RegistraPermessiComponent } from './gestione-permessi/registra-permessi/registra-permessi.component';
-import { VisualizzaSkillComponent } from './visualizza-skill/visualizza-skill.component';
-import { VisualizzaTeamComponent } from './visualizza-team/visualizza-team.component';
 import { ProfiloUtenteComponent } from './profilo-utente/profilo-utente.component';
 import { GestionePermessiComponent } from './gestione-permessi/gestione-permessi.component';
 import { RicercaComponent } from './ricerca/ricerca.component';
+import { SkillDipendenteComponent } from './skill-dipendente/skill-dipendente.component';
 
 
 const appRoutes: Routes = [
@@ -20,11 +19,10 @@ const appRoutes: Routes = [
     { path: 'registraUtente', component: RegistraUtenteComponent, pathMatch: 'full'},
     { path: 'registraTeam', component: RegistraTeamComponent, pathMatch: 'full'},
     { path: 'registraPermessi', component: RegistraPermessiComponent, pathMatch: 'full'},
-    { path: 'visualizzaSkills', component: VisualizzaSkillComponent, pathMatch: 'full'},
-    { path: 'visualizzaTeam', component: VisualizzaTeamComponent, pathMatch: 'full'},
     { path: 'visualizzaProfilo', component: ProfiloUtenteComponent, pathMatch: 'full'},
     { path: 'gestionePermessiDipendente', component: GestionePermessiComponent, pathMatch: 'full'},
-    { path: 'ricercaRisultati', component: RicercaComponent, pathMatch:'full'}
+    { path: 'ricercaRisultati', component: RicercaComponent, pathMatch:'full'},
+    { path: 'skillDipendente/:id_dipendente', component: SkillDipendenteComponent},
     
     //{ path: '**', component: PageNotFoundComponent }
 ];

@@ -33,6 +33,7 @@ export class RestRequestService {
     this.endpoint['rimuoviSkill'] = this.context+'/rimuoviSkill';
     this.endpoint['updateUser']= this.context+'/updateUser';
     this.endpoint['ricerca']= this.context+'/ricerca';
+    this.endpoint['dipendenteInfo']= this.context+'/dipendenteInfo';
     //Gestione permessi
     this.endpoint['getPermessiEnumArray'] = this.context+'/getPermessiEnumArray';
     this.endpoint['getListaPermessiDipendente'] = this.context+'/getListaPermessiDipendente';
@@ -164,11 +165,20 @@ export class RestRequestService {
     return this.http.post(this.endpoint['rifiutaPermesso'], parameter, httpOptions);
   }
 
-  ricerca (){
+  ricerca (tipoRicerca:String){
     var parameter = {
-      'token' : sessionStorage.getItem("token")
+      'token' : sessionStorage.getItem("token"),
+      'tipo_ricerca' : tipoRicerca
     }
     return this.http.post(this.endpoint['ricerca'], parameter, httpOptions);
+  }
+
+  getDipendeteInfoAndSkill(idDipendente : String){
+    var parameter = {
+      'token' : sessionStorage.getItem("token"),
+      'id_dipendente' : idDipendente
+    }
+    return this.http.post(this.endpoint['dipendenteInfo'], parameter, httpOptions);
   }
 }
 

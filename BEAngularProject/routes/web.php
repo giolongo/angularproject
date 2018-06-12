@@ -49,3 +49,4 @@ Route::match(array('POST'),'aggiungiModificaSkill', 'SkillsController@aggiungiMo
 Route::match(array('POST'),'rimuoviSkill', 'SkillsController@rimuoviSkill');
 Route::match(array('PUT'),'updateUser', 'UtenteController@updateUser');
 Route::match(array('GET','POST'),'ricerca', 'RicercaController@getRisulatatiRicerca');
+Route::match(array('GET','POST'),'dipendenteInfo', 'RicercaController@dipendenteInfo');
