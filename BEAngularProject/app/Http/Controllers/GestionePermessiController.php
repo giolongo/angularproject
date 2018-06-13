@@ -110,7 +110,8 @@ class GestionePermessiController extends Controller
                 'data_fine' => $data_fine->format('d-m-Y'),
                 'totale_giorni' => $data_inizio->diffInDays($data_fine, false),
                 'stato_richiesta' => $permesso->stato,
-                'certificatoBase64' => $permesso->certificatoBase64
+                'certificatoBase64' => $permesso->certificatoBase64,
+                'note' => $permesso->note
             ];
             if($ruolo == 'manager'){
                 $element['codice_fiscale']=$permesso->dipendente->codice_fiscale;

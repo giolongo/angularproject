@@ -96,7 +96,8 @@ export class DatatableListaPermessiManagerComponent implements OnDestroy, OnInit
           'id': row['id'],
           'nome': row['nome'],
           'cognome': row['cognome'],
-          'codice_fiscale': row['codice_fiscale']
+          'codice_fiscale': row['codice_fiscale'],
+          'note' : row['note']
         });
         var infoDipendente = $("<div>").append(
           $("<label>")
@@ -138,9 +139,10 @@ export class DatatableListaPermessiManagerComponent implements OnDestroy, OnInit
         if(!response['success']){
           console.log(response['error']);
         }else{
-          //reload page... or single row!
-          var row = dtInstance.row($(rowInstance).parents('tr')).remove();
-          dtInstance.draw();
+          __this.restRequestService.getListaPermessiSubordinati().subscribe(function(response){
+            __this.rows = response["data"];
+            __this.render(__this);
+          }.bind(this));
         }
       }).catch(function(e){
         console.log(e);
@@ -156,9 +158,10 @@ export class DatatableListaPermessiManagerComponent implements OnDestroy, OnInit
         if(!response['success']){
           console.log(response['error']);
         }else{
-          //reload page... or single row!
-          var row = dtInstance.row($(rowInstance).parents('tr')).remove();
-          dtInstance.draw();
+          __this.restRequestService.getListaPermessiSubordinati().subscribe(function(response){
+            __this.rows = response["data"];
+            __this.render(__this);
+          }.bind(this));
         }
       }).catch(function(e){
         console.log(e);
@@ -192,6 +195,13 @@ export class DatatableListaPermessiManagerComponent implements OnDestroy, OnInit
               $("<td>").text("Codice fiscale")
             ).append(
               $("<td>").text(data["codice_fiscale"])
+            )
+          )
+          .append(
+            $("<tr>").append(
+              $("<td>").text("Note")
+            ).append(
+              $("<td>").text(data["note"])
             )
           )
       ).html();      
