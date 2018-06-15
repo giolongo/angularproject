@@ -31,7 +31,9 @@ import { RegistraPermessiComponent } from './gestione-permessi/registra-permessi
 import { RicercaComponent } from './ricerca/ricerca.component';
 import { DatatableListaDipendentiComponent } from './ricerca/datatable-lista-dipendenti/datatable-lista-dipendenti.component';
 import { DatatableListaTeamComponent } from './ricerca/datatable-lista-team/datatable-lista-team.component';
-import { SkillDipendenteComponent } from './skill-dipendente/skill-dipendente.component';@NgModule({
+import { SkillDipendenteComponent } from './skill-dipendente/skill-dipendente.component';
+import { SkillDipendenteDipendentiComponent } from './skill-dipendente/skill-dipendente-dipendenti/skill-dipendente-dipendenti.component';
+import { SkillDipendenteManagerComponent } from './skill-dipendente/skill-dipendente-manager/skill-dipendente-manager.component';@NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
@@ -53,6 +55,8 @@ import { SkillDipendenteComponent } from './skill-dipendente/skill-dipendente.co
     DatatableListaDipendentiComponent,
     DatatableListaTeamComponent,
     SkillDipendenteComponent,
+    SkillDipendenteDipendentiComponent,
+    SkillDipendenteManagerComponent,
   ],
   imports: [    
     BrowserModule,
