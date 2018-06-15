@@ -30,7 +30,7 @@ export class ProfiloUtenteSkillsComponent implements OnInit {
   }
 
   aggiungi(){
-    this.restRequestService.aggiungiSkill(this.newSkill).subscribe(function(response){
+    this.restRequestService.aggiungiSkill(this.newSkill, null).subscribe(function(response){
       this.restRequestService.getSkills().subscribe(function(response){
         this.skills = response['data'];
         this.allSkill = this.skillsService.getSkills();
@@ -41,7 +41,7 @@ export class ProfiloUtenteSkillsComponent implements OnInit {
 
   modifica(skill:any){
     console.log(skill);
-    this.restRequestService.modificaSkill(skill).subscribe(function(response){
+    this.restRequestService.modificaSkill(skill, null).subscribe(function(response){
       this.restRequestService.getSkills().subscribe(function(response){
         this.skills = response['data'];
         this.allSkill = this.skillsService.getSkills();
@@ -52,7 +52,7 @@ export class ProfiloUtenteSkillsComponent implements OnInit {
 
   rimuovi(skill:any){
     console.log(skill);
-    this.restRequestService.rimuoviSkill(skill.id_skill).subscribe(function(response){
+    this.restRequestService.rimuoviSkill(skill.id_skill, null).subscribe(function(response){
         this.restRequestService.getSkills().subscribe(function(response){
           this.skills = response['data'];
           this.restRequestService.caricaSkills().subscribe(function(response){
