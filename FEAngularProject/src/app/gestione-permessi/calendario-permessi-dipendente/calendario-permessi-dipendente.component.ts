@@ -31,29 +31,30 @@ export class CalendarioPermessiDipendenteComponent implements OnInit, OnChanges 
   }
 
   ngOnInit(): void {
-    setTimeout(function(){
-      this.datePermessi = [];
+    setInterval(function(){
+      this.datePermessi=[];
       if(this.loadManager){
+        //console.log("refreshing manager calendar");
         this.restRequestService.getListaPermessiSubordinati().subscribe(function(response){
           response['data'].forEach(function (row) {
             if(row['stato_richiesta']=='approvato'){
               this.enumerateDaysBetweenDates(this, row['data_inizio'], row['data_fine']);
-              this.generateCalendar();
             }
           }.bind(this));
+          this.generateCalendar();
         }.bind(this));
       }
       else{
+        //console.log("refreshing dipendente calendar");
         this.restRequestService.getListaPermessiDipendente().subscribe(function(response){
           response['data'].forEach(function (row) {
             if(row['stato_richiesta']=='approvato'){
               this.enumerateDaysBetweenDates(this, row['data_inizio'], row['data_fine']);
-              this.generateCalendar();
             }
           }.bind(this));
+          this.generateCalendar();
         }.bind(this));
       }
-      this.generateCalendar();
     }.bind(this), 1000);
     
   }
