@@ -33,7 +33,8 @@ import { DatatableListaDipendentiComponent } from './ricerca/datatable-lista-dip
 import { DatatableListaTeamComponent } from './ricerca/datatable-lista-team/datatable-lista-team.component';
 import { SkillDipendenteComponent } from './skill-dipendente/skill-dipendente.component';
 import { SkillDipendenteDipendentiComponent } from './skill-dipendente/skill-dipendente-dipendenti/skill-dipendente-dipendenti.component';
-import { SkillDipendenteManagerComponent } from './skill-dipendente/skill-dipendente-manager/skill-dipendente-manager.component';@NgModule({
+import { SkillDipendenteManagerComponent } from './skill-dipendente/skill-dipendente-manager/skill-dipendente-manager.component';
+@NgModule({
   declarations: [
     AppComponent,
     LoginComponent,

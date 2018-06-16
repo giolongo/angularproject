@@ -109,26 +109,29 @@ export class RestRequestService {
     }
     return this.http.post(this.endpoint['getListaPermessiDipendente'], parameter, httpOptions);
   }
-  aggiungiSkill(newSkill:any){
+  aggiungiSkill(newSkill:any, idDipendente:String){
     var parameter = {
       'token' : sessionStorage.getItem("token"),
       'id_skill': newSkill.id,
-      'seniority':newSkill.seniority
+      'seniority':newSkill.seniority,
+      'id_dipendente':idDipendente
     }
     return this.http.post(this.endpoint['aggiungiModificaSkills'], parameter, httpOptions);
   }
-  modificaSkill(newSkill:any){
+  modificaSkill(newSkill:any, idDipendente:String){
     var parameter = {
       'token' : sessionStorage.getItem("token"),
       'id_skill': newSkill.id_skill,
-      'seniority':newSkill.seniority
+      'seniority':newSkill.seniority,
+      'id_dipendente':idDipendente
     }
     return this.http.post(this.endpoint['aggiungiModificaSkills'], parameter, httpOptions);
   }
-  rimuoviSkill(idSkill:String){
+  rimuoviSkill(idSkill:String, idDipendente:String){
     var parameter = {
       'token' : sessionStorage.getItem("token"),
-      'id_skill': idSkill
+      'id_skill': idSkill,
+      'id_dipendente':idDipendente
     }
     return this.http.post(this.endpoint['rimuoviSkill'], parameter, httpOptions);
   }

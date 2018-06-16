@@ -18,3 +18,15 @@
 .valid-action{
     cursor: pointer;
  }
+
+ .material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
+ .material-icons.md-red { color: rgb(255, 0, 0); }
+ .material-icons.md-blue { color: rgb(20, 138, 225); }
+ .disabled {
+     pointer-events: none;
+     cursor: default;
+  }
+ 
+  .disabled {
+     cursor: default;
+  }
