@@ -32,6 +32,7 @@ export class CalendarioPermessiDipendenteComponent implements OnInit, OnChanges 
 
   ngOnInit(): void {
     setTimeout(function(){
+      this.datePermessi = [];
       if(this.loadManager){
         this.restRequestService.getListaPermessiSubordinati().subscribe(function(response){
           response['data'].forEach(function (row) {

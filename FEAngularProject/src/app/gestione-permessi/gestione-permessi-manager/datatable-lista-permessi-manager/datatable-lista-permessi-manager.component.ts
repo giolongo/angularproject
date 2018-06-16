@@ -31,9 +31,9 @@ export class DatatableListaPermessiManagerComponent implements OnDestroy, OnInit
 
   ngOnInit(): void {
     this.initDatatable();
-    this.restRequestService.getListaPermessiSubordinati().subscribe(function(response){
+    this.restRequestService.getListaPermessiSubordinati().toPromise().then(function(response){
       this.rows = response["data"];
-      this.render(this);
+      this.render();
       this.tableReady = true;
     }.bind(this));
   }
@@ -60,14 +60,13 @@ export class DatatableListaPermessiManagerComponent implements OnDestroy, OnInit
       ],
       language: {
         "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Italian.json"
-      }
-    };
+      },
+    }
   }
 
-  render(__this): void {
+  render(): void {
+    var __this = this;
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      // Destroy the table first
-      __this.unbindBottoni();
       dtInstance.clear();
       this.rows.forEach(function (row) {
         var base64 = row['certificatoBase64'];
@@ -86,17 +85,9 @@ export class DatatableListaPermessiManagerComponent implements OnDestroy, OnInit
         var strippedFile = base64.split(';base64,')[1];
         base64 = baseFile+';base64,'+strippedFile;
 
-
-        var download_link = "<a href=\""+base64+"\" download=\"file"+ext+"\"><button class=\"btn btn-info material-icons\">attach_file</button></a>";
-        var flagApprovaPermesso = "";
-        var flagRifiutaPermesso = "";
-
-        if(row['stato_richiesta'] == 'approvato'){
-          flagApprovaPermesso = 'disabled';
-        }
-        if(row['stato_richiesta'] == 'rifiutato'){
-          flagRifiutaPermesso = 'disabled';
-        }
+        var disabilitaApprovaPermesso = row['stato_richiesta'] == 'approvato';
+        var disabilitaRifiutaPermesso = row['stato_richiesta'] == 'rifiutato';
+        
         var dettagliDipendente = JSON.stringify({
           'id': row['id'],
           'nome': row['nome'],
@@ -104,9 +95,9 @@ export class DatatableListaPermessiManagerComponent implements OnDestroy, OnInit
           'codice_fiscale': row['codice_fiscale'],
           'note' : row['note']
         });
-        var infoDipendente = $("<div>").append(
-          $("<label>")
-            .text(row['nome']+" "+row['cognome'])
+        var bottoneInfoDipendente = $("<div>").append(
+          $("<div>").append(
+            $("<label>").text(row['nome']+" "+row['cognome'])
           )
           .append(
             $("<button>")
@@ -116,27 +107,62 @@ export class DatatableListaPermessiManagerComponent implements OnDestroy, OnInit
               .attr('info-dipendente', dettagliDipendente)
               .text('expand_more')
               .css('width', '100%')
-          ).html();
+          )
+        );
+
+        var bottoneDonwloadCertificato = $("<div>").append(
+          $("<a>").attr("href", base64).attr("download", 'file'+ext).append(
+            $("<button>")
+              .addClass("btn")
+              .addClass("btn-info")
+              .addClass("material-icons")
+              .text("attach_file")
+          )
+        );
+
+        var bottoneApprovaPermesso = $("<div>").append(
+          $("<button>")
+            .addClass("btn")
+            .addClass("btn-success")
+            .addClass("material-icons")
+            .addClass("approve_request")
+            .attr("id_richiesta", row['id'])
+            .attr("title", "Approva")
+            .prop("disabled", disabilitaApprovaPermesso)
+            .text("done")
+        );
+        var bottoneRifiutaPermesso = $("<div>").append(
+          $("<button>")
+            .addClass("btn")
+            .addClass("btn-danger")
+            .addClass("material-icons")
+            .addClass("refuse_request")
+            .attr("id_richiesta", row['id'])
+            .attr("title", "Rifiuta")
+            .prop("disabled", disabilitaRifiutaPermesso)
+            .text("close")
+        );
         var myrow = [
           row['id'],
-          infoDipendente,
+          $(bottoneInfoDipendente).html(),
           row['stato_richiesta'],
           row['data_inizio'],
           row['data_fine'],
           row['totale_giorni'],
-          download_link,
-          '<button class="btn btn-success material-icons approve_request" id_richiesta=\''+row['id']+'\' title="Approva" '+flagApprovaPermesso+'>done</button>',
-          '<button class="btn btn-danger material-icons refuse_request" id_richiesta=\''+row['id']+'\' title="Rifiuta" '+flagRifiutaPermesso+'>close</button>',
-          
+          $(bottoneDonwloadCertificato).html(),
+          $(bottoneApprovaPermesso).html(),
+          $(bottoneRifiutaPermesso).html()
         ];
         dtInstance.row.add(myrow).draw();
       });
-      __this.bindBottoni(__this, dtInstance);
-      __this.initRow(__this, dtInstance);
+      __this.bindBottoni(dtInstance);
     });
   }
-  bindBottoni(__this, dtInstance){
-    $('body').on('click', '.approve_request', function(){
+
+  bindApprovaPermesso(){
+    var __this = this;
+    $('body .datatable-permessi-manager').off('click', '.approve_request');
+    $('body .datatable-permessi-manager').on('click', '.approve_request', function(){
       console.log('approva!');
       __this.tableReady = false;
       var id_permesso = $(this).attr('id_richiesta');
@@ -146,19 +172,22 @@ export class DatatableListaPermessiManagerComponent implements OnDestroy, OnInit
           console.log(response['error']);
           __this.tableReady = true;
         }else{
-          __this.restRequestService.getListaPermessiSubordinati().subscribe(function(response){
+          __this.restRequestService.getListaPermessiSubordinati().toPromise().then(function(response){
             __this.rows = response["data"];
-            __this.render(__this);
+            __this.render();
             __this.tableReady = true;
-          }.bind(this));
+          });
         }
       }).catch(function(e){
         console.log(e);
       });
     });
+  }
 
-    
-    $('body').on('click', '.refuse_request', function(){
+  bindRifiutaPermesso(){
+    var __this = this;
+    $('body .datatable-permessi-manager').off('click', '.refuse_request');
+    $('body .datatable-permessi-manager').on('click', '.refuse_request', function(){
       console.log('rifiuta!');
       __this.tableReady = false;
       var id_permesso = $(this).attr('id_richiesta');
@@ -168,9 +197,9 @@ export class DatatableListaPermessiManagerComponent implements OnDestroy, OnInit
           console.log(response['error']);
           __this.tableReady = true;
         }else{
-          __this.restRequestService.getListaPermessiSubordinati().subscribe(function(response){
+          __this.restRequestService.getListaPermessiSubordinati().toPromise().then(function(response){
             __this.rows = response["data"];
-            __this.render(__this);
+            __this.render();
             __this.tableReady = true;
           }.bind(this));
         }
@@ -179,9 +208,35 @@ export class DatatableListaPermessiManagerComponent implements OnDestroy, OnInit
       });
     });
   }
-  unbindBottoni(){
-    $('.datatable-permessi-manager').find('tbody').off('click', 'tr td.details-control');
+  bindDettagliDipendente(dtInstance){
+    var __this = this;
+    $('body .datatable-permessi-manager').off('click', 'td.details-control button.info-dipendente');
+    $('body .datatable-permessi-manager').on('click', 'td.details-control button.info-dipendente', function () {
+      var tr = $(this).closest('tr');
+      var row = dtInstance.row( tr );
+  
+      if ( row.child.isShown() ) {
+          // This row is already open - close it
+          row.child.hide();
+          tr.removeClass('shown');
+      }
+      else {
+          // Open this row
+          var data = $(this).attr('info-dipendente');
+          console.log(data);
+          data = JSON.parse(data);
+          row.child( __this.format(data) ).show();
+          tr.addClass('shown');
+      }
+    });
   }
+
+  bindBottoni(dtInstance){
+    this.bindApprovaPermesso();
+    this.bindRifiutaPermesso();
+    this.bindDettagliDipendente(dtInstance);
+  }
+
   format(data) {
       // `d` is the original data object for the row
       return $("<div>").append(
@@ -219,26 +274,5 @@ export class DatatableListaPermessiManagerComponent implements OnDestroy, OnInit
             )
           )
       ).html();      
-  }
-
-  initRow(__this, dtInstance){
-      $('tbody').on('click', 'td.details-control button.info-dipendente', function () {
-        var tr = $(this).closest('tr');
-        var row = dtInstance.row( tr );
-    
-        if ( row.child.isShown() ) {
-            // This row is already open - close it
-            row.child.hide();
-            tr.removeClass('shown');
-        }
-        else {
-            // Open this row
-            var data = $(this).attr('info-dipendente');
-            console.log(data);
-            data = JSON.parse(data);
-            row.child( __this.format(data) ).show();
-            tr.addClass('shown');
-        }
-    });
   }
 }

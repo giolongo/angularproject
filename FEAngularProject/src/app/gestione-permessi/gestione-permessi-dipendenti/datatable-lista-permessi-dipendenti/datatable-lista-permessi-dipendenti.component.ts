@@ -12,9 +12,8 @@ import { Subject } from 'rxjs';
 export class DatatableListaPermessiDipendentiComponent implements OnDestroy, OnInit {
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
-
   dtOptions: DataTables.Settings = {};
-
+  tableReady = false;
   headers = [
     '',
     'Note',
@@ -30,11 +29,11 @@ export class DatatableListaPermessiDipendentiComponent implements OnDestroy, OnI
   }
 
   ngOnInit(): void {
-    console.log("gonna fire getListaPermessiDipendente");
     this.initDatatable();
-    this.restRequestService.getListaPermessiDipendente().subscribe(function(response){
+    this.restRequestService.getListaPermessiDipendente().toPromise().then(function(response){
       this.rows = response["data"];
-      this.render(this);
+      this.render();
+      this.tableReady = true;
     }.bind(this));
   }
   ngOnDestroy(): void {
@@ -72,10 +71,10 @@ export class DatatableListaPermessiDipendentiComponent implements OnDestroy, OnI
     };
   }
 
-  render(__this): void {
+  render(): void {
+    var __this = this;
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      // Destroy the table first
-      dtInstance.clear().draw();
+      dtInstance.clear();
       this.rows.forEach(function (row) {
         var base64 = row['certificatoBase64'];
         if(base64.indexOf('base64,') == -1){
@@ -93,7 +92,9 @@ export class DatatableListaPermessiDipendentiComponent implements OnDestroy, OnI
         var strippedFile = base64.split(';base64,')[1];
         base64 = baseFile+';base64,'+strippedFile;
 
-        var infoDipendente = $("<div>").append(
+        var disabilitaCancellaPermesso = row['stato_richiesta'] == 'approvato';
+
+        var bottoneInfoDipendente = $("<div>").append(
           $("<button>")
             .addClass('btn')
             .addClass('material-icons')
@@ -101,45 +102,94 @@ export class DatatableListaPermessiDipendentiComponent implements OnDestroy, OnI
             .attr('info-dipendente', JSON.stringify({'note': row['note']}))
             .text('expand_more')
             .css('width', '100%')
-        ).html();
-        var download_link = "<a href=\""+base64+"\" download=\"file"+ext+"\"><button class=\"btn btn-info material-icons\">attach_file</button></a>";
-        var abilitaCancellaPermesso = "";
-        if(row['stato_richiesta'] == 'approvato'){
-          abilitaCancellaPermesso = 'disabled';
-        }
+        );
+
+        var bottoneDonwloadCertificato = $("<div>").append(
+          $("<a>").attr("href", base64).attr("download", 'file'+ext).append(
+            $("<button>")
+              .addClass("btn")
+              .addClass("btn-info")
+              .addClass("material-icons")
+              .text("attach_file")
+          )
+        );
+
+        var bottoneCancellaPermesso = $("<div>").append(
+          $("<button>")
+            .addClass("btn")
+            .addClass("btn-danger")
+            .addClass("material-icons")
+            .addClass("undo_request")
+            .attr("id_richiesta", row['id'])
+            .attr("title", "Annulla")
+            .prop("disabled", disabilitaCancellaPermesso)
+            .text("undo")
+        );
         var myrow = [
           row['id'],
-          infoDipendente,
+          $(bottoneInfoDipendente).html(),
           row['stato_richiesta'],
           row['data_inizio'],
           row['data_fine'],
           row['totale_giorni'],
-          //'<i class="material-icons scarica_certificato" title="scarica certificato" id_certificato=\''+row['id']+'\' file='+row['certificatoBase64']+'>attach_file</i>',
-          download_link,
-          '<button class="btn btn-danger material-icons undo_request" id_richiesta=\''+row['id']+'\' title="annulla" '+abilitaCancellaPermesso+'>undo</button>'
+          $(bottoneDonwloadCertificato).html(),
+          $(bottoneCancellaPermesso).html()
         ];
         dtInstance.row.add(myrow).draw();
       });
-      __this.bindBottoni(__this, dtInstance);
-      __this.initRow(__this, dtInstance);
+      __this.bindBottoni(dtInstance);
     });
   }
 
-  bindBottoni(__this, dtInstance){
-    $('body').on('click', '.undo_request', function(){
+  bindCancellaPermesso(dtInstance){
+    var __this = this;
+    $('body .datatable-permessi-dipendente').off('click', '.undo_request');
+    $('body .datatable-permessi-dipendente').on('click', '.undo_request', function(){
+      console.log('Annulla!');
+      __this.tableReady = false;
       var id_permesso = $(this).attr('id_richiesta');
       var rowInstance = this;
       __this.restRequestService.cancellaPermesso(id_permesso).toPromise().then(function(response){
         if(!response['success']){
           console.log(response['error']);
+          __this.tableReady = true;
         }else{
           var row = dtInstance.row($(rowInstance).parents('tr')).remove();
           dtInstance.draw();
+          __this.tableReady = true;
         }
       }).catch(function(e){
         console.log(e);
       });
     });
+  }
+
+  bindDettagliDipendente(dtInstance){
+    var __this = this;
+    $('body .datatable-permessi-dipendente').off('click', 'td.details-control button.info-dipendente');
+    $('body .datatable-permessi-dipendente').on('click', 'td.details-control button.info-dipendente', function () {
+      var tr = $(this).closest('tr');
+      var row = dtInstance.row( tr );
+  
+      if ( row.child.isShown() ) {
+          // This row is already open - close it
+          row.child.hide();
+          tr.removeClass('shown');
+      }
+      else {
+          // Open this row
+          var data = $(this).attr('info-dipendente');
+          console.log(data);
+          data = JSON.parse(data);
+          row.child( __this.format(data) ).show();
+          tr.addClass('shown');
+      }
+    });
+  }
+
+  bindBottoni(dtInstance){
+    this.bindCancellaPermesso(dtInstance);
+    this.bindDettagliDipendente(dtInstance);
   }
 
   format(data) {
@@ -158,26 +208,5 @@ export class DatatableListaPermessiDipendentiComponent implements OnDestroy, OnI
             )
           )
       ).html();      
-  }
-
-  initRow(__this, dtInstance){
-      $('tbody').on('click', 'td.details-control button.info-dipendente', function () {
-        var tr = $(this).closest('tr');
-        var row = dtInstance.row( tr );
-    
-        if ( row.child.isShown() ) {
-            // This row is already open - close it
-            row.child.hide();
-            tr.removeClass('shown');
-        }
-        else {
-            // Open this row
-            var data = $(this).attr('info-dipendente');
-            console.log(data);
-            data = JSON.parse(data);
-            row.child( __this.format(data) ).show();
-            tr.addClass('shown');
-        }
-    });
   }
 }
