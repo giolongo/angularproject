@@ -23,6 +23,7 @@ export class CalendarioPermessiDipendenteComponent implements OnInit, OnChanges 
   sortedDates: CalendarDate[] = [];
   datePermessi = [];
   @Input() selectedDates: CalendarDate[] = [];
+  @Input() loadManager: Boolean;
   @Output() onSelectDate = new EventEmitter<CalendarDate>();
 
   constructor(private restRequestService : RestRequestService) {
@@ -30,15 +31,30 @@ export class CalendarioPermessiDipendenteComponent implements OnInit, OnChanges 
   }
 
   ngOnInit(): void {
-    this.restRequestService.getListaPermessiDipendente().subscribe(function(response){
-      response['data'].forEach(function (row) {
-        if(row['stato_richiesta']=='approvato'){
-          this.enumerateDaysBetweenDates(this, row['data_inizio'], row['data_fine']);
-          this.generateCalendar();
-        }
-      }.bind(this));
+    setTimeout(function(){
+      if(this.loadManager){
+        this.restRequestService.getListaPermessiSubordinati().subscribe(function(response){
+          response['data'].forEach(function (row) {
+            if(row['stato_richiesta']=='approvato'){
+              this.enumerateDaysBetweenDates(this, row['data_inizio'], row['data_fine']);
+              this.generateCalendar();
+            }
+          }.bind(this));
+        }.bind(this));
+      }
+      else{
+        this.restRequestService.getListaPermessiDipendente().subscribe(function(response){
+          response['data'].forEach(function (row) {
+            if(row['stato_richiesta']=='approvato'){
+              this.enumerateDaysBetweenDates(this, row['data_inizio'], row['data_fine']);
+              this.generateCalendar();
+            }
+          }.bind(this));
+        }.bind(this));
+      }
       this.generateCalendar();
-    }.bind(this));
+    }.bind(this), 1000);
+    
   }
 
   ngOnChanges(changes: SimpleChanges): void {
