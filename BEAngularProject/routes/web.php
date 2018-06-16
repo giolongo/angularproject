@@ -50,3 +50,5 @@ Route::match(array('POST'),'rimuoviSkill', 'SkillsController@rimuoviSkill');
 Route::match(array('PUT'),'updateUser', 'UtenteController@updateUser');
 Route::match(array('GET','POST'),'ricerca', 'RicercaController@getRisulatatiRicerca');
 Route::match(array('GET','POST'),'dipendenteInfo', 'RicercaController@dipendenteInfo');
+Route::match(array('GET','POST'),'getTeam', 'TeamsController@getTeam');
+

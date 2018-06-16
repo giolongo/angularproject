@@ -14,6 +14,7 @@ use App\Models\SkillDipendente;
 use App\Models\Team;
 use App\Models\TeamDipendente;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
 /**
  *
  *@deprecated See WebHookVotaController
@@ -45,7 +46,7 @@ class SkillAndTeamController extends Controller
                 'email' => 'ocontarino@gmail.com',
                 'codice_fiscale' => 'ORZCNT93P12C351Q',
                 'data_nascita' => Carbon::now(),
-                'password' => 'prova123',
+                'password' => Hash::make('prova123'),
                 'iban' => '53535535353535353',
                 'banca' => 'Poste Italiane',
                 'bbc' => 'prova',
@@ -57,7 +58,7 @@ class SkillAndTeamController extends Controller
                 'email' => 'giovanniemanuelelongo@gmail.com',
                 'codice_fiscale' => 'LNGGNN93P12C351O',
                 'data_nascita' => Carbon::now(),
-                'password' => 'prova321',
+                'password' => Hash::make('prova321'),
                 'iban' => '535355353353',
                 'banca' => 'Poste Italiane',
                 'bbc' => 'prova',

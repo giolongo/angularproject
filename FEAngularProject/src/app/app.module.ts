@@ -34,6 +34,8 @@ import { DatatableListaTeamComponent } from './ricerca/datatable-lista-team/data
 import { SkillDipendenteComponent } from './skill-dipendente/skill-dipendente.component';
 import { SkillDipendenteDipendentiComponent } from './skill-dipendente/skill-dipendente-dipendenti/skill-dipendente-dipendenti.component';
 import { SkillDipendenteManagerComponent } from './skill-dipendente/skill-dipendente-manager/skill-dipendente-manager.component';
+import { TeamComponent } from './team/team.component';
+import { TeamManagerComponent } from './team/team-manager/team-manager.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,6 +60,8 @@ import { SkillDipendenteManagerComponent } from './skill-dipendente/skill-dipend
     SkillDipendenteComponent,
     SkillDipendenteDipendentiComponent,
     SkillDipendenteManagerComponent,
+    TeamComponent,
+    TeamManagerComponent,
   ],
   imports: [    
     BrowserModule,

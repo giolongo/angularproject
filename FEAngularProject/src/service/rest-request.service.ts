@@ -34,6 +34,7 @@ export class RestRequestService {
     this.endpoint['updateUser']= this.context+'/updateUser';
     this.endpoint['ricerca']= this.context+'/ricerca';
     this.endpoint['dipendenteInfo']= this.context+'/dipendenteInfo';
+    this.endpoint['getTeam']= this.context+'/getTeam';
     //Gestione permessi
     this.endpoint['getPermessiEnumArray'] = this.context+'/getPermessiEnumArray';
     this.endpoint['getListaPermessiDipendente'] = this.context+'/getListaPermessiDipendente';
@@ -182,6 +183,14 @@ export class RestRequestService {
       'id_dipendente' : idDipendente
     }
     return this.http.post(this.endpoint['dipendenteInfo'], parameter, httpOptions);
+  }
+
+  getTeam(idTeam : String){
+    var parameter = {
+      'token' : sessionStorage.getItem("token"),
+      'id_team' : idTeam
+    }
+    return this.http.post(this.endpoint['getTeam'], parameter, httpOptions);
   }
 }
 

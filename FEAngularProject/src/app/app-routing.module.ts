@@ -10,6 +10,7 @@ import { ProfiloUtenteComponent } from './profilo-utente/profilo-utente.componen
 import { GestionePermessiComponent } from './gestione-permessi/gestione-permessi.component';
 import { RicercaComponent } from './ricerca/ricerca.component';
 import { SkillDipendenteComponent } from './skill-dipendente/skill-dipendente.component';
+import { TeamComponent } from './team/team.component';
 
 
 const appRoutes: Routes = [
@@ -23,6 +24,7 @@ const appRoutes: Routes = [
     { path: 'gestionePermessiDipendente', component: GestionePermessiComponent, pathMatch: 'full'},
     { path: 'ricercaRisultati', component: RicercaComponent, pathMatch:'full'},
     { path: 'skillDipendente/:id_dipendente', component: SkillDipendenteComponent},
+    { path: 'team/:id_team', component: TeamComponent},
     
     //{ path: '**', component: PageNotFoundComponent }
 ];

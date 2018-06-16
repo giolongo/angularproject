@@ -29,7 +29,7 @@ class RicercaController extends Controller
                 ]);
             }
             else{
-                $list = Team::get();
+                $list = Team::with('teamDipendente')->with("teamCapoTeam")->get();
                 Log::debug(print_r($list->toArray(),true));
                 //where("nome", "=", $nome)
                 return response()->json([

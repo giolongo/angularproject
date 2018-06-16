@@ -25,7 +25,7 @@ export class DatatableListaTeamComponent implements OnInit {
   ngOnInit(): void {
     console.log("gonna fire getListaPermessiDipendente");
     this.initDatatable();
-    this.restRequestService.ricerca('team').subscribe(function(response){
+    this.restRequestService.ricerca('getTeam').subscribe(function(response){
       console.log(response["data"]);
       this.rows = response["data"];
       this.render(this);
@@ -82,7 +82,7 @@ export class DatatableListaTeamComponent implements OnInit {
       var id_team = $(this).attr('id_team');
       var rowInstance = this;
       console.log(id_team);
-      __this.router.navigate(['/skillDipendente/'+id_team]);
+      __this.router.navigate(['/team/'+id_team]);
     });
   }
 }

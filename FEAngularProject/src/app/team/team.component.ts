@@ -1,19 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { EmployerLogService } from '../../service/employer-log.service';
 import { RestRequestService } from '../../service/rest-request.service';
-import { SkillsService } from '../../service/skills.service';
-import { Router } from "@angular/router";
 
 @Component({
-  selector: 'app-profilo-utente',
-  templateUrl: './profilo-utente.component.html',
-  styleUrls: ['./profilo-utente.component.css']
+  selector: 'app-team',
+  templateUrl: './team.component.html',
+  styleUrls: ['./team.component.css']
 })
-export class ProfiloUtenteComponent implements OnInit {
-  public skills : any;
-  constructor(private employerLogService : EmployerLogService, private router: Router, 
-    private restRequestService:RestRequestService, private skillsService:SkillsService) { 
-  }
+export class TeamComponent implements OnInit {
+
+  constructor(private activatedRoute: ActivatedRoute,  private router: Router, private restRequestService:RestRequestService, private employerLogService : EmployerLogService) { }
 
   ngOnInit() {
     if(!this.employerLogService.isLogged()){

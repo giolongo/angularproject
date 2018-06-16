@@ -21,6 +21,11 @@ class Team extends Model
 
     public function teamDipendente()
     {
-        return $this->hasMany('App\TeamDipendente', 'id_team', 'id_team');
+        return $this->hasMany('App\Models\TeamDipendente', 'id_team', 'id_team');
+    }
+
+    public function teamCapoTeam()
+    {
+        return $this->hasMany('App\Models\Dipendente', 'id_dipendente', 'id_capo_team');
     }
 }
