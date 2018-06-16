@@ -42,7 +42,7 @@ class GestionePermessiController extends Controller
         $idList = Sottoposti::where('id_capo', '=', $user->id_dipendente)->pluck('id_dipendente');
         $count = Permessi::where('id', '=', $params['id_permesso'])
             ->whereIn('id_dipendente', $idList)
-            ->where('stato', '=', 'pending')
+            ->where('stato', '!=', $nuovoStato)
             ->count();
         if($count == 0){
             return response()->json(['success' => false, 'error' => 'Non puoi eseguire questa operazione[ cambio stato in '.$nuovoStato.']']);
