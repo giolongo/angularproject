@@ -2,8 +2,8 @@
   <ul class="navbar-nav mr-auto">
     <li class="nav-item">
         <div ngbDropdown>
-          <a class="name hand nav-link" ngbDropdownToggle>
-            <i class="material-icons hand">face</i>
+          <a class="name valid-action nav-link" ngbDropdownToggle>
+            <i class="material-icons">face</i>
             {{employerLogService.getNomeUtente()}} {{employerLogService.getCognomeUtente()}}
           </a>
           <div ngbDropdownMenu>
@@ -23,7 +23,7 @@
     <ul class="navbar-nav mr-auto">
       <li class="nav-item" *ngIf="employerLogService.isManager()">
           <div ngbDropdown>
-            <a class="nav-link hand" id="dropdownConfig" ngbDropdownToggle>
+            <a class="nav-link valid-action" id="dropdownConfig" ngbDropdownToggle>
                 <i class="material-icons" title="Registra">add</i> 
                 Registra
             </a>

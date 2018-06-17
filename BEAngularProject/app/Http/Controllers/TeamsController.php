@@ -16,7 +16,7 @@ class TeamsController extends Controller
         if(empty($user)){
             return response()->json(['success' => false, 'error' => 'Invalid token']);
         }else{
-            $team = Team::where("id_team", "=", $id_team)->with('teamDipendente')->with("teamCapoTeam")->get();
+            $team = Team::where("id_team", "=", $id_team)->with('teamDipendente.dipendente.skill.skill')->with("teamCapoTeam")->get();
             return response()->json([
                 'success' => true, 
                 'data'=> $team->toArray()

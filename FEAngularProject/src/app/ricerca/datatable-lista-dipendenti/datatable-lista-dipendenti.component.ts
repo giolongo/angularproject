@@ -79,7 +79,7 @@ export class DatatableListaDipendentiComponent implements OnDestroy, OnInit {
       this.rows.forEach(function (row) {
 
         var myrow = [
-          '<i class="material-icons view_dettagli" id_dipendente=\''+row['id_dipendente']+'\' title="Visualizza Skill">visibility</button>',
+          '<a class="valid-action"> <i class="material-icons view_dettagli" id_dipendente=\''+row['id_dipendente']+'\' title="Visualizza Skill">visibility</button> </a>',
           row['id_dipendente'],
           row['nome'],
           row['cognome'],

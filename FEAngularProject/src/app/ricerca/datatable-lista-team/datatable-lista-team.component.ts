@@ -15,8 +15,9 @@ export class DatatableListaTeamComponent implements OnInit {
   dtOptions: DataTables.Settings = {};
 
   headers = [
-    '',
-    'Nome'
+    'Action',
+    'Nome',
+    'Capo Team'
   ];
   rows = [];
   constructor(private restRequestService : RestRequestService, private router: Router) { 
@@ -44,12 +45,16 @@ export class DatatableListaTeamComponent implements OnInit {
           "orderable": false
           },
           {
-          "targets": -1,
-          "orderable": true
+            "targets": -1,
+            "orderable": true
+          },
+          {
+            "targets": -2,
+            "orderable": true
           },
         {
           className: "text-center",
-          "targets": [0,1],
+          "targets": [0,1,2],
         }
       ],
       language: {
@@ -65,8 +70,9 @@ export class DatatableListaTeamComponent implements OnInit {
       this.rows.forEach(function (row) {
 
         var myrow = [
-          '<i class="material-icons view_dettagli" id_team=\''+row['id_team']+'\' title="Visualizza Skill">visibility</button>',
+          '<a class="valid-action"> <i class="material-icons view_dettagli" id_team=\''+row['id_team']+'\' title="Visualizza Skill">visibility</button> </a>',
           row['nome'],
+          __this.getCapoTeam(row)
 
           //'<i class="material-icons scarica_certificato" title="scarica certificato" id_certificato=\''+row['id']+'\' file='+row['certificatoBase64']+'>attach_file</i>',
           //download_link,
@@ -84,5 +90,9 @@ export class DatatableListaTeamComponent implements OnInit {
       console.log(id_team);
       __this.router.navigate(['/team/'+id_team]);
     });
+  }
+
+  getCapoTeam (row : any){
+    return row.team_capo_team[0].cognome + ' ' + row.team_capo_team[0].nome;
   }
 }
