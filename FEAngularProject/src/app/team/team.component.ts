@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { EmployerLogService } from '../../service/employer-log.service';
 import { RestRequestService } from '../../service/rest-request.service';
+import { SkillsService } from '../../service/skills.service';
 
 @Component({
   selector: 'app-team',
@@ -10,7 +11,8 @@ import { RestRequestService } from '../../service/rest-request.service';
 })
 export class TeamComponent implements OnInit {
 
-  constructor(private activatedRoute: ActivatedRoute,  private router: Router, private restRequestService:RestRequestService, private employerLogService : EmployerLogService) { }
+  constructor(private activatedRoute: ActivatedRoute,  private router: Router, 
+    private restRequestService:RestRequestService, private employerLogService : EmployerLogService, private skillsService:SkillsService) { }
 
   ngOnInit() {
     if(!this.employerLogService.isLogged()){
