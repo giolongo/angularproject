@@ -7,7 +7,7 @@
               <h6 class="card-subtitle mb-2 text-muted">Responsabile: {{datiTeam[0].team_capo_team[0].nome}} {{datiTeam[0].team_capo_team[0].cognome}}</h6>
           </div>
           <div class="card-body">
-              <table class="table">
+              <table class="table" *ngIf="datiTeam[0].team_dipendente.length>0">
                 <thead>
                   <tr>
                     <th>Dipendente</th>
@@ -31,6 +31,12 @@
                   </tr>
                 </tbody>
             </table>
+            <div *ngIf="datiTeam[0].team_dipendente.length<1" style="padding-top:2rem;">
+                <i class="material-icons" style="padding-left:32%; font-size: 10rem;">error_outline</i>
+                <p style="font-size: 2rem; text-align:center;">
+                  <strong>Questo Team non ha membri</strong>
+                </p>
+            </div>
           </div>
       </div>
     </div>
@@ -42,7 +48,7 @@
           <h5 class="card-title">Aggiungi membri al team</h5>
       </div>
       <div class="card-body">
-          <div class="row">
+          <div class="row" *ngIf="allDipendenti.length>0">
               <div class="col-sm-4"><label>Dipendente: </label></div>
               <div class="col-sm-8">
                   <select class="input-text" [(ngModel)] ="newDipendente.id" value="newDipendente.id" name="{newDipendente.id}">
@@ -50,7 +56,13 @@
                   </select>
               </div>
           </div>
-          <button  class="btn btn-primary" (click)="aggiungi()">Aggiungi</button>
+          <button *ngIf="allDipendenti.length>0" class="btn btn-primary" (click)="aggiungi()">Aggiungi</button>
+          <div class="row" *ngIf="allDipendenti.length<1">
+              <i class="material-icons" style="padding-left:32%; font-size: 10rem;">error_outline</i>
+              <p style="font-size: 2rem; text-align:center;">
+                <strong>Questo Team ha tutti i membri nel suo team</strong>
+              </p>
+          </div>
       </div>
   </div>
 </div>
