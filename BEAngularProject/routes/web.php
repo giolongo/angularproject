@@ -51,4 +51,6 @@ Route::match(array('PUT'),'updateUser', 'UtenteController@updateUser');
 Route::match(array('GET','POST'),'ricerca', 'RicercaController@getRisulatatiRicerca');
 Route::match(array('GET','POST'),'dipendenteInfo', 'RicercaController@dipendenteInfo');
 Route::match(array('GET','POST'),'getTeam', 'TeamsController@getTeam');
+Route::match(array('GET','POST'),'deleteEmployerInTeam', 'TeamsController@deleteEmployerInTeam')->middleware('jwt.auth');
+Route::match(array('GET','POST'),'addEmployerInTeam', 'TeamsController@addEmployerInTeam')->middleware('jwt.auth');
 

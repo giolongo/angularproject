@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\angularproject\CommonFunction;
 use App\Models\Team;
+use App\Models\TeamDipendente;
 class TeamsController extends Controller
 {
     public function __construct()
@@ -22,5 +23,38 @@ class TeamsController extends Controller
                 'data'=> $team->toArray()
             ]);
         }
+    }
+
+    public function deleteEmployerInTeam(Request $request){
+        $token = $request->get('token');
+        $id_team = $request->get('id_team');
+        $id_dipendente = $request->get('id_dipendente');
+        $user = CommonFunction::tokenToDipendente($token);
+        if(empty($user)){
+            return response()->json(['success' => false, 'error' => 'Invalid token']);
+        }else{
+            TeamDipendente::where([["id_team","=", $id_team],
+            ["id_dipendente", "=", $id_dipendente]])->delete();
+        }
+        return response()->json([
+            'success' => true, 
+        ]);
+    }
+
+    public function addEmployerInTeam(Request $request){
+        $token = $request->get('token');
+        $id_team = $request->get('id_team');
+        $id_dipendente = $request->get('id_dipendente');
+        $user = CommonFunction::tokenToDipendente($token);
+        if(empty($user)){
+            return response()->json(['success' => false, 'error' => 'Invalid token']);
+        }else{
+            TeamDipendente::create([
+                'id_team'=> $id_team,
+                'id_dipendente'=> $id_dipendente]);
+        }
+        return response()->json([
+            'success' => true, 
+        ]);
     }
 }

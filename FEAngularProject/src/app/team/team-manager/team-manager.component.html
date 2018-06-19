@@ -12,24 +12,45 @@
                   <tr>
                     <th>Dipendente</th>
                     <th *ngFor="let skill of allSkill">{{skill.nome}}</th>
+                    <th *ngIf="employerLogService.isManager() && employerLogService.getId() == datiTeam[0].team_capo_team[0].id_dipendente">Rimuovi</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let dipendente of datiTeam[0].team_dipendente">
                     <td>{{dipendente.dipendente.nome}} {{dipendente.dipendente.cognome}}</td>
-                    <!-- <td *ngFor="let skills of dipendente.skill; let i = index" [ngIf]="skills.skill.nome == skill.nome">{{skill.nome}}</td> -->
-                    <!-- <div *ngFor="let skills of dipendente.skill"> dipendente.dipendente.skill[i].skill[0l].nome == skill.nome-->
                       <td *ngFor="let skill of allSkill">
                         <span *ngFor="let skillDipendente of dipendente.dipendente.skill;  let i=index">
                         <label *ngIf="compareSkill(skillDipendente.skill[0].nome, skill.nome)" 
                         >{{dipendente.dipendente.skill[i].seniority}}</label></span>
                       </td>
-<!--                     </div> -->
+                      <td *ngIf="employerLogService.isManager() && employerLogService.getId() == datiTeam[0].team_capo_team[0].id_dipendente">
+                        <a (click)="rimuovi(dipendente.id_team, dipendente.dipendente.id_dipendente)" class="valid-action" >
+                          <i class="material-icons md-red" title="Rimuovi Skill">delete</i> 
+                        </a>
+                      </td>
                   </tr>
                 </tbody>
             </table>
           </div>
       </div>
     </div>
+  </div>
+
+  <div class="col-md-6" *ngIf="employerLogService.isManager() && employerLogService.getId() == datiTeam[0].team_capo_team[0].id_dipendente">
+    <div class="card" style="width: 30rem; margin-top: 5rem;">
+      <div class="card-header">
+          <h5 class="card-title">Aggiungi membri al team</h5>
+      </div>
+      <div class="card-body">
+          <div class="row">
+              <div class="col-sm-4"><label>Dipendente: </label></div>
+              <div class="col-sm-8">
+                  <select class="input-text" [(ngModel)] ="newDipendente.id" value="newDipendente.id" name="{newDipendente.id}">
+                      <option *ngFor="let dipendenteAvaible of allDipendenti" [value]="dipendenteAvaible.id_dipendente">{{dipendenteAvaible.nome}} {{dipendenteAvaible.cognome}}</option>
+                  </select>
+              </div>
+          </div>
+          <button  class="btn btn-primary" (click)="aggiungi()">Aggiungi</button>
+      </div>
   </div>
 </div>
