@@ -57,4 +57,35 @@ class TeamsController extends Controller
             'success' => true, 
         ]);
     }
+
+    
+    public function addTeam(Request $request){
+        $token = $request->get('token');
+        $nome_team = $request->get('nome_team');
+        $user = CommonFunction::tokenToDipendente($token);
+        if(empty($user)){
+            return response()->json(['success' => false, 'error' => 'Invalid token']);
+        }else{
+
+            $team = Team::where([
+                ['nome','=',$nome_team],
+                ['id_capo_team','=',$user->id_dipendente]
+            ])->get();
+            if(!count($team)){
+                $team = Team::create([
+                    'nome'=> $nome_team,
+                    'id_capo_team'=> $user->id_dipendente]);
+                return response()->json([
+                    'success' => true, 
+                    'data' => $team->toArray()
+                ]);    
+            }
+            else{
+                return response()->json([
+                    'success' => false, 
+                    'error' => 'Nome team già presente'
+                ]); 
+            }
+        }
+    }
 }

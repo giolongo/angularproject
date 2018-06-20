@@ -11,7 +11,7 @@ import { RestRequestService } from '../../service/rest-request.service';
 export class RegistraTeamComponent implements OnInit {
  
   public nomeTeam : String;
-
+  public error : string;
   constructor(private employerLogService : EmployerLogService, private router: Router, private restRequestService:RestRequestService) { }
   
   ngOnInit() {
@@ -29,7 +29,14 @@ export class RegistraTeamComponent implements OnInit {
     }
   }
   public registraTeam(){
-    
+    this.restRequestService.addTeam(this.nomeTeam).subscribe(function(response){
+      console.log(response['success']);
+      if(!response['success']){
+        this.error = response['error'];
+      }else{
+        this.router.navigate(['team/'+response['data'].id_team]);
+      }
+    }.bind(this))
   }
 
 }

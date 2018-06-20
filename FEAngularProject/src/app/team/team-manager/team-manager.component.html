@@ -17,7 +17,7 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let dipendente of datiTeam[0].team_dipendente">
-                    <td>{{dipendente.dipendente.nome}} {{dipendente.dipendente.cognome}}</td>
+                    <td class="valid-action" routerLink="/skillDipendente/{{dipendente.dipendente.id_dipendente}}">{{dipendente.dipendente.nome}} {{dipendente.dipendente.cognome}}</td>
                       <td *ngFor="let skill of allSkill">
                         <span *ngFor="let skillDipendente of dipendente.dipendente.skill;  let i=index">
                         <label *ngIf="compareSkill(skillDipendente.skill[0].nome, skill.nome)" 
@@ -48,7 +48,7 @@
           <h5 class="card-title">Aggiungi membri al team</h5>
       </div>
       <div class="card-body">
-          <div class="row" *ngIf="allDipendenti.length>0">
+          <div class="row" *ngIf="allDipendenti && allDipendenti.length>0">
               <div class="col-sm-4"><label>Dipendente: </label></div>
               <div class="col-sm-8">
                   <select class="input-text" [(ngModel)] ="newDipendente.id" value="newDipendente.id" name="{newDipendente.id}">
@@ -56,8 +56,8 @@
                   </select>
               </div>
           </div>
-          <button *ngIf="allDipendenti.length>0" class="btn btn-primary" (click)="aggiungi()">Aggiungi</button>
-          <div class="row" *ngIf="allDipendenti.length<1">
+          <button *ngIf="allDipendenti && allDipendenti.length>0" class="btn btn-primary" (click)="aggiungi()">Aggiungi</button>
+          <div class="row" *ngIf="allDipendenti && allDipendenti.length<1">
               <i class="material-icons" style="padding-left:32%; font-size: 10rem;">error_outline</i>
               <p style="font-size: 2rem; text-align:center;">
                 <strong>Questo Team ha tutti i membri nel suo team</strong>
