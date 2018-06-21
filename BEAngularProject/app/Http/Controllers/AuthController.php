@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\Auth;
 use App\angularproject\CommonFunction;
+use Carbon\Carbon;
 
 class AuthController extends Controller
 {
@@ -138,7 +139,7 @@ class AuthController extends Controller
                     'ruolo' => $user->ruolo,
                     'email'=>$user->email,
                     'codiceFiscale'=>$user->codice_fiscale,
-                    'dataDiNascita'=>$user->data_nascita,
+                    'dataDiNascita'=> $data = ((new Carbon($user->data_nascita))->format('Y-m-d')),
                     'iban'=>$user->iban,
                     'banca'=>$user->banca,
                     'bbc'=>$user->bbc,
@@ -232,7 +233,7 @@ class AuthController extends Controller
                     'ruolo' => $user->ruolo,
                     'email'=>$user->email,     
                     'codiceFiscale'=>$user->codice_fiscale,
-                    'dataDiNascita'=>$user->data_nascita,
+                    'dataDiNascita'=>$data = ((new Carbon($user->data_nascita))->format('Y-m-d')),
                     'iban'=>$user->iban,
                     'banca'=>$user->banca,
                     'bbc'=>$user->bbc,

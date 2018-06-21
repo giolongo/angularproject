@@ -38,6 +38,7 @@ export class RestRequestService {
     this.endpoint['deleteEmployerInTeam'] = this.context+'/deleteEmployerInTeam';
     this.endpoint['addEmployerInTeam'] = this.context+'/addEmployerInTeam';
     this.endpoint['addTeam'] = this.context+'/addTeam';
+    this.endpoint['addDipendente'] = this.context+'/addDipendente';
     //Gestione permessi
     this.endpoint['getPermessiEnumArray'] = this.context+'/getPermessiEnumArray';
     this.endpoint['getListaPermessiDipendente'] = this.context+'/getListaPermessiDipendente';
@@ -220,6 +221,19 @@ export class RestRequestService {
       'nome_team' : nomeTeam
     }
     return this.http.post(this.endpoint['addTeam'], parameter, httpOptions);
+  }
+
+  addDipendente(dipendente : any){
+    var parameter = {
+      'token' : sessionStorage.getItem("token"),
+      'nome' : dipendente.nome,
+      'cognome' : dipendente.cognome,
+      'codice_fiscale' : dipendente.codice_fiscale,
+      'email' : dipendente.email,
+      'password' : dipendente.password,
+      'ruolo' : dipendente.ruolo
+    }
+    return this.http.post(this.endpoint['addDipendente'], parameter, httpOptions);
   }
 }
 

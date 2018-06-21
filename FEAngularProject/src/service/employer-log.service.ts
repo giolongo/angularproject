@@ -83,7 +83,7 @@ export class EmployerLogService {
     return this.utenteLoggato.codiceFiscale;
   }
 
-  getDataDiNascita() : Date {
+  getDataDiNascita() : any {
     return this.utenteLoggato.dataDiNascita;
   }
 

@@ -18,15 +18,21 @@
                     <label>Cognome</label>
                     <input type="text" class="input-text" name="cognome" [(ngModel)]="cognome" required>
                     <label>Codice Fiscale</label>
-                    <input type="text" class="input-text" name="codiceFiscale" [(ngModel)]="codiceFiscale" required>
+                    <input (ngModelChange)="error=undefined" type="text" class="input-text" name="codiceFiscale" [(ngModel)]="codiceFiscale" required>
                     <label>Data di Nascita</label>
-                    <input type="data" class="input-text" name="dataDiNascita" [(ngModel)]="dataDiNascita" required>
+                    <input type="date" class="input-text" name="dataDiNascita" [(ngModel)]="dataDiNascita" required>
+                    <label>Ruolo</label>
+                    <select class="input-text" name="ruolo" [(ngModel)]="ruolo" required>
+                        <option value="manager">Manager</option>
+                        <option value="dipendente">Dipendente</option>
+                    </select>
                     <label>Email</label>
                     <input type="email" class="input-text" name="email" [(ngModel)]="email" required>
                     <label>Password</label>
                     <input type="password" class="input-text" name="password" [(ngModel)]="password" required>
                     <div class="row" style="padding-top:1rem; padding-left:1rem;">
                         <input type="submit" class="btn btn-primary" value="Registra utente">
+                        <label class="error" *ngIf="error">{{error}}</label>
                     </div>
                 </div>
             </div>

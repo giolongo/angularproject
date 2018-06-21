@@ -25,6 +25,7 @@ export class ProfiloUtenteDatiPersonaliComponent implements OnInit {
     this.nome = employerLogService.getNomeUtente();
     this.cognome = employerLogService.getCognomeUtente();
     this.codiceFiscale = employerLogService.getCodiceFiscale();
+    var data = employerLogService.getDataDiNascita().date;
     this.dataDiNascita = employerLogService.getDataDiNascita();
     this.email = employerLogService.getEmail();
     this.iban = employerLogService.getIban();
@@ -37,6 +38,7 @@ export class ProfiloUtenteDatiPersonaliComponent implements OnInit {
   }
 
   aggiornaDipendente(){
+    console.log(this.dataDiNascita);
     var parameters = {
       'token' : sessionStorage.getItem("token"),
       'nome': this.nome,

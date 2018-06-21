@@ -54,4 +54,5 @@ Route::match(array('GET','POST'),'getTeam', 'TeamsController@getTeam');
 Route::match(array('GET','POST'),'deleteEmployerInTeam', 'TeamsController@deleteEmployerInTeam')->middleware('jwt.auth');
 Route::match(array('GET','POST'),'addEmployerInTeam', 'TeamsController@addEmployerInTeam')->middleware('jwt.auth');
 Route::match(array('GET','POST'),'addTeam', 'TeamsController@addTeam')->middleware('jwt.auth');
+Route::match(array('GET','POST'),'addDipendente', 'UtenteController@addUser');
 

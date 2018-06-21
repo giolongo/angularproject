@@ -18,7 +18,7 @@ class UtenteController extends Controller
         $nome = $request->get('nome');
         $cognome = $request->get('cognome');
         $email= $request->get('email');
-        //$data_nascita=new Carbon($request->get('dataDiNascita'));
+        $data_nascita=new Carbon($request->get('dataDiNascita'));
         $iban=$request->get('iban');
         $banca=$request->get('banca');
         $bbc=$request->get('bbc');
@@ -30,6 +30,7 @@ class UtenteController extends Controller
             "cognome" => $cognome,
             "email"=> $email,
             "iban"=>$iban,
+            "data_nascita"=> $data_nascita,
             "banca"=>$banca,
             "bbc"=>$bbc,
             "password"=>$password
@@ -38,6 +39,45 @@ class UtenteController extends Controller
         return response()->json([
             'success' => true, 
         ]);
+    }
+
+    public function addUser(Request $request){
+        $user = CommonFunction::tokenToDipendente($request->get('token'));
+
+        $nome = $request->get('nome');
+        $cognome = $request->get('cognome');
+        $email= $request->get('email');
+        $password=Hash::make($request->get('password'));
+        $codice_fiscale=$request->get('codice_fiscale');
+        $ruolo=$request->get('ruolo');
+        $data_nascita = new Carbon($request->get('data'));
+        if(empty($user)){
+            return response()->json(['success' => false, 'error' => 'Invalid token']);
+        }else{
+            $utente = Dipendente::where("codice_fiscale","=",$codice_fiscale)->get();
+            if(!count($utente)){
+                $utente = Dipendente::create([
+                    'nome'=> $nome,
+                    'cognome'=> $cognome,
+                    'email'=>$email,
+                    'password'=>$password,
+                    'codice_fiscale'=>$codice_fiscale,
+                    'ruolo'=>$ruolo,
+                    'data_nascita' => $data_nascita,
+                    'iban' => 'iban',
+                    'banca' => 'Poste Italiane',
+                    'bbc' => 'bbc']);
+                return response()->json([
+                    'success' => true, 
+                    'data' => $utente->toArray()
+                ]);    
+            }else{
+                return response()->json([
+                    'success' => false, 
+                    'error' => 'Codice Fiscale già presente'
+                ]); 
+            }
+        }
     }
     
 }

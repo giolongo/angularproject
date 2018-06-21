@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EmployerLogService } from '../../service/employer-log.service';
 import { Router } from "@angular/router";
+import { RestRequestService } from '../../service/rest-request.service';
 
 @Component({
   selector: 'app-registra-utente',
@@ -14,8 +15,9 @@ export class RegistraUtenteComponent implements OnInit {
   public dataDiNascita: String;
   public email: String;
   public password: String;
-
-  constructor(private employerLogService : EmployerLogService, private router: Router) { }
+  public ruolo: String;
+  public error: String;
+  constructor(private employerLogService : EmployerLogService, private router: Router, private restRequestService:RestRequestService) { }
 
   ngOnInit() {
     if(!this.employerLogService.isLogged()){
@@ -33,12 +35,22 @@ export class RegistraUtenteComponent implements OnInit {
   }
 
   public registraDipendente(){
-    console.log(this.nome);
-    console.log(this.cognome);
-    console.log(this.codiceFiscale);
-    console.log(this.dataDiNascita);
-    console.log(this.email);
-    console.log(this.password);
+    var newDipendente ={
+      'nome' : this.nome,
+      'cognome' : this.cognome,
+      'codice_fiscale' : this.codiceFiscale,
+      'email' : this.email,
+      'password' : this.password,
+      'ruolo' : this.ruolo,
+      'data_nascita' : this.dataDiNascita
+    }
+    this.restRequestService.addDipendente(newDipendente).subscribe(function(response){
+      if(!response['success']){
+        this.error = response['error'];
+      }else{
+        this.router.navigate(['skillDipendente/'+response['data'].id_dipendente]);
+      }
+    }.bind(this))
   }
 
 }
