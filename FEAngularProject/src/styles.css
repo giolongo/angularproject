@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~bootstrap/dist/css/bootstrap.min.css';
 @import '~material-design-icons/iconfont/material-icons.css';
+@import '~ladda/dist/ladda.min.css';
 .card {
     margin: 0 auto; /* Added */
     float: none; /* Added */
@@ -35,4 +36,11 @@
     color: red;
     padding-bottom:  1rem;
     margin: auto;
+}
+
+.ladda-button.blue {
+	background: #53b5e6;
+	color: #fff;
+	border-radius: 2px;
+	border: 1px solid transparent;
 }

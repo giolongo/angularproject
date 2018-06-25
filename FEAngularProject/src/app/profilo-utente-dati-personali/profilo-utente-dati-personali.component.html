@@ -1,4 +1,4 @@
-<form #modificaUtente = "ngForm" (ngSubmit) = "aggiornaDipendente()">
+<form #modificaUtente = "ngForm">
     <div class="card" style="width: 30rem; margin-top: 5rem;">
         <div class="card-header">
             <h5 class="card-title">Dati Utente</h5>
@@ -27,7 +27,7 @@
                 <input type="email" class="input-text" name="bbc" [(ngModel)]="bbc" value="{{bbc}}">
             </div>
             <div class="row" style="padding-top:1rem; padding-left:1rem;">
-                <input *ngIf="buttonIsVisible" type="submit" class="btn btn-primary" value="Salva">
+                <button [disabled]="isDisabled()" class="ladda-button blue" data-size="s" [ladda]="isLoading" (click)="aggiornaDipendente()">Salva</button>
             </div>
         </div>
     </div>

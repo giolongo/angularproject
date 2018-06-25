@@ -36,6 +36,7 @@ import { SkillDipendenteDipendentiComponent } from './skill-dipendente/skill-dip
 import { SkillDipendenteManagerComponent } from './skill-dipendente/skill-dipendente-manager/skill-dipendente-manager.component';
 import { TeamComponent } from './team/team.component';
 import { TeamManagerComponent } from './team/team-manager/team-manager.component';
+import { LaddaModule } from 'angular2-ladda';
 @NgModule({
   declarations: [
     AppComponent,
@@ -70,7 +71,8 @@ import { TeamManagerComponent } from './team/team-manager/team-manager.component
     FormsModule,
     DataTablesModule,
     NgbModule.forRoot(),
-    CalendarModule.forRoot()
+    CalendarModule.forRoot(),
+    LaddaModule,
   ],
   providers: [EmployerLogService],
   bootstrap: [AppComponent]

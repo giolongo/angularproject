@@ -118,7 +118,8 @@ class AuthController extends Controller
         try {
             // attempt to verify the credentials and create a token for the Dipendente
             if (! $token = JWTAuth::attempt($credentials)) {
-                return response()->json(['success' => false, 'error' => 'We cant find an account with this credentials. Please make sure you entered the right information and you have verified your email address.'], 401);
+                /* return response()->json(['success' => false, 'error' => 'We cant find an account with this credentials. Please make sure you entered the right information and you have verified your email address.'], 401); */
+                return response()->json(['success' => false, 'error' => 'We cant find an account with this credentials. Please make sure you entered the right information and you have verified your email address.']);
             }
         } catch (JWTException $e) {
             // something went wrong whilst attempting to encode the token
@@ -180,7 +181,8 @@ class AuthController extends Controller
         $dipendente = Dipendente::where('email', $request->email)->first();
         if (!$dipendente) {
             $error_message = "Your email address was not found.";
-            return response()->json(['success' => false, 'error' => ['email'=> $error_message]], 401);
+            /* return response()->json(['success' => false, 'error' => ['email'=> $error_message]], 401);*/
+            return response()->json(['success' => false, 'error' => ['email'=> $error_message]]);
         }
         try {
             Password::sendResetLink($request->only('email'), function (Message $message) {
@@ -189,7 +191,8 @@ class AuthController extends Controller
         } catch (\Exception $e) {
             //Return with error
             $error_message = $e->getMessage();
-            return response()->json(['success' => false, 'error' => $error_message], 401);
+            /* return response()->json(['success' => false, 'error' => $error_message], 401); */
+            return response()->json(['success' => false, 'error' => $error_message]);
         }
         return response()->json([
             'success' => true, 'data'=> ['message'=> 'A reset email has been sent! Please check your email.']

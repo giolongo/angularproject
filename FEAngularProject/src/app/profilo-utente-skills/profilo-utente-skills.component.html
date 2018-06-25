@@ -31,7 +31,7 @@
                             <i class="material-icons md-blue" title="Salva Modfiche">save</i> 
                         </a>
 
-                        <a (click)="rimuovi(skill)" class="valid-action" >
+                        <a (click)="rimuovi(skill)" class="valid-action" [attr.disabled]="isAction">
                             <i class="material-icons md-red" title="Rimuovi Skill">delete</i> 
                         </a>
                     </td>
@@ -55,7 +55,7 @@
                     </select>
                 </div>
             </div>
-            <button  class="btn btn-primary" (click)="aggiungi()">Aggiungi</button>
+            <button  class="ladda-button blue" data-size="s" [disabled]="!newSkill.seniority || !newSkill.id" [ladda]="isLoading" (click)="aggiungi()">Aggiungi</button>
         </div>
     </div>
 </div>

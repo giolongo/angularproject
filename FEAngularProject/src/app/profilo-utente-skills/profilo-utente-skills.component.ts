@@ -12,12 +12,18 @@ export class ProfiloUtenteSkillsComponent implements OnInit {
   public allSkill : any;
   public skills : any;
   private newSkill = {};
+  isAction : boolean = false;
+  isLoading: boolean = false;
   constructor(private restRequestService:RestRequestService, private skillsService:SkillsService) {
     this.restRequestService.getSkills().subscribe(function(response){
       this.skills = response['data'];
       this.allSkill = this.skillsService.getSkills();
-      this.rimuoviSkillPresenti();
+      this.restRequestService.caricaSkills().subscribe(function(response){
+        this.skillsService.caricaSkills(response);
+        this.allSkill = this.skillsService.getSkills();
+        this.rimuoviSkillPresenti();
       }.bind(this));
+    }.bind(this));
   }
 
 
@@ -25,33 +31,41 @@ export class ProfiloUtenteSkillsComponent implements OnInit {
     this.restRequestService.getSkills().subscribe(function(response){
       this.skills = response['data'];
       this.allSkill = this.skillsService.getSkills();
-      this.rimuoviSkillPresenti();
+      this.restRequestService.caricaSkills().subscribe(function(response){
+        this.skillsService.caricaSkills(response);
+        this.allSkill = this.skillsService.getSkills();
+        this.rimuoviSkillPresenti();
+      }.bind(this));
     }.bind(this));
   }
 
   aggiungi(){
+    this.isLoading=true;
     this.restRequestService.aggiungiSkill(this.newSkill, null).subscribe(function(response){
       this.restRequestService.getSkills().subscribe(function(response){
         this.skills = response['data'];
         this.allSkill = this.skillsService.getSkills();
         this.rimuoviSkillPresenti();
+        this.newSkill = {};
+        this.isLoading=false;
         }.bind(this));
     }.bind(this));
   }
 
   modifica(skill:any){
-    console.log(skill);
+    this.isAction = true;
     this.restRequestService.modificaSkill(skill, null).subscribe(function(response){
       this.restRequestService.getSkills().subscribe(function(response){
         this.skills = response['data'];
         this.allSkill = this.skillsService.getSkills();
         this.rimuoviSkillPresenti();
+        this.isAction = false;
         }.bind(this));
     }.bind(this));
   }
 
   rimuovi(skill:any){
-    console.log(skill);
+    this.isAction = true;
     this.restRequestService.rimuoviSkill(skill.id_skill, null).subscribe(function(response){
         this.restRequestService.getSkills().subscribe(function(response){
           this.skills = response['data'];
@@ -59,12 +73,14 @@ export class ProfiloUtenteSkillsComponent implements OnInit {
             this.skillsService.caricaSkills(response);
             this.allSkill = this.skillsService.getSkills();
             this.rimuoviSkillPresenti();
+            this.isAction = false;
           }.bind(this));
         }.bind(this));
     }.bind(this));
   }
 
   rimuoviSkillPresenti(){
+
     for (var i = 0;this.allSkill[i] && i< this.allSkill.length ; i++){
       for(var j = 0;this.allSkill[i] && j< this.skills.length ; j++){
         if(this.allSkill[i].id_skill == this.skills[j].skill[0].id_skill){

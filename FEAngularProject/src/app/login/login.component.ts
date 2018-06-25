@@ -10,6 +10,8 @@ import { Router } from "@angular/router";
 export class LoginComponent implements OnInit {
   codiceFiscale : String;
   password: String;
+  error : String;
+  isLoading: boolean = false;
   constructor(private employerLogService : EmployerLogService, private router: Router) {
   }
 
@@ -29,8 +31,14 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
+    this.isLoading = true;
     this.employerLogService.logIn(this.codiceFiscale, this.password).subscribe(function(response){
-      this.employerLogService.loginHandler(response);
+      if(!response['success']){
+        this.error = response['error'];
+      }else{
+        this.employerLogService.loginHandler(response);
+      }
+      this.isLoading = false;
     }.bind(this));
   }
 

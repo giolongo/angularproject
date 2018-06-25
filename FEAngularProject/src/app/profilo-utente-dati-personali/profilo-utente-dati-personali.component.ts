@@ -20,6 +20,7 @@ export class ProfiloUtenteDatiPersonaliComponent implements OnInit {
   public banca : String;
   public bbc : String;
   public user : User;
+  isLoading: boolean = false;
   buttonIsVisible : boolean;
   constructor(private employerLogService:EmployerLogService, private restRequestService:RestRequestService, private router:Router) { 
     this.nome = employerLogService.getNomeUtente();
@@ -31,13 +32,13 @@ export class ProfiloUtenteDatiPersonaliComponent implements OnInit {
     this.iban = employerLogService.getIban();
     this.banca = employerLogService.getBanca();
     this.bbc = employerLogService.getBbc();
-    this.buttonIsVisible = true;
   }
 
   ngOnInit() {
   }
 
   aggiornaDipendente(){
+    this.isLoading = true;
     console.log(this.dataDiNascita);
     var parameters = {
       'token' : sessionStorage.getItem("token"),
@@ -51,17 +52,22 @@ export class ProfiloUtenteDatiPersonaliComponent implements OnInit {
       'password':this.password
     }
 
-    this.buttonIsVisible = false;
     this.restRequestService.updateUtente(parameters).subscribe(function(){
-      this.buttonIsVisible = true;
       this.employerLogService.refreshSessionByTokenRequest().subscribe(function(response){
         if(!this.employerLogService.caricaUtenteLoggato(response)){
           this.router.navigate(['/login']);
         }
+        this.isLoading = false;
       }.bind(this));
-    }.bind(this));
+    }.bind(this)); 
+  }
 
-    
+  isDisabled() {
+    if(!this.nome || !this.cognome || !this.dataDiNascita || !this.email || !this.password){
+      return true;
+    }else{
+      return false;
+    }
   }
 
 }
