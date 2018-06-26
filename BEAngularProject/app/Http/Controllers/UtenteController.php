@@ -56,21 +56,30 @@ class UtenteController extends Controller
         }else{
             $utente = Dipendente::where("codice_fiscale","=",$codice_fiscale)->get();
             if(!count($utente)){
-                $utente = Dipendente::create([
-                    'nome'=> $nome,
-                    'cognome'=> $cognome,
-                    'email'=>$email,
-                    'password'=>$password,
-                    'codice_fiscale'=>$codice_fiscale,
-                    'ruolo'=>$ruolo,
-                    'data_nascita' => $data_nascita,
-                    'iban' => 'iban',
-                    'banca' => 'Poste Italiane',
-                    'bbc' => 'bbc']);
-                return response()->json([
-                    'success' => true, 
-                    'data' => $utente->toArray()
-                ]);    
+                $utente = Dipendente::where("email","=",$email)->get();
+                if(!count($utente)){
+                    $utente = Dipendente::create([
+                        'nome'=> $nome,
+                        'cognome'=> $cognome,
+                        'email'=>$email,
+                        'password'=>$password,
+                        'codice_fiscale'=>$codice_fiscale,
+                        'ruolo'=>$ruolo,
+                        'data_nascita' => $data_nascita,
+                        'iban' => 'iban',
+                        'banca' => 'Poste Italiane',
+                        'bbc' => 'bbc',
+                        'is_verified' => '1']);
+                    return response()->json([
+                        'success' => true, 
+                        'data' => $utente->toArray()
+                    ]);   
+                }else{
+                    return response()->json([
+                        'success' => false, 
+                        'error' => 'Email già presente'
+                    ]); 
+                } 
             }else{
                 return response()->json([
                     'success' => false, 

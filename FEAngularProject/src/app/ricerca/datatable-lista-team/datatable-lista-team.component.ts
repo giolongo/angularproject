@@ -84,11 +84,13 @@ export class DatatableListaTeamComponent implements OnInit {
     });
   }
   bindBottoni(__this, dtInstance){
-    $('body').on('click', '.view_dettagli', function(){
-      var id_team = $(this).attr('id_team');
-      var rowInstance = this;
-      console.log(id_team);
-      __this.router.navigate(['/team/'+id_team]);
+    $(document).ready( function () {
+      $('body').on('click', '.view_dettagli', function(){
+        var id_team = $(this).attr('id_team');
+        var rowInstance = this;
+        console.log(id_team);
+        __this.router.navigate(['/team/'+id_team]);
+      });
     });
   }
 

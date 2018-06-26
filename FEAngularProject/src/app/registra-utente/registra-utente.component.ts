@@ -17,6 +17,7 @@ export class RegistraUtenteComponent implements OnInit {
   public password: String;
   public ruolo: String;
   public error: String;
+  public isLoading : boolean = false;
   constructor(private employerLogService : EmployerLogService, private router: Router, private restRequestService:RestRequestService) { }
 
   ngOnInit() {
@@ -35,6 +36,7 @@ export class RegistraUtenteComponent implements OnInit {
   }
 
   public registraDipendente(){
+    this.isLoading=true;
     var newDipendente ={
       'nome' : this.nome,
       'cognome' : this.cognome,
@@ -45,12 +47,21 @@ export class RegistraUtenteComponent implements OnInit {
       'data_nascita' : this.dataDiNascita
     }
     this.restRequestService.addDipendente(newDipendente).subscribe(function(response){
+      this.isLoading = false;
       if(!response['success']){
         this.error = response['error'];
       }else{
         this.router.navigate(['skillDipendente/'+response['data'].id_dipendente]);
       }
     }.bind(this))
+  }
+
+  isDisabled(){
+    if(!this.nome || !this.cognome || !this.codiceFiscale || !this.email || !this.password  || !this.dataDiNascita){
+      return true;
+    }else{
+      return false;
+    }
   }
 
 }

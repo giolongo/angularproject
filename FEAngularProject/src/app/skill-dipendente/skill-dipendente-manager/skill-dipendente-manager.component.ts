@@ -32,23 +32,16 @@ export class SkillDipendenteManagerComponent implements OnInit {
         this.restRequestService.getDipendeteInfoAndSkill(this.idDipendente).subscribe(function(response){
           this.datiDipendente = response['data'];
           console.log( this.datiDipendente);
-          if(!this.skillsService.getSkills()){
-            //Carica lista delle skill
-            this.restRequestService.caricaSkills().subscribe(function(response){
+          this.restRequestService.caricaSkills().subscribe(function(response){
             this.skillsService.caricaSkills(response);
-            this.restRequestService.caricaSkills().subscribe(function(response){
-              this.skillsService.caricaSkills(response);
-              this.allSkill = this.skillsService.getSkills();
-            }.bind(this));
-            if(this.datiDipendente.length>0){
-              this.rimuoviSkillPresenti();
-            }
-           }.bind(this));
+            this.allSkill = this.skillsService.getSkills();
+          }.bind(this));
+          if(this.datiDipendente.length>0){
+            this.rimuoviSkillPresenti();
           }
         }.bind(this));
       }
     });
-
   }
 
   modifica(skill:any){
