@@ -1,4 +1,4 @@
-<div class="row" *ngIf="datiDipendente && datiDipendente.length>0">
+<div class="row" *ngIf="datiDipendente && datiDipendente.length > 0">
   <div class="col-md-6">
     <div>
       <div class="card" style="width: 30rem; margin-top: 5rem;">
@@ -92,7 +92,7 @@
                       </select>
                   </div>
               </div>
-              <button  class="btn btn-primary" (click)="aggiungi()">Aggiungi</button>
+              <button  class="ladda-button blue" data-size="s" [disabled]="!newSkill.seniority || !newSkill.id" [ladda]="isLoading" (click)="aggiungi()">Aggiungi</button>
             </div>
         </div>
     </div>
@@ -129,7 +129,7 @@
                         </select>
                     </div>
                 </div>
-                <button  class="btn btn-primary" (click)="aggiungi()">Aggiungi</button>
+                <button  class="ladda-button blue" data-size="s" [disabled]="!newSkill.seniority || !newSkill.id" [ladda]="isLoading" (click)="aggiungi()">Aggiungi</button>
             </div>
         </div>
     </div>

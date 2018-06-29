@@ -15,6 +15,7 @@ export class SkillDipendenteManagerComponent implements OnInit {
   datiDipendente : any;
   allSkill : any;
   private newSkill = {};
+  isLoading: boolean = false;
   constructor(private activatedRoute: ActivatedRoute,  private router: Router, 
     private restRequestService:RestRequestService, private employerLogService : EmployerLogService, private skillsService:SkillsService) { }
 
@@ -31,14 +32,14 @@ export class SkillDipendenteManagerComponent implements OnInit {
         }
         this.restRequestService.getDipendeteInfoAndSkill(this.idDipendente).subscribe(function(response){
           this.datiDipendente = response['data'];
-          console.log( this.datiDipendente);
+          console.log("prova" + this.datiDipendente.length);
           this.restRequestService.caricaSkills().subscribe(function(response){
             this.skillsService.caricaSkills(response);
             this.allSkill = this.skillsService.getSkills();
+            if(this.datiDipendente.length > 0){
+              this.rimuoviSkillPresenti();
+            }
           }.bind(this));
-          if(this.datiDipendente.length>0){
-            this.rimuoviSkillPresenti();
-          }
         }.bind(this));
       }
     });
@@ -56,11 +57,15 @@ export class SkillDipendenteManagerComponent implements OnInit {
   }
 
   aggiungi(){
+    this.isLoading=true;
     this.restRequestService.aggiungiSkill(this.newSkill, this.idDipendente).subscribe(function(response){
       this.restRequestService.getDipendeteInfoAndSkill(this.idDipendente).subscribe(function(response){
         this.datiDipendente = response['data'];
-        this.allSkill = this.skillsService.getSkills();
-        this.rimuoviSkillPresenti();
+        this.restRequestService.getSkills().subscribe(function(response){
+          this.allSkill = this.skillsService.getSkills();
+          this.rimuoviSkillPresenti();
+          this.isLoading=false;
+        }.bind(this));
         }.bind(this));
     }.bind(this));
   }
@@ -82,8 +87,8 @@ export class SkillDipendenteManagerComponent implements OnInit {
   }
 
   rimuoviSkillPresenti(){
-    for (var i = 0;this.allSkill[i] && i< this.datiDipendente.length ; i++){
-      for(var j = 0;this.allSkill[i] && j< this.datiDipendente.length ; j++){
+    for (var i = 0;this.allSkill[i] && i< this.allSkill.length ; i++){
+      for(var j = 0;this.allSkill[i] && j < this.datiDipendente.length ; j++){
         if(this.allSkill[i].id_skill == this.datiDipendente[j].skill[0].id_skill){
           console.log(true);
           this.allSkill.splice(i,1);
@@ -91,6 +96,6 @@ export class SkillDipendenteManagerComponent implements OnInit {
         }
       }
     }
-    console.log(this.allSkill.length);
+    console.log("Length= "+this.allSkill.length);
   }
 }

@@ -93,7 +93,7 @@ export class DatatableListaDipendentiComponent implements OnDestroy, OnInit {
   bindBottoni(__this, dtInstance){
     $(document).ready( function () {
       $('body').on('click', '.view_dettagli', function(){
-        var id_dipendente = $(this).attr('id_dipendente');
+        var id_dipendente = $(this).attr("id_dipendente");
         var rowInstance = this;
         console.log(id_dipendente);
         __this.router.navigate(['/skillDipendente/'+id_dipendente]);
