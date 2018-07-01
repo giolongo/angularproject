@@ -26,6 +26,7 @@ export class SkillDipendenteManagerComponent implements OnInit {
         this.idDipendente = params.id_dipendente;
         if(this.idDipendente == "undefined"){
           this.router.navigate(['/ricercaRisultati']);
+          return;
         }
         else if(this.employerLogService.getId() == this.idDipendente){
           this.router.navigate(['/visualizzaProfilo']);

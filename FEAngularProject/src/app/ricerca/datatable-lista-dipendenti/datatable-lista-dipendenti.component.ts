@@ -12,7 +12,7 @@ import { Subject } from 'rxjs';
 export class DatatableListaDipendentiComponent implements OnDestroy, OnInit {
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
-
+  tableReady : boolean;
   dtOptions: DataTables.Settings = {};
 
   headers = [
@@ -23,14 +23,15 @@ export class DatatableListaDipendentiComponent implements OnDestroy, OnInit {
     'Ruolo'
   ];
   rows = [];
-  constructor(private restRequestService : RestRequestService, private router: Router) { 
+  constructor(private restRequestService : RestRequestService, public router: Router) { 
+    this.tableReady = false;
   }
 
   ngOnInit(): void {
     this.initDatatable();
     this.restRequestService.ricerca('dipendenti').subscribe(function(response){
       this.rows = response["data"];
-      this.render(this);
+      this.render();
     }.bind(this));
   }
   ngOnDestroy(): void {
@@ -72,7 +73,8 @@ export class DatatableListaDipendentiComponent implements OnDestroy, OnInit {
     };
   }
 
-  render(__this): void {
+  render(): void {
+    var __this = this;
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
       // Destroy the table first
       dtInstance.clear().draw();
@@ -87,13 +89,21 @@ export class DatatableListaDipendentiComponent implements OnDestroy, OnInit {
         ];
         dtInstance.row.add(myrow).draw();
       });
-      __this.bindBottoni(__this, dtInstance);
+      __this.bindBottoni(dtInstance);
     });
+    this.tableReady = true;
   }
   
-  bindBottoni(__this, dtInstance){
-    $('body').on('click', '.view_dettagli', function(){
-      __this.router.navigate(['/skillDipendente/' + $(this).attr('id_dipendente')]);
+  bindBottoni(dtInstance){
+    var __this = this;
+    $('app-datatable-lista-dipendenti').on('click', '.view_dettagli', function(){
+      /* __this.router.navigate(['/skillDipendente/' + $(this).attr('id_dipendente')]); */
+      __this.redirect($(this).attr('id_dipendente'));
     });
+  }
+
+  redirect(idDipendente : string){
+    console.log('/skillDipendente/' + idDipendente);
+    this.router.navigate (['/skillDipendente/' + idDipendente]);
   }
 }

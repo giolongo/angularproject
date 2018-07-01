@@ -28,6 +28,7 @@ export class TeamManagerComponent implements OnInit {
         this.idTeam = params.id_team;
         if(this.idTeam == "undefined"){
           this.router.navigate(['/ricercaRisultati']);
+          return;
         }
         this.restRequestService.getTeam(this.idTeam).subscribe(function(response){
           this.datiTeam = response['data'];

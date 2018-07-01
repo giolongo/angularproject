@@ -4,7 +4,7 @@
         <h5 class="card-title">Utenti</h5>
       </div>
       <div class="card-body"> -->
-        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+        <table [ngClass]="tableReady ? '' : 'not-visible'" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
           <thead>
             <tr>
               <th *ngFor="let header of headers">{{header}}</th>
@@ -12,6 +12,7 @@
           </thead>
           <tbody></tbody>
         </table>
+        <div class="loader" [ngClass]="tableReady ? 'hidden' : ''">&nbsp;</div>
 <!--       </div>
     </div>
   </div> -->
