@@ -90,14 +90,10 @@ export class DatatableListaDipendentiComponent implements OnDestroy, OnInit {
       __this.bindBottoni(__this, dtInstance);
     });
   }
+  
   bindBottoni(__this, dtInstance){
-    $(document).ready( function () {
-      $('body').on('click', '.view_dettagli', function(){
-        var id_dipendente = $(this).attr("id_dipendente");
-        var rowInstance = this;
-        console.log(id_dipendente);
-        __this.router.navigate(['/skillDipendente/'+id_dipendente]);
-      });
+    $('body').on('click', '.view_dettagli', function(){
+      __this.router.navigate(['/skillDipendente/' + $(this).attr('id_dipendente')]);
     });
   }
 }

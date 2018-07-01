@@ -16,6 +16,7 @@ export class TeamManagerComponent implements OnInit {
   private allSkill : any;
   private allDipendenti : any;
   private newDipendente = {};
+  private isLoading : boolean = false;
   constructor(private activatedRoute: ActivatedRoute,  private router: Router, 
     private restRequestService:RestRequestService, private employerLogService : EmployerLogService, 
     private skillsService:SkillsService) {}
@@ -67,10 +68,13 @@ export class TeamManagerComponent implements OnInit {
   }
 
   aggiungi(){
+    this.isLoading = true;
     this.restRequestService.addEmployerInTeam(this.idTeam, this.newDipendente).subscribe(function(response){
       this.restRequestService.getTeam(this.idTeam).subscribe(function(response){
         this.datiTeam = response['data'];
         this.rimuoviDipendentiPresenti();
+        this.isLoading = false;
+        this.newDipendente = {};
       }.bind(this))
     }.bind(this))
   }

@@ -56,7 +56,7 @@
                   </select>
               </div>
           </div>
-          <button *ngIf="allDipendenti && allDipendenti.length>0" class="btn btn-primary" (click)="aggiungi()">Aggiungi</button>
+          <button  class="ladda-button blue" data-size="s" [disabled]="!newDipendente.id" [ladda]="isLoading"*ngIf="allDipendenti && allDipendenti.length>0" (click)="aggiungi()">Aggiungi</button>
           <div class="row" *ngIf="allDipendenti && allDipendenti.length<1">
               <i class="material-icons" style="padding-left:32%; font-size: 10rem;">error_outline</i>
               <p style="font-size: 2rem; text-align:center;">

@@ -65,6 +65,7 @@ export class SkillDipendenteManagerComponent implements OnInit {
           this.allSkill = this.skillsService.getSkills();
           this.rimuoviSkillPresenti();
           this.isLoading=false;
+          this.newSkill = {};
         }.bind(this));
         }.bind(this));
     }.bind(this));
