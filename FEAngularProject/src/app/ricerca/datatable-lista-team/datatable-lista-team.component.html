@@ -4,7 +4,7 @@
         <h5 class="card-title">Team</h5>
       </div>
       <div class="card-body"> -->
-      <div class="loader" [hidden]="tableReady">&nbsp;</div>
+      <div class="loader" *ngIf="!tableReady"></div>
       <div [hidden]="!tableReady" class="card card-style">
           <div class="card-header">
               <h5 class="card-title">Team</h5>
