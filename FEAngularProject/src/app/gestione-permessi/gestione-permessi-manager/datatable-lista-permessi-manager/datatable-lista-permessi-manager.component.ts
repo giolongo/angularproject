@@ -13,7 +13,7 @@ export class DatatableListaPermessiManagerComponent implements OnDestroy, OnInit
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
   dtOptions: DataTables.Settings = {};
-  tableReady = false;
+  tableReady : boolean;
   headers = [
     '',
     'Dipendente',
@@ -27,6 +27,7 @@ export class DatatableListaPermessiManagerComponent implements OnDestroy, OnInit
   ];
   rows = [];
   constructor(private restRequestService : RestRequestService, private router: Router) { 
+    this.tableReady = false;
   }
 
   ngOnInit(): void {
@@ -67,7 +68,7 @@ export class DatatableListaPermessiManagerComponent implements OnDestroy, OnInit
   render(): void {
     var __this = this;
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      dtInstance.clear();
+      dtInstance.clear().draw();
       this.rows.forEach(function (row) {
         var base64 = row['certificatoBase64'];
         if(base64.indexOf('base64,') == -1){

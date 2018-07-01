@@ -16,8 +16,11 @@ export class SkillDipendenteManagerComponent implements OnInit {
   allSkill : any;
   private newSkill = {};
   isLoading: boolean = false;
+  isReady : boolean;
   constructor(private activatedRoute: ActivatedRoute,  private router: Router, 
-    private restRequestService:RestRequestService, private employerLogService : EmployerLogService, private skillsService:SkillsService) { }
+    private restRequestService:RestRequestService, private employerLogService : EmployerLogService, private skillsService:SkillsService) { 
+      this.isReady = false;
+    }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
@@ -40,6 +43,7 @@ export class SkillDipendenteManagerComponent implements OnInit {
             if(this.datiDipendente.length > 0){
               this.rimuoviSkillPresenti();
             }
+            this.isReady = true;
           }.bind(this));
         }.bind(this));
       }
@@ -47,12 +51,13 @@ export class SkillDipendenteManagerComponent implements OnInit {
   }
 
   modifica(skill:any){
-    console.log(skill);
+    this.isReady = false;
     this.restRequestService.modificaSkill(skill, this.idDipendente).subscribe(function(response){
       this.restRequestService.getDipendeteInfoAndSkill(this.idDipendente).subscribe(function(response){
         this.datiDipendente = response['data'];
         this.allSkill = this.skillsService.getSkills();
         this.rimuoviSkillPresenti();
+        this.isReady = true;
         }.bind(this));
     }.bind(this));
   }
@@ -73,7 +78,7 @@ export class SkillDipendenteManagerComponent implements OnInit {
   }
 
   rimuovi(skill:any){
-    console.log(skill);
+    this.isReady = false;
     this.restRequestService.rimuoviSkill(skill.id_skill, this.idDipendente).subscribe(function(response){
       this.restRequestService.getDipendeteInfoAndSkill(this.idDipendente).subscribe(function(response){
         this.datiDipendente = response['data'];
@@ -85,6 +90,7 @@ export class SkillDipendenteManagerComponent implements OnInit {
             }
           }.bind(this));
         }.bind(this));
+        this.isReady = true;
     }.bind(this));
   }
 

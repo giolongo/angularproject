@@ -28,9 +28,9 @@ export class DatatableListaTeamComponent implements OnInit {
     console.log("gonna fire getListaPermessiDipendente");
     this.initDatatable();
     this.restRequestService.ricerca('getTeam').subscribe(function(response){
-      console.log(response["data"]);
       this.rows = response["data"];
-      this.render();
+      this.render(this);
+      this.tableReady = true;
     }.bind(this));
   }
   ngOnDestroy(): void {
@@ -84,7 +84,6 @@ export class DatatableListaTeamComponent implements OnInit {
       });
       __this.bindBottoni(dtInstance);
     });
-    this.tableReady = true;
   }
   bindBottoni(dtInstance){
     var __this = this;

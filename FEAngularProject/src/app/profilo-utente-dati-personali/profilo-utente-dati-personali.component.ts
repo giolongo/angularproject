@@ -20,9 +20,11 @@ export class ProfiloUtenteDatiPersonaliComponent implements OnInit {
   public banca : String;
   public bbc : String;
   public user : User;
+  isReady : boolean;
   isLoading: boolean = false;
   buttonIsVisible : boolean;
   constructor(private employerLogService:EmployerLogService, private restRequestService:RestRequestService, private router:Router) { 
+    this.isReady = false;
     this.nome = employerLogService.getNomeUtente();
     this.cognome = employerLogService.getCognomeUtente();
     this.codiceFiscale = employerLogService.getCodiceFiscale();
@@ -32,6 +34,7 @@ export class ProfiloUtenteDatiPersonaliComponent implements OnInit {
     this.iban = employerLogService.getIban();
     this.banca = employerLogService.getBanca();
     this.bbc = employerLogService.getBbc();
+    this.isReady = true;
   }
 
   ngOnInit() {

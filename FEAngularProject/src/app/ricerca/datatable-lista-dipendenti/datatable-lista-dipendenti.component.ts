@@ -27,11 +27,13 @@ export class DatatableListaDipendentiComponent implements OnDestroy, OnInit {
     this.tableReady = false;
   }
 
+
   ngOnInit(): void {
     this.initDatatable();
     this.restRequestService.ricerca('dipendenti').subscribe(function(response){
       this.rows = response["data"];
-      this.render();
+      this.render(this);
+      this.tableReady = true;
     }.bind(this));
   }
   ngOnDestroy(): void {
@@ -73,8 +75,7 @@ export class DatatableListaDipendentiComponent implements OnDestroy, OnInit {
     };
   }
 
-  render(): void {
-    var __this = this;
+  render(__this): void {
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
       // Destroy the table first
       dtInstance.clear().draw();
@@ -89,13 +90,11 @@ export class DatatableListaDipendentiComponent implements OnDestroy, OnInit {
         ];
         dtInstance.row.add(myrow).draw();
       });
-      __this.bindBottoni(dtInstance);
+      __this.bindBottoni(__this, dtInstance);
     });
-    this.tableReady = true;
   }
   
-  bindBottoni(dtInstance){
-    var __this = this;
+  bindBottoni(__this, dtInstance){
     $('app-datatable-lista-dipendenti').on('click', '.view_dettagli', function(){
       /* __this.router.navigate(['/skillDipendente/' + $(this).attr('id_dipendente')]); */
       __this.redirect($(this).attr('id_dipendente'));

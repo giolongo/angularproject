@@ -16,10 +16,13 @@ export class TeamManagerComponent implements OnInit {
   private allSkill : any;
   private allDipendenti : any;
   private newDipendente = {};
+  isReady : boolean;
   private isLoading : boolean = false;
   constructor(private activatedRoute: ActivatedRoute,  private router: Router, 
     private restRequestService:RestRequestService, private employerLogService : EmployerLogService, 
-    private skillsService:SkillsService) {}
+    private skillsService:SkillsService) {
+      this.isReady = false;
+    }
 
 
   ngOnInit() {
@@ -35,13 +38,13 @@ export class TeamManagerComponent implements OnInit {
           this.restRequestService.ricerca('dipendenti').subscribe(function(response){
             this.allDipendenti = response["data"];
             this.rimuoviDipendentiPresenti();
+            this.isReady = true;
           }.bind(this))
         }.bind(this))
         this.restRequestService.caricaSkills().subscribe(function(response){
           this.skillsService.caricaSkills(response);
           this.allSkill = this.skillsService.getSkills();
         }.bind(this));
-        console.log(this.allSkill);
       }
     });
   }
@@ -55,12 +58,14 @@ export class TeamManagerComponent implements OnInit {
   }
   
   rimuovi(team : String, dipendente : String){
+    this.isReady = false;
     this.restRequestService.deleteEmployerInTeam(team, dipendente).subscribe(function(response){
       this.restRequestService.getTeam(this.idTeam).subscribe(function(response){
         this.datiTeam = response['data'];
           this.restRequestService.ricerca('dipendenti').subscribe(function(response){
             this.allDipendenti = response["data"];
             this.rimuoviDipendentiPresenti();
+            this.isReady = true;
           }.bind(this))
         console.log( this.datiTeam);
       }.bind(this))
@@ -92,6 +97,5 @@ export class TeamManagerComponent implements OnInit {
         }
       }
     }
-    console.log(this.allSkill.length);
   }
 }
