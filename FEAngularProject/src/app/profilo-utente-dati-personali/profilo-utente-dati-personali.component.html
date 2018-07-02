@@ -15,8 +15,12 @@
             <input type="date" class="input-text" name="dataDiNascita" [(ngModel)]="dataDiNascita" value="{{dataDiNascita}}">
             <label>Email</label>
             <input type="email" class="input-text" name="email" [(ngModel)]="email" value="{{email}}">
-            <label>Password</label>
-            <input type="password" class="input-text" name="password" [(ngModel)]="password">
+            <label>Vecchia Password</label>
+            <input type="password" class="input-text" name="vecchiaPassword" [(ngModel)]="vecchiaPassword" (blur)="checkOldPassword()">
+            <label>Ripeti Password</label>
+            <input type="password" class="input-text" name="ripetiVecchiaPassword" [(ngModel)]="ripetiVecchiaPassword" (blur)="checkOldPassword()">
+            <label>Nuova Password</label>
+            <input type="password" class="input-text" name="password" [(ngModel)]="password" [disabled]="error || !vecchiaPassword || !ripetiVecchiaPassword" (blur)="checkNewPassword()">
             <h5 class="card-title" *ngIf="!showDatiBancari || showDatiBancari==false">Mostra dati bancari  <a class="valid-action" ><i class="material-icons" (click)="showDatiBancari=true">expand_more</i></a> </h5>
             <h5 class="card-title" *ngIf="showDatiBancari==true">Nascondi dati bancari <a class="valid-action" ><i class="material-icons" (click)="showDatiBancari=false">expand_less</i></a></h5>
             <div *ngIf="showDatiBancari">
@@ -30,6 +34,8 @@
             <div class="row" style="padding-top:1rem; padding-left:1rem;">
                 <button [disabled]="isDisabled()" class="ladda-button blue" data-size="s" [ladda]="isLoading" (click)="aggiornaDipendente()">Salva</button>
             </div>
+            <label class="error" *ngIf="error">{{error}}</label>
+            <label class="warning" *ngIf="warning">{{warning}}</label>
         </div>
     </div>
 </form>

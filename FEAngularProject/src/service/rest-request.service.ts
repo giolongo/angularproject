@@ -39,6 +39,7 @@ export class RestRequestService {
     this.endpoint['addEmployerInTeam'] = this.context+'/addEmployerInTeam';
     this.endpoint['addTeam'] = this.context+'/addTeam';
     this.endpoint['addDipendente'] = this.context+'/addDipendente';
+    this.endpoint['checkPasswordUtente'] = this.context+'/checkPasswordUtente';
     //Gestione permessi
     this.endpoint['getPermessiEnumArray'] = this.context+'/getPermessiEnumArray';
     this.endpoint['getListaPermessiDipendente'] = this.context+'/getListaPermessiDipendente';
@@ -234,6 +235,14 @@ export class RestRequestService {
       'ruolo' : dipendente.ruolo
     }
     return this.http.post(this.endpoint['addDipendente'], parameter, httpOptions);
+  }
+
+  checkPasswordUtente(password : String, codiceFiscale : String){
+    var parameter = {
+      'codice_fiscale' : codiceFiscale,
+      'password' : password
+    }
+    return this.http.post(this.endpoint['checkPasswordUtente'], parameter, httpOptions);
   }
 }
 

@@ -20,6 +20,10 @@ export class ProfiloUtenteDatiPersonaliComponent implements OnInit {
   public banca : String;
   public bbc : String;
   public user : User;
+  public vecchiaPassword : string;
+  public ripetiVecchiaPassword : string;
+  public error : string;
+  public warning : string;
   isReady : boolean;
   isLoading: boolean = false;
   buttonIsVisible : boolean;
@@ -35,6 +39,7 @@ export class ProfiloUtenteDatiPersonaliComponent implements OnInit {
     this.banca = employerLogService.getBanca();
     this.bbc = employerLogService.getBbc();
     this.isReady = true;
+    this.error="";
   }
 
   ngOnInit() {
@@ -42,7 +47,11 @@ export class ProfiloUtenteDatiPersonaliComponent implements OnInit {
 
   aggiornaDipendente(){
     this.isLoading = true;
+    this.warning = undefined;
     console.log(this.dataDiNascita);
+    if(!this.password){
+      this.password = this.vecchiaPassword;
+    }
     var parameters = {
       'token' : sessionStorage.getItem("token"),
       'nome': this.nome,
@@ -60,16 +69,37 @@ export class ProfiloUtenteDatiPersonaliComponent implements OnInit {
         if(!this.employerLogService.caricaUtenteLoggato(response)){
           this.router.navigate(['/login']);
         }
+        this.vecchiaPassword = this.ripetiVecchiaPassword = this.password = undefined;
         this.isLoading = false;
       }.bind(this));
     }.bind(this)); 
   }
 
   isDisabled() {
-    if(!this.nome || !this.cognome || !this.dataDiNascita || !this.email || !this.password){
+    if((!this.nome || !this.cognome || !this.dataDiNascita || !this.email)&&!this.error){
       return true;
     }else{
       return false;
+    }
+  }
+
+  checkOldPassword(){
+    if(this.vecchiaPassword != this.ripetiVecchiaPassword){
+      this.error="Le password non coincidono";
+    }else{
+      this.restRequestService.checkPasswordUtente(this.vecchiaPassword, this.codiceFiscale).subscribe(function(response){
+        if(!response['succes']){
+          this.error = response['error'];
+        }else{
+          this.error=undefined;
+        }
+      }.bind(this));
+    }
+  }
+
+  checkNewPassword(){
+    if(this.ripetiVecchiaPassword == this.password){
+      this.warning="La nuova e vecchia password coincidono";
     }
   }
 

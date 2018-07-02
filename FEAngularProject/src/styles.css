@@ -38,6 +38,12 @@
     margin: auto;
 }
 
+.warning{
+    color: rgb(240, 134, 25);
+    padding-bottom:  1rem;
+    margin: auto;
+}
+
 .ladda-button.blue {
 	background: #53b5e6;
 	color: #fff;
