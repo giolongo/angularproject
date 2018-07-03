@@ -25,11 +25,14 @@
             <h5 class="card-title" *ngIf="showDatiBancari==true">Nascondi dati bancari <a class="valid-action" ><i class="material-icons" (click)="showDatiBancari=false">expand_less</i></a></h5>
             <div *ngIf="showDatiBancari">
                 <label>Iban</label>
-                <input type="email" class="input-text" name="iban" [(ngModel)]="iban" value="{{iban}}">
+                <input type="text" class="input-text" name="iban" [(ngModel)]="iban" value="{{iban}}">
                 <label>Banca</label>
-                <input type="email" class="input-text" name="banca" [(ngModel)]="banca" value="{{banca}}">
+                <select class="input-text" name="banca" [(ngModel)]="banca" required>
+                    <option value="Poste Italiane">Poste Italiane</option>
+                    <option value="Monte Paschi">Monte Paschi</option>
+                </select>
                 <label>BBC</label>
-                <input type="email" class="input-text" name="bbc" [(ngModel)]="bbc" value="{{bbc}}">
+                <input type="text" class="input-text" name="bbc" [(ngModel)]="bbc" value="{{bbc}}">
             </div>
             <div class="row" style="padding-top:1rem; padding-left:1rem;">
                 <button [disabled]="isDisabled()" class="ladda-button blue" data-size="s" [ladda]="isLoading" (click)="aggiornaDipendente()">Salva</button>
