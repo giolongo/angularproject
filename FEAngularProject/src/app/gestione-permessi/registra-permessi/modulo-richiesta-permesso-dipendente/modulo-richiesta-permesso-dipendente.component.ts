@@ -29,6 +29,9 @@ export class ModuloRichiestaPermessoDipendenteComponent implements OnInit {
   }
 
   setFileName(event){
+    //carica file permesso.
+    //il file viene codificato in base64 per poi essere memorizzato come stringa sul database.
+
     var file = event.target.files[0];
     this.nomeCertificatoCaricato = file.name;
     
