@@ -1,7 +1,9 @@
+<!-- Calendario per la visualizzazione dei giorni di permesso approvati -->
 <div class="calendario">
   <div class="card">
     <div class="card-header">
       <div class="row text-center">
+        <!-- Header per il cambio mese / cambio anno -->
         <div class="col-md-2 col-sm-2">
           <a (click)="prevMonth()"><i class="material-icons hand calendar-nav-icon" title="before">navigate_before</i></a> 
         </div>
@@ -39,6 +41,7 @@
                 <div class="week-date disabled" *ngIf="!isSelectedMonth(day.mDate)">
                   <span class="date-text">{{ day.mDate.date() }}</span>
                 </div>
+                <!-- I giorni approvati vengono marcati come "selezionati" in modo tale da essere evidenziati, per mezzo della condizione isSelectedMonth(day.mDate) -->
                 <div class="week-date enabled"
                       *ngIf="isSelectedMonth(day.mDate)"
                       (click)="selectDate(day)"

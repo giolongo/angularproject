@@ -1,3 +1,5 @@
+//Il codice è analogo al child-component del component gestione-permessi-dipendenti,
+//cambia l'endpoint dal quale recupera i dati.
 import { Component, OnInit } from '@angular/core';
 import { EmployerLogService } from '../../../service/employer-log.service';
 import { Router } from "@angular/router";

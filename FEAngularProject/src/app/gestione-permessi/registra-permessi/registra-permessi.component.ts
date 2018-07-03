@@ -12,8 +12,8 @@ export class RegistraPermessiComponent implements OnInit {
   constructor(private employerLogService : EmployerLogService, private router: Router) { }
 
   ngOnInit() {
+    //Controlli per la sessione (vedi gestione-permessi)
     if(!this.employerLogService.isLogged()){
-      //Se non lo è lo riporto alla pagina di Login
       if(!sessionStorage.getItem("token")){
         this.router.navigate(['/login']);
       }else{

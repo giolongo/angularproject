@@ -4,8 +4,11 @@ import * as moment from 'moment';
 import * as _ from 'lodash';
 
 export interface CalendarDate {
+  //calendario gestito per mezzo della classe moment
   mDate: moment.Moment;
+  //flag per evidenziare i giorni di permesso approvati
   selected?: boolean;
+  //il giorno corrente è anch'esso evidenziato
   today?: boolean;
   showEvent: boolean;
 }
@@ -16,7 +19,7 @@ export interface CalendarDate {
   styleUrls: ['./calendario-permessi-dipendente.component.scss']
 })
 export class CalendarioPermessiDipendenteComponent implements OnInit, OnChanges {
-
+  //inizializzo la classe moment per la gestione del clendario
   currentDate = moment();
   dayNames = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
   weeks: CalendarDate[][] = [];
@@ -27,25 +30,34 @@ export class CalendarioPermessiDipendenteComponent implements OnInit, OnChanges 
   @Output() onSelectDate = new EventEmitter<CalendarDate>();
 
   constructor(private restRequestService : RestRequestService) {
+    //setto la locale per tradurre le stringhe del calendario da inglese ad italiano
     this.currentDate.locale("it");
   }
 
   ngOnInit(): void {
+    //periodicamente verifico la presenza di nuovi permessi approvati ricaricando il mese visualizzato.
     setInterval(function(){
       this.datePermessi=[];
+      //Il component è utilizzato sia per le view visibili dai manager che per quelle visibili dai dipendenti
       if(this.loadManager){
-        //console.log("refreshing manager calendar");
+        //Caso view visualizzata da un Manager
+        //Carico la lista dei permessi approvati a tutti i subordinati
         this.restRequestService.getListaPermessiSubordinati().subscribe(function(response){
           response['data'].forEach(function (row) {
+            //la chiamata restituisce un range, calcolo ogni singola data per evidenziarla nel calendario
             if(row['stato_richiesta']=='approvato'){
               this.enumerateDaysBetweenDates(this, row['data_inizio'], row['data_fine']);
             }
           }.bind(this));
+          //genero il calendario
           this.generateCalendar();
         }.bind(this));
       }
       else{
-        //console.log("refreshing dipendente calendar");
+        //Caso view visualizzata da un dipendete
+        //Carico la lista dei permessi approvati
+        //NB: Il manager che accede alla tab gestione permessi visualizza questo component come Dipendente (vede solo i suoi permessi)
+        //NB: Il manager che accede alla tab gestione permessi subordinati visualizza questo component come Manager (vede anche i permessi dei suoi subordinati)
         this.restRequestService.getListaPermessiDipendente().subscribe(function(response){
           response['data'].forEach(function (row) {
             if(row['stato_richiesta']=='approvato'){
@@ -63,7 +75,7 @@ export class CalendarioPermessiDipendenteComponent implements OnInit, OnChanges 
     if (changes.selectedDates &&
         changes.selectedDates.currentValue &&
         changes.selectedDates.currentValue.length  > 1) {
-      // sort on date changes for better performance when range checking
+      //Ordino le date
       this.sortedDates = _.sortBy(changes.selectedDates.currentValue, (m: CalendarDate) => m.mDate.valueOf());
       this.generateCalendar();
     }
@@ -88,7 +100,7 @@ export class CalendarioPermessiDipendenteComponent implements OnInit, OnChanges 
     this.onSelectDate.emit(date);
   }
 
-  // actions from calendar
+  //Azioni del calendario (cambio mese/anno)
   prevMonth(): void {
     this.currentDate = moment(this.currentDate).subtract(1, 'months');
     this.generateCalendar();
@@ -119,7 +131,7 @@ export class CalendarioPermessiDipendenteComponent implements OnInit, OnChanges 
     this.generateCalendar();
   }
 
-  // generate the calendar grid
+  // Genera il calendario
   generateCalendar(): void {
     const dates = this.fillDates(this.currentDate);
     const weeks: CalendarDate[][] = [];
@@ -128,7 +140,7 @@ export class CalendarioPermessiDipendenteComponent implements OnInit, OnChanges 
     }
     this.weeks = weeks;
   }
-
+  //Popola il mese selezionato
   fillDates(currentMoment: moment.Moment): CalendarDate[] {
     const firstOfMonth = moment(currentMoment).startOf('month').day();
     const firstDayOfGrid = moment(currentMoment).startOf('month').subtract(firstOfMonth, 'days');
@@ -140,6 +152,8 @@ export class CalendarioPermessiDipendenteComponent implements OnInit, OnChanges 
                 today: this.isToday(d),
                 selected: this.isSelected(d),
                 mDate: d,
+                //getClasses preleva le classi da assegnare al div dello specifico giorno
+                //in questo modo visualizzo i permessi approvati con uno sfondo blu.
                 showEvent: this.getClasses(d)
               };
             });
@@ -171,7 +185,6 @@ export class CalendarioPermessiDipendenteComponent implements OnInit, OnChanges 
         var day = currDate.date() - 1;
         var month = currDate.month() +1;
         var year = currDate.year();
-        //console.log(day+"-"+month+"-"+year);
         __this.datePermessi[__this.formatDate(day, month, year)] = true;
       }
   };

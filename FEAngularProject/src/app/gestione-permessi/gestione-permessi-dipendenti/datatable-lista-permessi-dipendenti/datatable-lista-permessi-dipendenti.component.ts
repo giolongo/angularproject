@@ -10,6 +10,7 @@ import { Subject } from 'rxjs';
   styleUrls: ['./datatable-lista-permessi-dipendenti.component.css']
 })
 export class DatatableListaPermessiDipendentiComponent implements OnDestroy, OnInit {
+  //inizializzo gli elementi per il render della datatable
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
   dtOptions: DataTables.Settings = {};
@@ -29,10 +30,13 @@ export class DatatableListaPermessiDipendentiComponent implements OnDestroy, OnI
   }
 
   ngOnInit(): void {
+    //inizializzo i metadati della datatable
     this.initDatatable();
+    //prelevo dal backend i dati da inserire nella datatable per poi "disegnarli".
     this.restRequestService.getListaPermessiDipendente().toPromise().then(function(response){
       this.rows = response["data"];
       this.render();
+      //questo flag attiva/disattiva il loader
       this.tableReady = true;
     }.bind(this));
   }
@@ -74,8 +78,11 @@ export class DatatableListaPermessiDipendentiComponent implements OnDestroy, OnI
   render(): void {
     var __this = this;
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      //ad ogni refresh svuoto la datatable per poi riempirla con i dati aggiornati
       dtInstance.clear();
+      //per ogni riga ottenuta dalla chiamata backend inserisco la controparte nella datatable
       this.rows.forEach(function (row) {
+        //il certificato è gestito per mezzo della codifica base64 (memorizzo una stringa lato backend).
         var base64 = row['certificatoBase64'];
         if(base64.indexOf('base64,') == -1){
           return "";
@@ -91,9 +98,9 @@ export class DatatableListaPermessiDipendentiComponent implements OnDestroy, OnI
         var baseFile = 'data:application/octet-stream';
         var strippedFile = base64.split(';base64,')[1];
         base64 = baseFile+';base64,'+strippedFile;
-
+        //attivo/disattivo i bottoni
         var disabilitaCancellaPermesso = row['stato_richiesta'] == 'approvato';
-
+        //genero i bottoni (attivati/disattivati a seconda del caso, il controllo è stato implementato anche a backend)
         var bottoneInfoDipendente = $("<div>").append(
           $("<button>")
             .addClass('btn')
@@ -135,17 +142,23 @@ export class DatatableListaPermessiDipendentiComponent implements OnDestroy, OnI
           $(bottoneDonwloadCertificato).html(),
           $(bottoneCancellaPermesso).html()
         ];
+        //aggiungo gli elementi che ho generato.
+        //Per la generazione di ogni singolo nodo è stato utilizzato JQuery per semplicità e pulizia del codice.
         dtInstance.row.add(myrow).draw();
+        //procedo con la prossima riga
       });
+      //imposto gli eventi sui bottoni appena aggiunti alle varie righe.
       __this.bindBottoni(dtInstance);
     });
   }
 
   bindCancellaPermesso(dtInstance){
     var __this = this;
+    //Disabilito i vecchi eventi, altrimenti aggiungendone sempre nuovi avrei esecuzioni multiple della stessa richiesta.
+    //Canellando una riga non cancello anche l'evento!
     $('body .datatable-permessi-dipendente').off('click', '.undo_request');
     $('body .datatable-permessi-dipendente').on('click', '.undo_request', function(){
-      console.log('Annulla!');
+      //console.log('Annulla!');
       __this.tableReady = false;
       var id_permesso = $(this).attr('id_richiesta');
       var rowInstance = this;
@@ -165,6 +178,7 @@ export class DatatableListaPermessiDipendentiComponent implements OnDestroy, OnI
   }
 
   bindDettagliDipendente(dtInstance){
+    //questo evento permette di visualizzare la sottotabella della datatable
     var __this = this;
     $('body .datatable-permessi-dipendente').off('click', 'td.details-control button.info-dipendente');
     $('body .datatable-permessi-dipendente').on('click', 'td.details-control button.info-dipendente', function () {
@@ -193,7 +207,7 @@ export class DatatableListaPermessiDipendentiComponent implements OnDestroy, OnI
   }
 
   format(data) {
-      // `d` is the original data object for the row
+      //costruisce la sottotabella della datatable, torna l'html.
       return $("<div>").append(
         $("<table>")
           .attr("cellpadding", "5")

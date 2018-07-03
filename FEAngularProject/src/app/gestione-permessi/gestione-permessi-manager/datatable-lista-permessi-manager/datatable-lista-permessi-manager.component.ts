@@ -1,3 +1,5 @@
+//Il codice è analogo al child-component del component gestione-permessi-dipendenti,
+//cambia l'endpoint dal quale recupera i dati.
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
 import { Router } from '@angular/router';
@@ -25,6 +27,7 @@ export class DatatableListaPermessiManagerComponent implements OnDestroy, OnInit
     'Approva',
     'Rifiuta'
   ];
+
   rows = [];
   constructor(private restRequestService : RestRequestService, private router: Router) { 
     this.tableReady = false;

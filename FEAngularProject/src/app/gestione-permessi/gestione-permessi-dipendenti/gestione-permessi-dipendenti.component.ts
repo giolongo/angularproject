@@ -12,6 +12,8 @@ export class GestionePermessiDipendentiComponent implements OnInit {
   constructor(private employerLogService : EmployerLogService, private router: Router) { }
 
   ngOnInit() {
+    //Non controllo nulla, il parent ha già controllato tutto il necessario, se sono arrivato a caricare questo component tutto è andato per il verso giusto.
+    //Se così non fosse non sarei neanche arrivato quì.
   }
 
 }
