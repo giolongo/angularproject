@@ -15,13 +15,13 @@ export class ProfiloUtenteDatiPersonaliComponent implements OnInit {
   public codiceFiscale : String;
   public dataDiNascita : Date;
   public email : String;
-  public password : String;
   public iban : String;
   public banca : String;
   public bbc : String;
   public user : User;
   public vecchiaPassword : string;
-  public ripetiVecchiaPassword : string;
+  public nuovaPassword : string;
+  public ripetiNuovaPassword : string;
   public error : string;
   public warning : string;
   isReady : boolean;
@@ -50,8 +50,11 @@ export class ProfiloUtenteDatiPersonaliComponent implements OnInit {
     this.isLoading = true;
     this.warning = undefined;
     //Caso in cui non si voglia modificare la password
-    if(!this.password){
-      this.password = this.vecchiaPassword;
+    if(!this.vecchiaPassword){
+      this.nuovaPassword = this.ripetiNuovaPassword = this.vecchiaPassword;
+    }
+    if(this.nuovaPassword != this.ripetiNuovaPassword){
+      return;
     }
     //Parametri per la request
     var parameters = {
@@ -63,7 +66,10 @@ export class ProfiloUtenteDatiPersonaliComponent implements OnInit {
       'iban':this.iban,
       'banca':this.banca,
       'bbc':this.bbc,
-      'password':this.password
+      'vecchiaPassword':this.vecchiaPassword,
+      'nuovaPassword':this.nuovaPassword,
+      'ripetiNuovaPassword':this.ripetiNuovaPassword,
+
     }
     //Eseguo la chiamata rest per l'update dei dati
     this.restRequestService.updateUtente(parameters).subscribe(function(){
@@ -74,7 +80,7 @@ export class ProfiloUtenteDatiPersonaliComponent implements OnInit {
           this.router.navigate(['/login']);
         }
         //Reset form
-        this.vecchiaPassword = this.ripetiVecchiaPassword = this.password = undefined;
+        this.vecchiaPassword = this.nuovaPassword = this.ripetiNuovaPassword = undefined;
         this.isLoading = false;
       }.bind(this));
     }.bind(this)); 
@@ -82,18 +88,38 @@ export class ProfiloUtenteDatiPersonaliComponent implements OnInit {
 
   //Check per disabilitare il button "salva"
   isDisabled() {
-    if((!this.nome || !this.cognome || !this.dataDiNascita || !this.email || !this.vecchiaPassword || !this.ripetiVecchiaPassword) || this.error){
+    if(
+      !this.nome || 
+      !this.cognome || 
+      !this.dataDiNascita || 
+      !this.email || 
+      !this.vecchiaPassword || 
+      !this.nuovaPassword || 
+      !this.ripetiNuovaPassword || 
+      this.error
+    ){
       return true;
     }else{
       return false;
     }
   }
 
-  //Controllo che la password precedente sia inserita correttametne, un verify prima di eseguire l'update dei dati
-  checkOldPassword(){
-    if(this.vecchiaPassword != this.ripetiVecchiaPassword){
-      this.error="Le password non coincidono";
-    }else{
+  //Validate form per update utente
+  checkPassword(){
+    if(this.vecchiaPassword || this.nuovaPassword){
+      if(!this.vecchiaPassword){
+        this.error="Inserisci la vecchia password";
+      }else if(!this.nuovaPassword){
+        this.error="Inserisci la password";
+      }else if(!this.ripetiNuovaPassword){
+        this.error="Inserisci nuovamente la password";
+      }else if(this.vecchiaPassword && this.nuovaPassword && this.nuovaPassword != this.ripetiNuovaPassword){
+        this.error="Le password non coincidono";
+      }else{
+        this.error = undefined;
+      }
+    }
+    if(!this.error){
       this.restRequestService.checkPasswordUtente(this.vecchiaPassword, this.codiceFiscale).subscribe(function(response){
         if(!response['succes']){
           this.error = response['error'];
@@ -101,12 +127,6 @@ export class ProfiloUtenteDatiPersonaliComponent implements OnInit {
           this.error=undefined;
         }
       }.bind(this));
-    }
-  }
-  //Check se la password precedente e quella nuova coincidono, metto in primo piano un messaggio di warning
-  checkNewPassword(){
-    if(this.ripetiVecchiaPassword == this.password){
-      this.warning="La nuova e vecchia password coincidono";
     }
   }
 

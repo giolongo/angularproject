@@ -12,7 +12,7 @@ class UtenteController extends Controller
 {
     public function __construct()
     {}
-
+    
     public function checkPasswordUtente(Request $request){
         $credentials = $request->only('codice_fiscale', 'password');
         
@@ -39,7 +39,7 @@ class UtenteController extends Controller
             // something went wrong whilst attempting to encode the token
             return response()->json(['success' => false, 'error' => 'Failed to login, please try again.'], 500);
         }
-        }
+    }
 
        /*  $utente = Dipendente::where([["id_dipendente", "=", $user->id_dipendente],
         ["password","=",$password]
@@ -66,7 +66,27 @@ class UtenteController extends Controller
         $iban=$request->get('iban');
         $banca=$request->get('banca');
         $bbc=$request->get('bbc');
-        $password=Hash::make($request->get('password'));
+        $vecchiaPassword=$request->get('vecchiaPassword');
+        $nuovaPassword=$request->get('nuovaPassword');
+        $ripetiNuovaPassword=$request->get('ripetiNuovaPassword');
+        
+       // $vecchiaPassword=($request->get('vecchiaPassword'));
+      //  $nuovaPassword=($request->get('nuovaPassword'));
+       // $ripetiNuovaPassword=($request->get('ripetiNuovaPassword'));
+        if(!empty($vecchiaPassword)){
+            if(!Hash::check($vecchiaPassword, $user->password)){
+                return response()->json(['success' => false, 'error' => 'La vecchia password e\' errata!']);
+            }else if(empty($nuovaPassword) || empty($ripetiNuovaPassword)){
+                return response()->json(['success' => false, 'error' => 'Questa nuova password non puo\' essere impostata!']);
+            }else if($nuovaPassword != $ripetiNuovaPassword){
+                return response()->json(['success' => false, 'error' => 'Le password non coincidono!']);
+            }
+            $nuovaPassword = Hash::make($nuovaPassword);
+        }else{
+            $nuovaPassword = $user->password;
+        }
+
+
 
         Dipendente::where([["id_dipendente", "=", $user->id_dipendente]])
         ->update([
@@ -77,7 +97,7 @@ class UtenteController extends Controller
             "data_nascita"=> $data_nascita,
             "banca"=>$banca,
             "bbc"=>$bbc,
-            "password"=>$password
+            "password"=>$nuovaPassword
         ]);
 
         return response()->json([
