@@ -15,16 +15,16 @@ import { TeamComponent } from './team/team.component';
 
 const appRoutes: Routes = [
     { path: '', redirectTo: '/dashboard', pathMatch: 'full'},
-    { path: 'login', component: LoginComponent, pathMatch: 'full'},
-    { path: 'dashboard', component: DashboardComponent, pathMatch: 'full'},
-    { path: 'registraUtente', component: RegistraUtenteComponent, pathMatch: 'full'},
-    { path: 'registraTeam', component: RegistraTeamComponent, pathMatch: 'full'},
+    { path: 'login', component: LoginComponent, pathMatch: 'full'},//Longo Giovanni & Orazio Contarino
+    { path: 'dashboard', component: DashboardComponent, pathMatch: 'full'},//Longo Giovanni & Orazio Contarino
+    { path: 'registraUtente', component: RegistraUtenteComponent, pathMatch: 'full'},//Longo Giovanni && Orazio COntarino
+    { path: 'registraTeam', component: RegistraTeamComponent, pathMatch: 'full'},//Longo Giovanni
     { path: 'registraPermessi', component: RegistraPermessiComponent, pathMatch: 'full'},
-    { path: 'visualizzaProfilo', component: ProfiloUtenteComponent, pathMatch: 'full'},
+    { path: 'visualizzaProfilo', component: ProfiloUtenteComponent, pathMatch: 'full'},//Longo Giovanni
     { path: 'gestionePermessiDipendente', component: GestionePermessiComponent, pathMatch: 'full'},
-    { path: 'ricercaRisultati', component: RicercaComponent, pathMatch:'full'},
-    { path: 'skillDipendente/:id_dipendente', component: SkillDipendenteComponent},
-    { path: 'team/:id_team', component: TeamComponent},
+    { path: 'ricercaRisultati', component: RicercaComponent, pathMatch:'full'},//Longo Giovanni
+    { path: 'skillDipendente/:id_dipendente', component: SkillDipendenteComponent},//Longo Giovanni
+    { path: 'team/:id_team', component: TeamComponent},//Longo Giovanni
     
     //{ path: '**', component: PageNotFoundComponent }
 ];

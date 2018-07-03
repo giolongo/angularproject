@@ -13,7 +13,10 @@ export class SkillDipendenteDipendentiComponent implements OnInit {
 
   private idDipendente : String;
   datiDipendente : any;
-  constructor(private activatedRoute: ActivatedRoute,  private router: Router, private restRequestService:RestRequestService, private employerLogService : EmployerLogService) {}
+  isReady : boolean;
+  constructor(private activatedRoute: ActivatedRoute,  private router: Router, private restRequestService:RestRequestService, private employerLogService : EmployerLogService) {
+    this.isReady = false;
+  }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
@@ -22,13 +25,14 @@ export class SkillDipendenteDipendentiComponent implements OnInit {
         this.idDipendente = params.id_dipendente;
         if(this.idDipendente == "undefined"){
           this.router.navigate(['/ricercaRisultati']);
+          return;
         }
         else if(this.employerLogService.getId() == this.idDipendente){
           this.router.navigate(['/visualizzaProfilo']);
         }
         this.restRequestService.getDipendeteInfoAndSkill(this.idDipendente).subscribe(function(response){
           this.datiDipendente = response['data'];
-          console.log( this.datiDipendente);
+          this.isReady=true;
         }.bind(this))
       }
     });

@@ -20,9 +20,16 @@ export class ProfiloUtenteDatiPersonaliComponent implements OnInit {
   public banca : String;
   public bbc : String;
   public user : User;
+  public vecchiaPassword : string;
+  public ripetiVecchiaPassword : string;
+  public error : string;
+  public warning : string;
+  isReady : boolean;
   isLoading: boolean = false;
   buttonIsVisible : boolean;
   constructor(private employerLogService:EmployerLogService, private restRequestService:RestRequestService, private router:Router) { 
+    this.isReady = false;
+    //Setto i dati dell'utente loggato per mostrarlo nell'apposito form
     this.nome = employerLogService.getNomeUtente();
     this.cognome = employerLogService.getCognomeUtente();
     this.codiceFiscale = employerLogService.getCodiceFiscale();
@@ -32,6 +39,8 @@ export class ProfiloUtenteDatiPersonaliComponent implements OnInit {
     this.iban = employerLogService.getIban();
     this.banca = employerLogService.getBanca();
     this.bbc = employerLogService.getBbc();
+    this.isReady = true;
+    this.warning = "Per modificare i dati inserire la password nei campi 'Vecchia Password' e 'Ripeti Password'";
   }
 
   ngOnInit() {
@@ -39,7 +48,12 @@ export class ProfiloUtenteDatiPersonaliComponent implements OnInit {
 
   aggiornaDipendente(){
     this.isLoading = true;
-    console.log(this.dataDiNascita);
+    this.warning = undefined;
+    //Caso in cui non si voglia modificare la password
+    if(!this.password){
+      this.password = this.vecchiaPassword;
+    }
+    //Parametri per la request
     var parameters = {
       'token' : sessionStorage.getItem("token"),
       'nome': this.nome,
@@ -51,22 +65,48 @@ export class ProfiloUtenteDatiPersonaliComponent implements OnInit {
       'bbc':this.bbc,
       'password':this.password
     }
-
+    //Eseguo la chiamata rest per l'update dei dati
     this.restRequestService.updateUtente(parameters).subscribe(function(){
+      //Ricevuta la respone e quindi eseguito l'update ricarico il service contenente i dati dell'utente loggato
       this.employerLogService.refreshSessionByTokenRequest().subscribe(function(response){
+        //Se riscontro errore, forzo ad eseguire il login nuovamente
         if(!this.employerLogService.caricaUtenteLoggato(response)){
           this.router.navigate(['/login']);
         }
+        //Reset form
+        this.vecchiaPassword = this.ripetiVecchiaPassword = this.password = undefined;
         this.isLoading = false;
       }.bind(this));
     }.bind(this)); 
   }
 
+  //Check per disabilitare il button "salva"
   isDisabled() {
-    if(!this.nome || !this.cognome || !this.dataDiNascita || !this.email || !this.password){
+    if((!this.nome || !this.cognome || !this.dataDiNascita || !this.email || !this.vecchiaPassword || !this.ripetiVecchiaPassword) || this.error){
       return true;
     }else{
       return false;
+    }
+  }
+
+  //Controllo che la password precedente sia inserita correttametne, un verify prima di eseguire l'update dei dati
+  checkOldPassword(){
+    if(this.vecchiaPassword != this.ripetiVecchiaPassword){
+      this.error="Le password non coincidono";
+    }else{
+      this.restRequestService.checkPasswordUtente(this.vecchiaPassword, this.codiceFiscale).subscribe(function(response){
+        if(!response['succes']){
+          this.error = response['error'];
+        }else{
+          this.error=undefined;
+        }
+      }.bind(this));
+    }
+  }
+  //Check se la password precedente e quella nuova coincidono, metto in primo piano un messaggio di warning
+  checkNewPassword(){
+    if(this.ripetiVecchiaPassword == this.password){
+      this.warning="La nuova e vecchia password coincidono";
     }
   }
 

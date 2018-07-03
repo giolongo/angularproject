@@ -6,11 +6,55 @@ use App\angularproject\CommonFunction;
 use App\Models\Dipendente;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
+use Validator, JWTAuth;
 
 class UtenteController extends Controller
 {
     public function __construct()
     {}
+
+    public function checkPasswordUtente(Request $request){
+        $credentials = $request->only('codice_fiscale', 'password');
+        
+        $rules = [
+            'codice_fiscale' => 'required',
+            'password' => 'required',
+        ];
+        $validator = Validator::make($credentials, $rules);
+        if($validator->fails()) {
+            return response()->json([
+                'success' => false, 
+                'error' => "La password inserita è errata" 
+            ]);
+        }
+        try {
+            // attempt to verify the credentials and create a token for the Dipendente
+            if (! $token = JWTAuth::attempt($credentials)) {
+                /* return response()->json(['success' => false, 'error' => 'We cant find an account with this credentials. Please make sure you entered the right information and you have verified your email address.'], 401); */
+                return response()->json(['success' => false, 'error' => 'La password inserita è errata']);
+            }else{
+                return response()->json(['success' => true]);
+            }
+        } catch (JWTException $e) {
+            // something went wrong whilst attempting to encode the token
+            return response()->json(['success' => false, 'error' => 'Failed to login, please try again.'], 500);
+        }
+        }
+
+       /*  $utente = Dipendente::where([["id_dipendente", "=", $user->id_dipendente],
+        ["password","=",$password]
+        ])->get();
+        if(!count($utente)){
+            return response()->json([
+                'success' => false, 
+                'error' => "La password inserita è errata" 
+            ]); 
+        }else{
+            return response()->json([
+                'success' => true, 
+            ]); 
+        } */
+    
 
     public function updateUser(Request $request){
         $user = CommonFunction::tokenToDipendente($request->get('token'));

@@ -1,4 +1,5 @@
-<form #modificaUtente = "ngForm">
+<div class="loader" [hidden]="isReady">&nbsp;</div>
+<form [hidden]="!isReady" #modificaUtente = "ngForm">
     <div class="card" style="width: 30rem; margin-top: 5rem;">
         <div class="card-header">
             <h5 class="card-title">Dati Utente</h5>
@@ -14,21 +15,30 @@
             <input type="date" class="input-text" name="dataDiNascita" [(ngModel)]="dataDiNascita" value="{{dataDiNascita}}">
             <label>Email</label>
             <input type="email" class="input-text" name="email" [(ngModel)]="email" value="{{email}}">
-            <label>Password</label>
-            <input type="password" class="input-text" name="password" [(ngModel)]="password">
+            <label>Vecchia Password</label>
+            <input type="password" class="input-text" name="vecchiaPassword" [(ngModel)]="vecchiaPassword" (blur)="checkOldPassword()">
+            <label>Ripeti Password</label>
+            <input type="password" class="input-text" name="ripetiVecchiaPassword" [(ngModel)]="ripetiVecchiaPassword" (blur)="checkOldPassword()">
+            <label>Nuova Password</label>
+            <input type="password" class="input-text" name="password" [(ngModel)]="password" [disabled]="error || !vecchiaPassword || !ripetiVecchiaPassword" (blur)="checkNewPassword()">
             <h5 class="card-title" *ngIf="!showDatiBancari || showDatiBancari==false">Mostra dati bancari  <a class="valid-action" ><i class="material-icons" (click)="showDatiBancari=true">expand_more</i></a> </h5>
             <h5 class="card-title" *ngIf="showDatiBancari==true">Nascondi dati bancari <a class="valid-action" ><i class="material-icons" (click)="showDatiBancari=false">expand_less</i></a></h5>
             <div *ngIf="showDatiBancari">
                 <label>Iban</label>
-                <input type="email" class="input-text" name="iban" [(ngModel)]="iban" value="{{iban}}">
+                <input type="text" class="input-text" name="iban" [(ngModel)]="iban" value="{{iban}}">
                 <label>Banca</label>
-                <input type="email" class="input-text" name="banca" [(ngModel)]="banca" value="{{banca}}">
+                <select class="input-text" name="banca" [(ngModel)]="banca" required>
+                    <option value="Poste Italiane">Poste Italiane</option>
+                    <option value="Monte Paschi">Monte Paschi</option>
+                </select>
                 <label>BBC</label>
-                <input type="email" class="input-text" name="bbc" [(ngModel)]="bbc" value="{{bbc}}">
+                <input type="text" class="input-text" name="bbc" [(ngModel)]="bbc" value="{{bbc}}">
             </div>
             <div class="row" style="padding-top:1rem; padding-left:1rem;">
                 <button [disabled]="isDisabled()" class="ladda-button blue" data-size="s" [ladda]="isLoading" (click)="aggiornaDipendente()">Salva</button>
             </div>
+            <label class="error" *ngIf="error">{{error}}</label>
+            <label class="warning" *ngIf="warning">{{warning}}</label>
         </div>
     </div>
 </form>

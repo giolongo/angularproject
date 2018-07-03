@@ -17,12 +17,15 @@ export class ProfiloUtenteComponent implements OnInit {
 
   ngOnInit() {
     if(!this.employerLogService.isLogged()){
-      //Se non lo è lo riporto alla pagina di Login
+      //Controlo se l'utente si è già loggato in precedenza (durante la login viene salvato il token nella sessionstorage)
       if(!sessionStorage.getItem("token")){
+        //Se non lo è, ritorno alla login
         this.router.navigate(['/login']);
       }else{
+        //Ricarico i dati dell'utente loggato tramite l'apposito token
         this.employerLogService.refreshSessionByTokenRequest().subscribe(function(response){
           if(!this.employerLogService.caricaUtenteLoggato(response)){
+            //Se la request mi da error, torno alla login
             this.router.navigate(['/login']);
           }
         }.bind(this));

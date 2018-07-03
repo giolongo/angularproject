@@ -11,7 +11,7 @@ import { Subject } from 'rxjs';
 export class DatatableListaTeamComponent implements OnInit {
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
-
+  tableReady : boolean;
   dtOptions: DataTables.Settings = {};
 
   headers = [
@@ -21,15 +21,16 @@ export class DatatableListaTeamComponent implements OnInit {
   ];
   rows = [];
   constructor(private restRequestService : RestRequestService, private router: Router) { 
+    this.tableReady = false;
   }
 
   ngOnInit(): void {
     console.log("gonna fire getListaPermessiDipendente");
     this.initDatatable();
     this.restRequestService.ricerca('getTeam').subscribe(function(response){
-      console.log(response["data"]);
       this.rows = response["data"];
       this.render(this);
+      this.tableReady = true;
     }.bind(this));
   }
   ngOnDestroy(): void {
@@ -63,7 +64,8 @@ export class DatatableListaTeamComponent implements OnInit {
     };
   }
 
-  render(__this): void {
+  render(): void {
+    var __this = this;
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
       // Destroy the table first
       dtInstance.clear().draw();
@@ -80,17 +82,16 @@ export class DatatableListaTeamComponent implements OnInit {
         ];
         dtInstance.row.add(myrow).draw();
       });
-      __this.bindBottoni(__this, dtInstance);
+      __this.bindBottoni(dtInstance);
     });
   }
-  bindBottoni(__this, dtInstance){
-    $(document).ready( function () {
-      $('body').on('click', '.view_dettagli', function(){
-        var id_team = $(this).attr('id_team');
-        var rowInstance = this;
-        console.log(id_team);
-        __this.router.navigate(['/team/'+id_team]);
-      });
+  bindBottoni(dtInstance){
+    var __this = this;
+    $('app-datatable-lista-team').on('click', '.view_dettagli', function(){
+      var id_team = $(this).attr('id_team');
+      var rowInstance = this;
+      console.log(id_team);
+      __this.router.navigate(['/team/'+id_team]);
     });
   }
 
