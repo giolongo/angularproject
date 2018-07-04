@@ -1,3 +1,4 @@
+//Giovanni Emanuele Longo - Ricerca dipendenti
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, Input } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
 import { Router } from '@angular/router';
@@ -14,7 +15,7 @@ export class DatatableListaDipendentiComponent implements OnDestroy, OnInit {
   dtElement: DataTableDirective;
   tableReady : boolean;
   dtOptions: DataTables.Settings = {};
-
+  //Header DataTable
   headers = [
     'Action',
     'Id',
@@ -24,15 +25,20 @@ export class DatatableListaDipendentiComponent implements OnDestroy, OnInit {
   ];
   rows = [];
   constructor(private restRequestService : RestRequestService, public router: Router) { 
+    //Mostro la DataTable solo se è renderizzata
     this.tableReady = false;
   }
 
 
   ngOnInit(): void {
+    //Inizializzo la DataTable
     this.initDatatable();
+    //Carico tutti i dipendenti
     this.restRequestService.ricerca('dipendenti').subscribe(function(response){
       this.rows = response["data"];
+      //Ricevuto la response renderizzo la DataTable
       this.render(this);
+      //Rendo visibile la DataTable
       this.tableReady = true;
     }.bind(this));
   }
@@ -77,10 +83,10 @@ export class DatatableListaDipendentiComponent implements OnDestroy, OnInit {
 
   render(__this): void {
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      // Destroy the table first
       dtInstance.clear().draw();
       this.rows.forEach(function (row) {
-
+        //I dati da mostrare
+        //Il button per il reindirizzamento alla pagina dell'utente selezionato
         var myrow = [
           '<a class="valid-action"> <i class="material-icons view_dettagli" id_dipendente=\''+row['id_dipendente']+'\' title="Visualizza Skill">visibility</button> </a>',
           row['id_dipendente'],
@@ -96,13 +102,12 @@ export class DatatableListaDipendentiComponent implements OnDestroy, OnInit {
   
   bindBottoni(__this, dtInstance){
     $('app-datatable-lista-dipendenti').on('click', '.view_dettagli', function(){
-      /* __this.router.navigate(['/skillDipendente/' + $(this).attr('id_dipendente')]); */
+      //Rendirizzamento alla pagina dell'utente selezionato
       __this.redirect($(this).attr('id_dipendente'));
     });
   }
 
   redirect(idDipendente : string){
-    console.log('/skillDipendente/' + idDipendente);
     this.router.navigate (['/skillDipendente/' + idDipendente]);
   }
 }

@@ -1,3 +1,4 @@
+//Giovanni Emanuele Longo
 import { Injectable } from '@angular/core';
 import { User } from '../app/common/class/user';
 import { Observable, of } from 'rxjs';
@@ -12,11 +13,11 @@ export class EmployerLogService {
   constructor(private restRequestService : RestRequestService, private router: Router) {
   }
   
-
+  //Check se l'utente è loggato
   isLogged() : boolean{
     return this.utenteLoggato ? true : false;
   }
-
+  //Login
   logIn(username: String, password: String){
     if((!this.utenteLoggato || !this.utenteLoggato.token)){
       return this.restRequestService.login(username, password);
@@ -27,23 +28,25 @@ export class EmployerLogService {
     this.caricaUtenteLoggato(response);
     this.router.navigate(['/dashboard']);
   }
-
+  //Refres usando il token in sessione
   refreshSessionByTokenRequest(){
     if(sessionStorage.getItem("token")){
       return this.restRequestService.validateToken(sessionStorage.getItem("token"));
     }
     return null;
   }
-
+  //Logout
   logOut() : boolean{
+    //Canvello utente loggato
     delete this.utenteLoggato;
     sessionStorage.removeItem('token');
+    //Rmuovo il token e vado alla login
     this.router.navigate(['/login']);
     return;
-    //TODO: Inserire il metodo del service rest-request che effettua il logout
   }
 
   caricaUtenteLoggato(response : any){
+    //Caricare l'oggetto utenteLoggato
     if(!response['success']){
       return false;
     }

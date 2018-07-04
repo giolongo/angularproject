@@ -1,3 +1,4 @@
+//Longo Giovanni Emanuele
 import { Component, OnInit } from '@angular/core';
 import { EmployerLogService } from '../../service/employer-log.service';
 import { RestRequestService } from '../../service/rest-request.service';

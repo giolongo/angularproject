@@ -1,3 +1,4 @@
+//Longo Giovanni Emanuele
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { EmployerLogService } from '../../service/employer-log.service';

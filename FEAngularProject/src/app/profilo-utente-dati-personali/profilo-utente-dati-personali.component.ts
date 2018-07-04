@@ -1,3 +1,4 @@
+//Longo Giovanni Emanuele
 import { Component, OnInit } from '@angular/core';
 import { User } from '../common/class/user';
 import { EmployerLogService } from '../../service/employer-log.service';

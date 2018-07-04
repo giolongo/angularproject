@@ -1,3 +1,4 @@
+//Longo Giovanni Emanuele
 import { Component, OnInit } from '@angular/core';
 import { RestRequestService } from '../../service/rest-request.service';
 import { SkillsService } from '../../service/skills.service';
@@ -96,6 +97,7 @@ export class ProfiloUtenteSkillsComponent implements OnInit {
         if(this.allSkill[i].id_skill == this.skills[j].skill[0].id_skill){
           //In caso affermativo rimuovo un elemento da tutte le skill a partire dalla posizione i dell'array
           this.allSkill.splice(i,1);
+          //rimuovendo l'elemento di posizione i, tutto l'array scala, di conseguenza dovrò ricontrollare l'elemento iesimo
           i=i-1;
         }
       }

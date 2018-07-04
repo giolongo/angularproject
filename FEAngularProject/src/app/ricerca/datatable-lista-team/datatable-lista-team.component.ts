@@ -1,3 +1,4 @@
+//Giovanni Emanuele Longo - Ricerca team
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, Input } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
 import { Router } from '@angular/router';
@@ -13,7 +14,7 @@ export class DatatableListaTeamComponent implements OnInit {
   dtElement: DataTableDirective;
   tableReady : boolean;
   dtOptions: DataTables.Settings = {};
-
+  //Header DataTable
   headers = [
     'Action',
     'Nome',
@@ -21,15 +22,19 @@ export class DatatableListaTeamComponent implements OnInit {
   ];
   rows = [];
   constructor(private restRequestService : RestRequestService, private router: Router) { 
+    //Mostro la DataTable solo se è renderizzata
     this.tableReady = false;
   }
 
   ngOnInit(): void {
-    console.log("gonna fire getListaPermessiDipendente");
+    //Inizializzo la DataTable
     this.initDatatable();
+    //Carico tutti i team
     this.restRequestService.ricerca('getTeam').subscribe(function(response){
       this.rows = response["data"];
+      //Ricevuto la response renderizzo la DataTable
       this.render(this);
+      //Rendo visibile la DataTable
       this.tableReady = true;
     }.bind(this));
   }
@@ -70,15 +75,12 @@ export class DatatableListaTeamComponent implements OnInit {
       // Destroy the table first
       dtInstance.clear().draw();
       this.rows.forEach(function (row) {
-
+        //I dati da mostrare
+        //Il button per il reindirizzamento alla pagina del team selezionato
         var myrow = [
           '<a class="valid-action"> <i class="material-icons view_dettagli" id_team=\''+row['id_team']+'\' title="Visualizza Skill">visibility</button> </a>',
           row['nome'],
           __this.getCapoTeam(row)
-
-          //'<i class="material-icons scarica_certificato" title="scarica certificato" id_certificato=\''+row['id']+'\' file='+row['certificatoBase64']+'>attach_file</i>',
-          //download_link,
-          //'<button class="btn btn-danger material-icons undo_request" id_richiesta=\''+row['id']+'\' title="annulla" '+abilitaCancellaPermesso+'>undo</button>'
         ];
         dtInstance.row.add(myrow).draw();
       });
@@ -90,11 +92,11 @@ export class DatatableListaTeamComponent implements OnInit {
     $('app-datatable-lista-team').on('click', '.view_dettagli', function(){
       var id_team = $(this).attr('id_team');
       var rowInstance = this;
-      console.log(id_team);
+      //Rendirizzamento alla pagina del team selezionato
       __this.router.navigate(['/team/'+id_team]);
     });
   }
-
+  //Mostro il capo team, creato metodo a parte per una migliore leggibilità del codice
   getCapoTeam (row : any){
     return row.team_capo_team[0].cognome + ' ' + row.team_capo_team[0].nome;
   }
