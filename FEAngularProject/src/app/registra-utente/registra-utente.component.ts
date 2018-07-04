@@ -39,6 +39,26 @@ export class RegistraUtenteComponent implements OnInit {
     }
   }
 
+  private checkRequired(newDipendente){
+    if(!this.nome){
+      this.error = "Inserisci il nome";
+    }else if(!this.cognome){
+      this.error = "Inserisci il cognome";
+    }if(!this.codiceFiscale){
+      this.error = "Inserisci il codice_fiscale";
+    }else if(!this.email){
+      this.error = "Inserisci il email";
+    }if(!this.password){
+      this.error = "Inserisci il password";
+    }else if(!this.ruolo){
+      this.error = "Inserisci il ruolo";
+    }else if(!this.dataDiNascita){
+      this.error = "Inserisci data di nascita";
+    }else{
+      this.error = undefined;
+    }
+  }
+
   public registraDipendente(){
     this.isLoading=true;
     //Dati nuovo dipendente
@@ -50,6 +70,10 @@ export class RegistraUtenteComponent implements OnInit {
       'password' : this.password,
       'ruolo' : this.ruolo,
       'data_nascita' : this.dataDiNascita
+    }
+
+    if(this.error){
+      return;
     }
     this.restRequestService.addDipendente(newDipendente).subscribe(function(response){
       this.isLoading = false;
