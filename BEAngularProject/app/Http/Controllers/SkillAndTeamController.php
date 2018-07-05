@@ -15,6 +15,7 @@ use App\Models\Team;
 use App\Models\TeamDipendente;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 /**
  *
  *@deprecated See WebHookVotaController
