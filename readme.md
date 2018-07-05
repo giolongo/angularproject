@@ -1,97 +1,97 @@
-###  
-Prerequisiti  
-- Scarica xampp con apache e mysql    
-- Scarica ed installa nodejs  
-- Scarica ed installa angular-cli  
-- Scarica ed installa typescript  
-- Scarica ed installa composer  
-- Scarica ed installa git bash  
-- Assicurati di avere i comandi `php`, `composer`, `ng`, `git` nel PATH (eseguibili da terminale)  
+# Progetto Angular
 - Esegui `git clone https://github.com/oraziocontarino/angularproject.git`  
+# Configurazione BackEnd (BE) 
+### Prerequisiti:  
+- **COMPOSER**  
+- **XAMPP** 
+  - Apache
+  - MySQL
+  
+### Configurazione ambiente di sviluppo e progetto BE:
+- Aggiungi alla variabile PATH di sistema i path per i comandi `php` e `composer`.
+- Apri il terminale.
+- Esegui `cd angularproject/BEAngularProject`.
+- Apri la cartella dove è stato installato xampp, modifica il file httpd.conf di Apache (`xampp > apache > conf`) ed incolla alla fine del file la seguente configurazione:
 
-###  
-Configurazione BackEnd (BE)  
-1. Accedi alla configurazione Apache (httpd.conf) ed incolla la seguente configurazione:  
-`#!conf`  
-`alias /angularproject/be C:/Path/To/BEAngularProject/public`
-`<Directory "C:/Path/To/BEAngularProject/public">`
-`AllowOverride all`  
-`Require all granted`  
-`</Directory>`  
-NB: `C:/Path/To/BEAngularProject/public` è relativo al path locale del server, addattarlo al caso specifico.  
-2. Avvia XAMPP  
-3. Avvia il servizio Apache  
-4. Avvia il servizio MySql  
-5. Crea il database `angularproject`   
-6. Esegui `cd C:/Path/To/BEAngularProject/`  
-7. Esegui `composer install`  
-8. Esegui `php artisan migrate`  
-9. Esegui `php artisan jwt:secret`  
-10. Crea un file con il seguente nome `.env` nella cartella BEAngularProject  
-11. Nel file creato al punto precedente incolla la seguente configurazione (modificando opportunamente i paths e le credenziali):  
-`APP_NAME=Laravel`  
-`APP_ENV=local`  
-`APP_KEY=base64:q1BKmFCaFMFQlMbugfnIubWMMLTt0J2kKVGbc++keG0=`  
-`APP_DEBUG=true`  
-`APP_URL=http://localhost`  
-  
-`LOG_CHANNEL=stack`  
-  
-`DB_CONNECTION=mysql`  
-`DB_HOST=127.0.0.1`  
-`DB_PORT={DATABASE PORT}`  
-`DB_DATABASE={DATABASE NAME}`  
-`DB_USERNAME={DATABASE USER}`  
-`DB_PASSWORD={DATABASE PASSWORD }`  
-  
-`BROADCAST_DRIVER=log`  
-`CACHE_DRIVER=file`  
-`SESSION_DRIVER=file`  
-`SESSION_LIFETIME=120`  
-`QUEUE_DRIVER=sync`  
-  
-`REDIS_HOST=127.0.0.1`  
-`REDIS_PASSWORD=null`  
-`REDIS_PORT=6379`  
-  
-`MAIL_DRIVER=smtp`  
-`MAIL_HOST={SMTP EMAIL}`  
-`MAIL_PORT={PORT EMAIL}`  
-`MAIL_USERNAME={USERNAME EMAIL}`  
-`MAIL_PASSWORD={PASSWORD EMAIL}`  
-`MAIL_ENCRYPTION=tls`  
-  
-`PUSHER_APP_ID=`  
-`PUSHER_APP_KEY=`  
-`PUSHER_APP_SECRET=`  
-`PUSHER_APP_CLUSTER=mt1`  
-  
-`MIX_PUSHER_APP_KEY="${PUSHER_APP_KEY}"`  
-`MIX_PUSHER_APP_CLUSTER="${PUSHER_APP_CLUSTER}"`  
-  
-`JWT_SECRET=IWyqOAwBYniWvrvdVsnJGAbSDZ5EdOF5`  
-12. Nel .env appena modificato, impostare opportunamente i campi elencati: 
-DB_PORT, DB_DATABASE, DB_USERNAME, DB_PASSWORD, MAIL_HOST, MAIL_PORT, MAIL_USERNAME, MAIL_PASSWORD  
-Ex:  
-DB_PORT=3306  
-DB_DATABASE=angularproject  
-DB_USERNAME=root   
-DB_PASSWORD=  
-MAIL_HOST=smtp.gmail.com  
-MAIL_PORT=587  
-MAIL_USERNAME=mario.rossi@gmail.com  
-MAIL_PASSWORD=mySecretPasswd  
+    ```  
+    #!conf  
+    alias /meteo "C:/Path/To/angularproject/BEAngularProject/public"  
+    <Directory "C:/Path/To/angularproject/BEAngularProject/public">  
+    AllowOverride all  
+    Require all granted  
+    </Directory>  
+    ```
+    (sostituire Path/To/ con il percorso esatto della cartella `angularproject/BEAngularProject` ottenuta dal comando `git clone`)
 
-###  
-Configurazione FrontEnd (FE)  
-1. Esegui `cd C:/Path/To/FEAngularProject/` 
-2. Esegui `npm install`  
-3. Esegui `npm install -g @angular/cli@latest`  
-4. Esegui `npm install --save @ng-bootstrap/ng-bootstrap`  
+- Avvia XAMPP.
+- Avvia i servizi Apache e MySQL dal client XAMPP.
+- Accedi all'indirizzo `http://localhost/phpmyadmin` quindi crea il database `angularproject` cliccando su `nuovo` (menù laterale sinistro).  
+- Ritorna al terminale, nella cartella di progetto `angularproject/BEAngularProject`.
+- Esegui `copy .env.example .env`: il comando genera il file di configurazione *.env* utilizzato da Laravel.
+- Modifica il contenuto del file .env creato al punto precedente come segue:
 
-###
-Avviare l'app
-- Esegui `ng serve --open` dalla cartella FEAngularProject   
+    ```  
+    APP_NAME=Laravel
+    APP_ENV=local
+    APP_KEY=
+    APP_DEBUG=true
+    APP_URL=http://localhost
+    #------------------#
+    LOG_CHANNEL=stack
+    #------------------#
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT={DATABASE PORT}
+    DB_DATABASE=angularproject
+    DB_USERNAME=root
+    DB_PASSWORD=
+    #------------------#
+    BROADCAST_DRIVER=log
+    CACHE_DRIVER=file
+    SESSION_DRIVER=file
+    SESSION_LIFETIME=120
+    QUEUE_DRIVER=sync
+    #------------------#
+    REDIS_HOST=127.0.0.1
+    REDIS_PASSWORD=null
+    REDIS_PORT=6379
+    #------------------#
+    MAIL_DRIVER=smtp
+    MAIL_HOST=
+    MAIL_PORT=
+    MAIL_USERNAME=
+    MAIL_PASSWORD=
+    MAIL_ENCRYPTION=tls
+    #------------------#
+    PUSHER_APP_ID=
+    PUSHER_APP_KEY=
+    PUSHER_APP_SECRET=
+    PUSHER_APP_CLUSTER=mt1
+    #------------------#
+    MIX_PUSHER_APP_KEY="${PUSHER_APP_KEY}"
+    MIX_PUSHER_APP_CLUSTER="${PUSHER_APP_CLUSTER}"
+    #------------------#
+    JWT_SECRET=
+    ```
+
+- Esegui `composer install`
+- Esegui `php artisan key:generate`
+- Esegui `php artisan jwt:secret`
+- Esegui `php artisan migrate`
+- Esegui `php artisan db:seed --class=InitDatabaseSeeder`
+
+# Configurazione Frontend (FE)  
+### Prerequisiti:  
+- NodeJS  
+- Angular-cli  
+- TypeScript  
+### Configurazione ambiente di sviluppo e progetto FE:
+- Assicurati di avere i comandi `npm`, `ng`, `ts` nel PATH (eseguibili da terminale)   
+- Esegui `cd C:/Path/To/FEAngularProject/`
+- Esegui `npm install --save @angular/cli@latest`
+- Esegui `npm install --save @ng-bootstrap/ng-bootstrap`
+- Esegui `npm install`
+- Esegui `ng serve --open` 
  
 
 
