@@ -119,11 +119,11 @@ class AuthController extends Controller
             // attempt to verify the credentials and create a token for the Dipendente
             if (! $token = JWTAuth::attempt($credentials)) {
                 /* return response()->json(['success' => false, 'error' => 'We cant find an account with this credentials. Please make sure you entered the right information and you have verified your email address.'], 401); */
-                return response()->json(['success' => false, 'error' => 'We cant find an account with this credentials. Please make sure you entered the right information and you have verified your email address.']);
+                return response()->json(['success' => false, 'error' => 'Dati errati']);
             }
         } catch (JWTException $e) {
             // something went wrong whilst attempting to encode the token
-            return response()->json(['success' => false, 'error' => 'Failed to login, please try again.'], 500);
+            return response()->json(['success' => false, 'error' => 'Si e\' verificato un errore, riprova.'], 500);
         }
         // all good so return the token
         //return response()->json(['success' => true, 'data'=> [ 'token' => $token ]]);

@@ -1,3 +1,4 @@
+//Orazio Contarino
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import {RestRequestService} from '../../../service/rest-request.service' 
 import * as moment from 'moment';

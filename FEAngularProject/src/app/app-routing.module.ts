@@ -19,9 +19,9 @@ const appRoutes: Routes = [
     { path: 'dashboard', component: DashboardComponent, pathMatch: 'full'},//Longo Giovanni & Orazio Contarino
     { path: 'registraUtente', component: RegistraUtenteComponent, pathMatch: 'full'},//Longo Giovanni && Orazio COntarino
     { path: 'registraTeam', component: RegistraTeamComponent, pathMatch: 'full'},//Longo Giovanni
-    { path: 'registraPermessi', component: RegistraPermessiComponent, pathMatch: 'full'},
+    { path: 'registraPermessi', component: RegistraPermessiComponent, pathMatch: 'full'},//Orazio Contarino
     { path: 'visualizzaProfilo', component: ProfiloUtenteComponent, pathMatch: 'full'},//Longo Giovanni
-    { path: 'gestionePermessiDipendente', component: GestionePermessiComponent, pathMatch: 'full'},
+    { path: 'gestionePermessiDipendente', component: GestionePermessiComponent, pathMatch: 'full'},//Orazio Contarino
     { path: 'ricercaRisultati', component: RicercaComponent, pathMatch:'full'},//Longo Giovanni
     { path: 'skillDipendente/:id_dipendente', component: SkillDipendenteComponent},//Longo Giovanni
     { path: 'team/:id_team', component: TeamComponent},//Longo Giovanni

@@ -15,7 +15,7 @@
 
     ```  
     #!conf  
-    alias /meteo "C:/Path/To/angularproject/BEAngularProject/public"  
+    alias /angularproject/be "C:/Path/To/angularproject/BEAngularProject/public"  
     <Directory "C:/Path/To/angularproject/BEAngularProject/public">  
     AllowOverride all  
     Require all granted  
@@ -41,7 +41,7 @@
     #------------------#
     DB_CONNECTION=mysql
     DB_HOST=127.0.0.1
-    DB_PORT={DATABASE PORT}
+    DB_PORT=3306
     DB_DATABASE=angularproject
     DB_USERNAME=root
     DB_PASSWORD=
@@ -82,16 +82,12 @@
 
 # Configurazione Frontend (FE)  
 ### Prerequisiti:  
-- NodeJS  
-- Angular-cli  
-- TypeScript  
+- NodeJS   
 ### Configurazione ambiente di sviluppo e progetto FE:
-- Assicurati di avere i comandi `npm`, `ng`, `ts` nel PATH (eseguibili da terminale)   
+- Assicurati di avere i comandi `npm`, `ng`, `ts` nel PATH (eseguibili da terminale)
 - Esegui `cd C:/Path/To/FEAngularProject/`
-- Esegui `npm install --save @angular/cli@latest`
-- Esegui `npm install --save @ng-bootstrap/ng-bootstrap`
 - Esegui `npm install`
-- Esegui `ng serve --open` 
+- Esegui `ng serve --open`
  
 
 
