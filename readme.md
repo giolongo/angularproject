@@ -89,5 +89,11 @@
 - Esegui `npm install`
 - Esegui `ng serve --open`
  
-
-
+### Credenziali di accesso  
+- Utente Manager:  
+  Username: `CNTRZO94P28C351T`  
+  Password: `prova123`  
+- Utente Dipendente:  
+  Username: `LNGGNN93P12C351O`  
+  Password: `prova321`  
+  
