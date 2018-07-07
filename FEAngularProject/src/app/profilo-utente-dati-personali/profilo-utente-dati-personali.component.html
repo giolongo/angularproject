@@ -20,7 +20,7 @@
             <label>Nuova Password</label>
             <input type="password" class="input-text" name="nuovaPassword" [(ngModel)]="nuovaPassword" (blur)="checkPassword()">
             <label>Ripeti Password</label>
-            <input type="password" class="input-text" name="ripetiNuovaPassword" [(ngModel)]="ripetiNuovaPassword" [disabled]="!vecchiaPassword || !nuovaPassword" (blur)="checkPassword()">
+            <input type="password" class="input-text" name="ripetiNuovaPassword" [(ngModel)]="ripetiNuovaPassword" (blur)="checkPassword()">
             <h5 class="card-title" *ngIf="!showDatiBancari || showDatiBancari==false">Mostra dati bancari  <a class="valid-action" ><i class="material-icons" (click)="showDatiBancari=true">expand_more</i></a> </h5>
             <h5 class="card-title" *ngIf="showDatiBancari==true">Nascondi dati bancari <a class="valid-action" ><i class="material-icons" (click)="showDatiBancari=false">expand_less</i></a></h5>
             <div *ngIf="showDatiBancari">

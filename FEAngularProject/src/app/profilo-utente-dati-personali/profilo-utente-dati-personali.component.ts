@@ -89,24 +89,32 @@ export class ProfiloUtenteDatiPersonaliComponent implements OnInit {
 
   //Check per disabilitare il button "salva"
   isDisabled() {
+    var campiPasswordPopolatiCorrettamente = (this.vecchiaPassword && this.nuovaPassword && this.ripetiNuovaPassword) ? true : false;
+    var campiPasswordNonPopolatiCorrettamente = (!this.vecchiaPassword && !this.nuovaPassword && !this.ripetiNuovaPassword) ? true : false;
+    var checkCampiPassword = campiPasswordPopolatiCorrettamente || campiPasswordNonPopolatiCorrettamente;
+    //console.log("campiPasswordPopolatiCorrettamente: "+campiPasswordPopolatiCorrettamente );
+    //console.log("campiPasswordNonPopolatiCorrettamente: "+campiPasswordNonPopolatiCorrettamente );
     if(
       !this.nome || 
       !this.cognome || 
       !this.dataDiNascita || 
       !this.email || 
-      !this.vecchiaPassword || 
-      !this.nuovaPassword || 
-      !this.ripetiNuovaPassword || 
+      !checkCampiPassword ||
       this.error
     ){
       return true;
     }else{
       return false;
     }
+    
   }
 
   //Validate form per update utente
   checkPassword(){
+    //var campiPasswordPopolatiCorrettamente = (this.vecchiaPassword && this.nuovaPassword && this.ripetiNuovaPassword) ? true : false;
+    //var campiPasswordNonPopolatiCorrettamente = (!this.vecchiaPassword && !this.nuovaPassword && !this.ripetiNuovaPassword) ? true : false;
+    //var checkCampiPassword = campiPasswordPopolatiCorrettamente || campiPasswordNonPopolatiCorrettamente;
+
     if(this.vecchiaPassword || this.nuovaPassword){
       if(!this.vecchiaPassword){
         this.error="Inserisci la vecchia password";
@@ -119,8 +127,10 @@ export class ProfiloUtenteDatiPersonaliComponent implements OnInit {
       }else{
         this.error = undefined;
       }
+    }else{
+      this.error = undefined;
     }
-    if(!this.error){
+    if(!this.error && this.vecchiaPassword){
       this.restRequestService.checkPasswordUtente(this.vecchiaPassword, this.codiceFiscale).subscribe(function(response){
         if(!response['succes']){
           this.error = response['error'];

@@ -2,16 +2,16 @@
   <ul class="navbar-nav mr-auto">
     <li class="nav-item">
         <div ngbDropdown>
-          <a class="name valid-action nav-link" ngbDropdownToggle>
+          <a class="nav-link valid-action name" ngbDropdownToggle>
             <i class="material-icons">face</i>
             {{employerLogService.getNomeUtente()}} {{employerLogService.getCognomeUtente()}}
           </a>
           <div ngbDropdownMenu>
-            <a class="dropdown-item" routerLink="/visualizzaProfilo">
+            <a class="dropdown-item nav-link valid-action" routerLink="/visualizzaProfilo">
               <i class="material-icons" title="Info">perm_identity</i>
               Profilo utente
             </a>
-            <a class="dropdown-item" (click)="logout()">
+            <a class="dropdown-item nav-link valid-action" (click)="logout()">
               <i class="material-icons" title="Logout">power_settings_new</i>
               Esci
             </a>
@@ -61,7 +61,7 @@
               <!-- <a class="dropdown-item" routerLink="/registraPermessi">Permessi</a> -->
       <li class="nav-item">
         <div ngbDropdown>
-          <a class="nav-link hand" id="dropdownConfig" ngbDropdownToggle>
+          <a class="nav-link valid-action" id="dropdownConfig" ngbDropdownToggle>
               <i class="material-icons" title="Gestione permessi">event_note</i> 
               Gestione permessi
           </a>
