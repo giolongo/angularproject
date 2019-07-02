@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import {RestRequestService} from '../../../service/rest-request.service' 
 import * as moment from 'moment';
 import * as _ from 'lodash';
+import {Observable,of, from } from 'rxjs';
 
 export interface CalendarDate {
   //calendario gestito per mezzo della classe moment
@@ -29,21 +30,26 @@ export class CalendarioPermessiDipendenteComponent implements OnInit, OnChanges 
   @Input() selectedDates: CalendarDate[] = [];
   @Input() loadManager: Boolean;
   @Output() onSelectDate = new EventEmitter<CalendarDate>();
-
+  updateCalendarInterval = null;
   constructor(private restRequestService : RestRequestService) {
     //setto la locale per tradurre le stringhe del calendario da inglese ad italiano
     this.currentDate.locale("it");
   }
+  ngOnDestroy(): void {
+    console.log("Stop quering");
+    clearInterval(this.updateCalendarInterval);
+  }
 
   ngOnInit(): void {
     //periodicamente verifico la presenza di nuovi permessi approvati ricaricando il mese visualizzato.
-    setInterval(function(){
+    this.updateCalendarInterval = setInterval(function(){
       this.datePermessi=[];
       //Il component è utilizzato sia per le view visibili dai manager che per quelle visibili dai dipendenti
       if(this.loadManager){
         //Caso view visualizzata da un Manager
         //Carico la lista dei permessi approvati a tutti i subordinati
         this.restRequestService.getListaPermessiSubordinati().subscribe(function(response){
+          console.log("response permessi: ", response);
           if(response['data'] == undefined){
             return;
           }
@@ -63,6 +69,7 @@ export class CalendarioPermessiDipendenteComponent implements OnInit, OnChanges 
         //NB: Il manager che accede alla tab gestione permessi visualizza questo component come Dipendente (vede solo i suoi permessi)
         //NB: Il manager che accede alla tab gestione permessi subordinati visualizza questo component come Manager (vede anche i permessi dei suoi subordinati)
         this.restRequestService.getListaPermessiDipendente().subscribe(function(response){
+          console.log("response permessi: ", response);
           if(response['data'] == undefined){
             return;
           }
@@ -75,7 +82,6 @@ export class CalendarioPermessiDipendenteComponent implements OnInit, OnChanges 
         }.bind(this));
       }
     }.bind(this), 1000);
-    
   }
 
   ngOnChanges(changes: SimpleChanges): void {
