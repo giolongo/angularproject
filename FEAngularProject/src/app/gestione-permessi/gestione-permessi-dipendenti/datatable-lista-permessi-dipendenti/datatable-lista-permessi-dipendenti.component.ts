@@ -17,11 +17,11 @@ export class DatatableListaPermessiDipendentiComponent implements OnDestroy, OnI
   tableReady = false;
   headers = [
     '',
-    'Note',
+    'Info',
     'Stato richiesta',
     'Data inizio',
     'Data fine',
-    'Totale giorni',
+    //'Totale giorni',
     'Certificato',
     '*Annulla richiesta'
   ];
@@ -47,14 +47,15 @@ export class DatatableListaPermessiDipendentiComponent implements OnDestroy, OnI
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 2,
+      responsive: true,
       columnDefs: [
         {
         "targets": 0,
         "orderable": false
         },
         {
-          className: "details-control",
-          "targets": 1
+          "targets": 1,
+          className: "details-control"
         },
         {
         "targets": -1,
@@ -64,9 +65,20 @@ export class DatatableListaPermessiDipendentiComponent implements OnDestroy, OnI
         "targets": -2,
         "orderable": false
         },
+        //show columns for col screen
         {
-          className: "text-center",
-          "targets": [0,1,2,3,4,5,6],
+          className: "text-center d-none d-lg-table-cell",
+          "targets": [6,5]
+        },
+        //show columns for col screen
+        {
+          className: "text-center d-none d-md-table-cell",
+          "targets": [4,3]
+        },
+        //hide columns for col screen
+        {
+          className: "text-center d-table-cell",
+          "targets": [2,1,0]
         }
       ],
       language: {
@@ -101,44 +113,28 @@ export class DatatableListaPermessiDipendentiComponent implements OnDestroy, OnI
         //attivo/disattivo i bottoni
         var disabilitaCancellaPermesso = row['stato_richiesta'] == 'approvato';
         //genero i bottoni (attivati/disattivati a seconda del caso, il controllo è stato implementato anche a backend)
+        row["base64"] = base64;
+        row["ext"] = ext;
+        row['disabilitaCancellaPermesso'] = disabilitaCancellaPermesso;
         var bottoneInfoDipendente = $("<div>").append(
           $("<button>")
             .addClass('btn')
             .addClass('material-icons')
             .addClass('info-dipendente')
-            .attr('info-dipendente', JSON.stringify({'note': row['note']}))
+            .attr('info-dipendente', JSON.stringify(row))
             .text('expand_more')
             .css('width', '100%')
         );
 
-        var bottoneDonwloadCertificato = $("<div>").append(
-          $("<a>").attr("href", base64).attr("download", 'file'+ext).append(
-            $("<button>")
-              .addClass("btn")
-              .addClass("btn-info")
-              .addClass("material-icons")
-              .text("attach_file")
-          )
-        );
+        var bottoneDonwloadCertificato = __this.generateDownloadButton(row);
+        var bottoneCancellaPermesso = __this.generateDisabilitaPermesso(row);
 
-        var bottoneCancellaPermesso = $("<div>").append(
-          $("<button>")
-            .addClass("btn")
-            .addClass("btn-danger")
-            .addClass("material-icons")
-            .addClass("undo_request")
-            .attr("id_richiesta", row['id'])
-            .attr("title", "Annulla")
-            .prop("disabled", disabilitaCancellaPermesso)
-            .text("undo")
-        );
         var myrow = [
           row['id'],
           $(bottoneInfoDipendente).html(),
           row['stato_richiesta'],
           row['data_inizio'],
           row['data_fine'],
-          row['totale_giorni'],
           $(bottoneDonwloadCertificato).html(),
           $(bottoneCancellaPermesso).html()
         ];
@@ -206,7 +202,7 @@ export class DatatableListaPermessiDipendentiComponent implements OnDestroy, OnI
     this.bindDettagliDipendente(dtInstance);
   }
 
-  format(data) {
+  format(row) {
       //costruisce la sottotabella della datatable, torna l'html.
       return $("<div>").append(
         $("<table>")
@@ -215,12 +211,51 @@ export class DatatableListaPermessiDipendentiComponent implements OnDestroy, OnI
           .attr("border", "0")
           .css("padding-left", "50px")
           .append(
-            $("<tr>").append(
-              $("<td>").text("Note")
-            ).append(
-              $("<td>").text(data["note"])
-            )
+            this.generateSubTableNode("Data inizio", row["data_inizio"], "d-none d-md-table-cell")
+          ).append(
+            this.generateSubTableNode("Data fine", row["data_fine"], "d-none d-md-table-cell")
+          ).append(
+            this.generateSubTableNode("Totale giorni", row["totale_giorni"])
+          ).append(
+            this.generateSubTableNode("Note", row["note"])
+          ).append(
+            this.generateSubTableNode("Certificato", this.generateDownloadButton(row).html())
+          ).append(
+            this.generateSubTableNode("Annulla richiesta", this.generateDisabilitaPermesso(row).html())
           )
       ).html();      
+  }
+  generateSubTableNode(header, content, classes=""){
+    return $("<tr>").append(
+      $("<td>").addClass(classes).html(header)
+    ).append(
+      $("<td>").addClass(classes).html(content)
+    );
+  }
+
+  generateDownloadButton(row){
+    return $("<div>").append(
+      $("<a>").attr("href", row["base64"]).attr("download", 'file'+row["ext"]).append(
+        $("<button>")
+          .addClass("btn")
+          .addClass("btn-info")
+          .addClass("material-icons")
+          .text("attach_file")
+      )
+    );
+  }
+
+  generateDisabilitaPermesso(row){
+    return $("<div>").append(
+      $("<button>")
+        .addClass("btn")
+        .addClass("btn-danger")
+        .addClass("material-icons")
+        .addClass("undo_request")
+        .attr("id_richiesta", row['id'])
+        .attr("title", "Annulla")
+        .prop("disabled", row['disabilitaCancellaPermesso'])
+        .text("undo")
+    );
   }
 }

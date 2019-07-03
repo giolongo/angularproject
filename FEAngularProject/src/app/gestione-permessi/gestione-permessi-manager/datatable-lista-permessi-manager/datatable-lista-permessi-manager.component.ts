@@ -59,8 +59,8 @@ export class DatatableListaPermessiManagerComponent implements OnDestroy, OnInit
         },
         {
           className: "text-center",
-          "targets": [0,1,2,3,4,5,6,7,8],
-        },
+          "targets": [0,1,2,3,4,5,6],
+        }
       ],
       language: {
         "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Italian.json"

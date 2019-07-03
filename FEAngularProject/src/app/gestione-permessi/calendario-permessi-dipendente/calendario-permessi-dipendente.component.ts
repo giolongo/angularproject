@@ -56,7 +56,6 @@ export class CalendarioPermessiDipendenteComponent implements OnInit, OnChanges 
       //Caso view visualizzata da un Manager
       //Carico la lista dei permessi approvati a tutti i subordinati
       this.restRequestService.getListaPermessiSubordinati().subscribe(function(response){
-        console.log("response permessi: ", response);
         if(response['data'] == undefined){
           return;
         }
@@ -77,7 +76,6 @@ export class CalendarioPermessiDipendenteComponent implements OnInit, OnChanges 
       //NB: Il manager che accede alla tab gestione permessi visualizza questo component come Dipendente (vede solo i suoi permessi)
       //NB: Il manager che accede alla tab gestione permessi subordinati visualizza questo component come Manager (vede anche i permessi dei suoi subordinati)
       this.restRequestService.getListaPermessiDipendente().subscribe(function(response){
-        console.log("response permessi: ", response);
         if(response['data'] == undefined){
           return;
         }
