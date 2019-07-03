@@ -3,58 +3,91 @@
     <div class="card-body">
       <div class="row">
         <div class="col-lg-4 col-md-6 padding-sm-top">
-          <div class="col-lg-12 col-md-8 offset-md-2">
+          <div class="col-lg-12 offset-lg-0 col-md-10 offset-md-1">
             <label>Data Inizio</label>
           </div>
-          <div class="col-lg-12 col-md-8 offset-md-2">
+          <div class="col-lg-12 offset-lg-0 col-md-10 offset-md-1">
             <ngb-datepicker [(ngModel)]="dataInizio" name="dataInizio"></ngb-datepicker>
           </div>
         </div>
         <div class="col-lg-4 col-md-6 padding-sm-top">
-          <div class="col-lg-12 col-md-8 offset-md-2">
-            <label class="col-md-12">Data Fine</label>
+          <div class="col-lg-12 offset-lg-0 col-md-10 offset-md-1">
+            <label>Data Fine</label>
           </div>
-          <div class="col-lg-12 col-md-8 offset-md-2">
+          <div class="col-lg-12 offset-lg-0 col-md-10 offset-md-1">
             <ngb-datepicker [(ngModel)]="dataFine" name="dataFine"></ngb-datepicker>
           </div>
         </div>
         <div class="col-lg-4 col-md-12 padding-sm-top">
-          <div class="col-lg-12 col-md-12">
+          <div class="col-lg-12 offset-lg-0 col-md-10 offset-md-1">
             <label>Riepilogo permessi/ferie</label>
           </div>
-          <app-calendario-permessi-dipendente></app-calendario-permessi-dipendente>
+          <div class="col-lg-12 offset-lg-0 col-md-10 offset-md-1">
+            <app-calendario-permessi-dipendente></app-calendario-permessi-dipendente>
+          </div>
         </div>
       </div>
       <div class="row">&nbsp;</div>
-      <label>Note</label>
+
       <div class="row">
-        <div class="col-md-12">
-          <input type="text" name="note" class="input-text" placeholder="note" [(ngModel)]="note">
+        <div class="col-12">
+          <div class="col-lg-6 col-md-12 col-12">
+            <label>Note</label>
+          </div>
         </div>
       </div>
-      <div class="row">&nbsp;</div>
-      <label>Tipologia</label>
       <div class="row">
-        <div class="col-md-12">
-          <select name="tipologia" class="input-text" [(ngModel)]="tipologia">
-              <option *ngFor="let nomePermesso of permessiEnumArray" value="{{nomePermesso}}">{{ nomePermesso }}</option>
-          </select>
+        <div class="col-12">
+          <div class="col-lg-6 col-md-12 col-12">
+            <input type="text" name="note" class="input-text" placeholder="note" [(ngModel)]="note">
+          </div>
         </div>
       </div>
-      <div class="row">&nbsp;</div>
-      <label>Carica certificato</label>
+
       <div class="row">
-        <label class="col-md-3 input-group-btn">
-          <span class="btn btn-primary">
-            <i class="material-icons">attach_file</i>
-            <input type="file" name="certificato" style="display: none;" (change)="setFileName($event)" ngModel>
-          </span>
-        </label>
-        <input class="col-md-9 fileName form-control" type="text" name="nomeCertificatoCaricato" readonly [(ngModel)]="nomeCertificatoCaricato">
+        <div class="col-12">
+          <div class="col-lg-6 col-md-12 col-12">
+            <label>Tipologia</label>
+          </div>
+        </div>
       </div>
-      <div class="row">&nbsp;</div>
-      <div class="row" style="padding-top:1rem; padding-left:1rem;">
-        <input type="submit" class="col-md-12 btn btn-primary" value="Inoltra richiesta">
+      <div class="row">
+        <div class="col-12">
+          <div class="col-lg-6 col-md-12 col-12">
+            <select name="tipologia" class="input-text" [(ngModel)]="tipologia">
+                <option *ngFor="let nomePermesso of permessiEnumArray" value="{{nomePermesso}}">{{ nomePermesso }}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <div class="col-lg-6 col-md-12 col-12">
+            <label>Carica certificato</label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12" style="display: inherit;">
+          <div class="col-lg-1 col-md-3 col-4" (click)="certificato.click()">
+            <span class="col-12 input-group-btn btn btn-secondary">
+              <i class="material-icons">attach_file</i>
+              <input #certificato type="file" name="certificato" style="display: none;" (change)="setFileName($event)" ngModel>
+            </span>
+          </div>
+          <div class="col-lg-5 col-md-9 col-8">
+            <input class="col-12 fileName form-control" type="text" name="nomeCertificatoCaricato" readonly [(ngModel)]="nomeCertificatoCaricato">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <div class="col-lg-6 col-md-12 col-12">
+              <input type="submit" class="col-md-12 btn btn-primary" value="Inoltra richiesta">
+          </div>
+        </div>
       </div>
     </div>
   </div>

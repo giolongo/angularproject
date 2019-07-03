@@ -16,3 +16,15 @@ ul a i{
 /deep/ .padding-sm-top {
     padding-top: 25px !important;
 }
+
+/deep/ ngb-datepicker{
+    width: 100% !important;
+}
+
+/deep/ .ngb-dp-month {
+    width: 100%;
+}
+/deep/ .ngb-dp-weekdays,
+/deep/ .ngb-dp-week {
+    justify-content: space-evenly;
+}

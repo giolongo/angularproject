@@ -79,14 +79,14 @@
           <div *ngIf="allSkill && allSkill.length > 0">
               <h5 class="card-title">Aggiungi Skill</h5>
               <div class="row">
-                  <div class="col-sm-2"><label>Nome: </label></div>
-                  <div class="col-sm-4">
+                  <div class="col-2"><label>Nome: </label></div>
+                  <div class="col-4">
                       <select class="input-text" [(ngModel)] ="newSkill.id" value="newSkill.id" name="{newSkill.id}">
                           <option *ngFor="let skillAvaible of allSkill" [value]="skillAvaible.id_skill">{{skillAvaible.nome}}</option>
                       </select>
                   </div>
-                  <div class="col-sm-2"><label>Seniority: </label></div>
-                  <div class="col-sm-4">
+                  <div class="col-2"><label>Seniority: </label></div>
+                  <div class="col-4">
                       <select class="input-text" [(ngModel)] ="newSkill.seniority" name="{newSkill.seniority}">
                           <option value="Junior">Junior</option>
                           <option value="Senior">Senior</option>
@@ -116,14 +116,14 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-sm-2"><label>Nome: </label></div>
-                    <div class="col-sm-4">
+                    <div class="col-2"><label>Nome: </label></div>
+                    <div class="col-4">
                         <select class="input-text" [(ngModel)] ="newSkill.id" value="newSkill.id" name="{newSkill.id}">
                             <option *ngFor="let skillAvaible of allSkill" [value]="skillAvaible.id_skill">{{skillAvaible.nome}}</option>
                         </select>
                     </div>
-                    <div class="col-sm-2"><label>Seniority: </label></div>
-                    <div class="col-sm-4">
+                    <div class="col-2"><label>Seniority: </label></div>
+                    <div class="col-4">
                         <select class="input-text" [(ngModel)] ="newSkill.seniority" name="{newSkill.seniority}">
                             <option value="Junior">Junior</option>
                             <option value="Senior">Senior</option>

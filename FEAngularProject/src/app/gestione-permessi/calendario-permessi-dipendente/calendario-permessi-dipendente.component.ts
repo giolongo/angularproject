@@ -42,46 +42,54 @@ export class CalendarioPermessiDipendenteComponent implements OnInit, OnChanges 
 
   ngOnInit(): void {
     //periodicamente verifico la presenza di nuovi permessi approvati ricaricando il mese visualizzato.
-    this.updateCalendarInterval = setInterval(function(){
-      this.datePermessi=[];
-      //Il component è utilizzato sia per le view visibili dai manager che per quelle visibili dai dipendenti
-      if(this.loadManager){
-        //Caso view visualizzata da un Manager
-        //Carico la lista dei permessi approvati a tutti i subordinati
-        this.restRequestService.getListaPermessiSubordinati().subscribe(function(response){
-          console.log("response permessi: ", response);
-          if(response['data'] == undefined){
-            return;
+    this.checkPermission(function(){
+      this.updateCalendarInterval = setInterval(function(){
+        this.checkPermission();
+      }.bind(this), 1000);
+    }.bind(this));
+  }
+
+  checkPermission(callback=function(){}){
+    this.datePermessi=[];
+    //Il component è utilizzato sia per le view visibili dai manager che per quelle visibili dai dipendenti
+    if(this.loadManager){
+      //Caso view visualizzata da un Manager
+      //Carico la lista dei permessi approvati a tutti i subordinati
+      this.restRequestService.getListaPermessiSubordinati().subscribe(function(response){
+        console.log("response permessi: ", response);
+        if(response['data'] == undefined){
+          return;
+        }
+        response['data'].forEach(function (row) {
+          //la chiamata restituisce un range, calcolo ogni singola data per evidenziarla nel calendario
+          if(row['stato_richiesta']=='approvato'){
+            this.enumerateDaysBetweenDates(this, row['data_inizio'], row['data_fine']);
           }
-          response['data'].forEach(function (row) {
-            //la chiamata restituisce un range, calcolo ogni singola data per evidenziarla nel calendario
-            if(row['stato_richiesta']=='approvato'){
-              this.enumerateDaysBetweenDates(this, row['data_inizio'], row['data_fine']);
-            }
-          }.bind(this));
-          //genero il calendario
-          this.generateCalendar();
         }.bind(this));
-      }
-      else{
-        //Caso view visualizzata da un dipendete
-        //Carico la lista dei permessi approvati
-        //NB: Il manager che accede alla tab gestione permessi visualizza questo component come Dipendente (vede solo i suoi permessi)
-        //NB: Il manager che accede alla tab gestione permessi subordinati visualizza questo component come Manager (vede anche i permessi dei suoi subordinati)
-        this.restRequestService.getListaPermessiDipendente().subscribe(function(response){
-          console.log("response permessi: ", response);
-          if(response['data'] == undefined){
-            return;
+        //genero il calendario
+        this.generateCalendar();
+        callback();
+      }.bind(this));
+    }
+    else{
+      //Caso view visualizzata da un dipendete
+      //Carico la lista dei permessi approvati
+      //NB: Il manager che accede alla tab gestione permessi visualizza questo component come Dipendente (vede solo i suoi permessi)
+      //NB: Il manager che accede alla tab gestione permessi subordinati visualizza questo component come Manager (vede anche i permessi dei suoi subordinati)
+      this.restRequestService.getListaPermessiDipendente().subscribe(function(response){
+        console.log("response permessi: ", response);
+        if(response['data'] == undefined){
+          return;
+        }
+        response['data'].forEach(function (row) {
+          if(row['stato_richiesta']=='approvato'){
+            this.enumerateDaysBetweenDates(this, row['data_inizio'], row['data_fine']);
           }
-          response['data'].forEach(function (row) {
-            if(row['stato_richiesta']=='approvato'){
-              this.enumerateDaysBetweenDates(this, row['data_inizio'], row['data_fine']);
-            }
-          }.bind(this));
-          this.generateCalendar();
         }.bind(this));
-      }
-    }.bind(this), 1000);
+        this.generateCalendar();
+        callback();
+      }.bind(this));
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {

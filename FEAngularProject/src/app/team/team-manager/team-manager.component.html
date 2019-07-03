@@ -50,8 +50,8 @@
       </div>
       <div class="card-body">
           <div class="row" *ngIf="allDipendenti && allDipendenti.length>0">
-              <div class="col-sm-4"><label>Dipendente: </label></div>
-              <div class="col-sm-8">
+              <div class="col-4"><label>Dipendente: </label></div>
+              <div class="col-8">
                   <select class="input-text" [(ngModel)] ="newDipendente.id" value="newDipendente.id" name="{newDipendente.id}">
                       <option *ngFor="let dipendenteAvaible of allDipendenti" [value]="dipendenteAvaible.id_dipendente">{{dipendenteAvaible.nome}} {{dipendenteAvaible.cognome}}</option>
                   </select>

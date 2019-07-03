@@ -27,9 +27,6 @@
 .fileName{
     margin-bottom: 0.5rem;
 }
-.card-body .row{
-    margin-right: 0px;
-}
 
 ::-webkit-input-placeholder {
     text-align: center;
