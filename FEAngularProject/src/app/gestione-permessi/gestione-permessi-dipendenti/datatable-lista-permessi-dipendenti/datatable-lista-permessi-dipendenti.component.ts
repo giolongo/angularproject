@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular
 import { DataTableDirective } from 'angular-datatables';
 import { Router } from '@angular/router';
 import { RestRequestService } from '../../../../service/rest-request.service';
-import { Subject } from 'rxjs';
+import { UtilsService } from '../../../../service/utils.service';
 
 @Component({
   selector: 'app-datatable-lista-permessi-dipendenti',
@@ -18,15 +18,15 @@ export class DatatableListaPermessiDipendentiComponent implements OnDestroy, OnI
   headers = [
     '',
     'Info',
-    'Stato richiesta',
-    'Data inizio',
-    'Data fine',
-    //'Totale giorni',
-    'Certificato',
+    'Stato',
+    //'Data inizio',
+    //'Data fine',
+    'Totale giorni',
+    'File',
     '*Annulla richiesta'
   ];
   rows = [];
-  constructor(private restRequestService : RestRequestService, private router: Router) { 
+  constructor(private restRequestService : RestRequestService, private utilsService : UtilsService, private router: Router) { 
   }
 
   ngOnInit(): void {
@@ -68,12 +68,12 @@ export class DatatableListaPermessiDipendentiComponent implements OnDestroy, OnI
         //show columns for col screen
         {
           className: "text-center d-none d-lg-table-cell",
-          "targets": [6,5]
+          "targets": [5,4]
         },
         //show columns for col screen
         {
           className: "text-center d-none d-md-table-cell",
-          "targets": [4,3]
+          "targets": [3]
         },
         //hide columns for col screen
         {
@@ -116,25 +116,17 @@ export class DatatableListaPermessiDipendentiComponent implements OnDestroy, OnI
         row["base64"] = base64;
         row["ext"] = ext;
         row['disabilitaCancellaPermesso'] = disabilitaCancellaPermesso;
-        var bottoneInfoDipendente = $("<div>").append(
-          $("<button>")
-            .addClass('btn')
-            .addClass('material-icons')
-            .addClass('info-dipendente')
-            .attr('info-dipendente', JSON.stringify(row))
-            .text('expand_more')
-            .css('width', '100%')
-        );
-
-        var bottoneDonwloadCertificato = __this.generateDownloadButton(row);
-        var bottoneCancellaPermesso = __this.generateDisabilitaPermesso(row);
+        var bottoneInfoDipendente = __this.utilsService.generaBottoneInfoDipendente(row);
+        var bottoneDonwloadCertificato = __this.utilsService.generateDownloadButton(row);
+        var bottoneCancellaPermesso = __this.utilsService.generateDisabilitaPermesso(row);
 
         var myrow = [
           row['id'],
           $(bottoneInfoDipendente).html(),
           row['stato_richiesta'],
-          row['data_inizio'],
-          row['data_fine'],
+          //row['data_inizio'],
+          //row['data_fine'],
+          row['totale_giorni'],
           $(bottoneDonwloadCertificato).html(),
           $(bottoneCancellaPermesso).html()
         ];
@@ -203,59 +195,27 @@ export class DatatableListaPermessiDipendentiComponent implements OnDestroy, OnI
   }
 
   format(row) {
-      //costruisce la sottotabella della datatable, torna l'html.
-      return $("<div>").append(
-        $("<table>")
-          .attr("cellpadding", "5")
-          .attr("cellspacing", "0")
-          .attr("border", "0")
-          .css("padding-left", "50px")
-          .append(
-            this.generateSubTableNode("Data inizio", row["data_inizio"], "d-none d-md-table-cell")
-          ).append(
-            this.generateSubTableNode("Data fine", row["data_fine"], "d-none d-md-table-cell")
-          ).append(
-            this.generateSubTableNode("Totale giorni", row["totale_giorni"])
-          ).append(
-            this.generateSubTableNode("Note", row["note"])
-          ).append(
-            this.generateSubTableNode("Certificato", this.generateDownloadButton(row).html())
-          ).append(
-            this.generateSubTableNode("Annulla richiesta", this.generateDisabilitaPermesso(row).html())
-          )
-      ).html();      
-  }
-  generateSubTableNode(header, content, classes=""){
-    return $("<tr>").append(
-      $("<td>").addClass(classes).html(header)
-    ).append(
-      $("<td>").addClass(classes).html(content)
-    );
-  }
-
-  generateDownloadButton(row){
+    //costruisce la sottotabella della datatable, torna l'html.
     return $("<div>").append(
-      $("<a>").attr("href", row["base64"]).attr("download", 'file'+row["ext"]).append(
-        $("<button>")
-          .addClass("btn")
-          .addClass("btn-info")
-          .addClass("material-icons")
-          .text("attach_file")
-      )
-    );
-  }
-
-  generateDisabilitaPermesso(row){
-    return $("<div>").append(
-      $("<button>")
-        .addClass("btn")
-        .addClass("btn-danger")
-        .addClass("material-icons")
-        .addClass("undo_request")
-        .attr("id_richiesta", row['id'])
-        .attr("title", "Annulla")
-        .prop("disabled", row['disabilitaCancellaPermesso'])
-        .text("undo")
-    );
+      $("<table>")
+        .addClass("col-12")
+        .attr("cellpadding", "5")
+        .attr("cellspacing", "0")
+        .attr("border", "0")
+        .css("padding-left", "50px")
+        .append(
+          this.utilsService.generateSubTableNode("Data inizio", row["data_inizio"])
+        ).append(
+          this.utilsService.generateSubTableNode("Data fine", row["data_fine"])
+        ).append(
+          this.utilsService.generateSubTableNode("Note", row["note"])
+        ).append(
+          this.utilsService.generateSubTableNode("Totale giorni", row["totale_giorni"], "d-md-none")
+        ).append(
+          this.utilsService.generateSubTableNode("Certificato", this.utilsService.generateDownloadButton(row).html(), "d-lg-none")
+        ).append(
+          this.utilsService.generateSubTableNode("Annulla richiesta", this.utilsService.generateDisabilitaPermesso(row).html(), "d-lg-none")
+        )
+    ).html();      
   }
 }

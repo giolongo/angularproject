@@ -12,12 +12,10 @@
     <div class="i-tuoi-permessi tab-body col-12" tab-name="i-tuoi-permessi">
         <app-gestione-permessi-dipendenti class="row"></app-gestione-permessi-dipendenti>
     </div>
-    <div class="permessi-subordinati tab-body col-12 hidden" tab-name="permessi-suburdinati">
-        <div class="col-6">
-            <app-datatable-lista-permessi-manager></app-datatable-lista-permessi-manager>
-        </div>
-        <div class="col-6">
-            <app-calendario-permessi-dipendente [loadManager]=true></app-calendario-permessi-dipendente>
+    <div class="permessi-subordinati tab-body hidden col-12" tab-name="permessi-suburdinati">
+        <div class="row">
+            <app-datatable-lista-permessi-manager class="col-lg-8 col-md-12"></app-datatable-lista-permessi-manager>
+            <app-calendario-permessi-dipendente  class="col-lg-4 col-md-12" [loadManager]=true></app-calendario-permessi-dipendente>
         </div>
     </div>
 </div>

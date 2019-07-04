@@ -37,6 +37,7 @@ import { SkillDipendenteManagerComponent } from './skill-dipendente/skill-dipend
 import { TeamComponent } from './team/team.component';
 import { TeamManagerComponent } from './team/team-manager/team-manager.component';
 import { LaddaModule } from 'angular2-ladda';
+import { UtilsService } from '../service/utils.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -74,7 +75,7 @@ import { LaddaModule } from 'angular2-ladda';
     CalendarModule.forRoot(),
     LaddaModule,
   ],
-  providers: [EmployerLogService],
+  providers: [EmployerLogService,UtilsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

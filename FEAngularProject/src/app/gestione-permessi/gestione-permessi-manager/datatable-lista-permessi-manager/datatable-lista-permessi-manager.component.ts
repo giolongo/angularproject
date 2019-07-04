@@ -4,7 +4,7 @@ import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular
 import { DataTableDirective } from 'angular-datatables';
 import { Router } from '@angular/router';
 import { RestRequestService } from '../../../../service/rest-request.service';
-import { Subject } from 'rxjs';
+import { UtilsService } from '../../../../service/utils.service';
 
 @Component({
   selector: 'app-datatable-lista-permessi-manager',
@@ -18,18 +18,18 @@ export class DatatableListaPermessiManagerComponent implements OnDestroy, OnInit
   tableReady : boolean;
   headers = [
     '',
-    'Dipendente',
-    'Stato richiesta',
-    'Data inizio',
-    'Data fine',
+    'Info',
+    'Stato',
+    //'Data inizio',
+    //'Data fine',
     'Totale giorni',
-    'Certificato',
+    'File',
     'Approva',
     'Rifiuta'
   ];
 
   rows = [];
-  constructor(private restRequestService : RestRequestService, private router: Router) { 
+  constructor(private restRequestService : RestRequestService,  private utilsService : UtilsService, private router: Router) { 
     this.tableReady = false;
   }
 
@@ -57,9 +57,20 @@ export class DatatableListaPermessiManagerComponent implements OnDestroy, OnInit
         "targets": [0, -1, -2, -3],
         "orderable": false
         },
+        //show columns for col screen
         {
-          className: "text-center",
-          "targets": [0,1,2,3,4,5,6],
+          className: "text-center d-none d-lg-table-cell",
+          "targets": [6,5,4]
+        },
+        //show columns for col screen
+        {
+          className: "text-center d-none d-md-table-cell",
+          "targets": [3]
+        },
+        //hide columns for col screen
+        {
+          className: "text-center d-table-cell",
+          "targets": [2,1,0]
         }
       ],
       language: {
@@ -91,67 +102,20 @@ export class DatatableListaPermessiManagerComponent implements OnDestroy, OnInit
 
         var disabilitaApprovaPermesso = row['stato_richiesta'] == 'approvato';
         var disabilitaRifiutaPermesso = row['stato_richiesta'] == 'rifiutato';
-        
-        var dettagliDipendente = JSON.stringify({
-          'id': row['id'],
-          'nome': row['nome'],
-          'cognome': row['cognome'],
-          'codice_fiscale': row['codice_fiscale'],
-          'note' : row['note']
-        });
-        var bottoneInfoDipendente = $("<div>").append(
-          $("<div>").append(
-            $("<label>").text(row['nome']+" "+row['cognome'])
-          )
-          .append(
-            $("<button>")
-              .addClass('btn')
-              .addClass('material-icons')
-              .addClass('info-dipendente')
-              .attr('info-dipendente', dettagliDipendente)
-              .text('expand_more')
-              .css('width', '100%')
-          )
-        );
-
-        var bottoneDonwloadCertificato = $("<div>").append(
-          $("<a>").attr("href", base64).attr("download", 'file'+ext).append(
-            $("<button>")
-              .addClass("btn")
-              .addClass("btn-info")
-              .addClass("material-icons")
-              .text("attach_file")
-          )
-        );
-
-        var bottoneApprovaPermesso = $("<div>").append(
-          $("<button>")
-            .addClass("btn")
-            .addClass("btn-success")
-            .addClass("material-icons")
-            .addClass("approve_request")
-            .attr("id_richiesta", row['id'])
-            .attr("title", "Approva")
-            .prop("disabled", disabilitaApprovaPermesso)
-            .text("done")
-        );
-        var bottoneRifiutaPermesso = $("<div>").append(
-          $("<button>")
-            .addClass("btn")
-            .addClass("btn-danger")
-            .addClass("material-icons")
-            .addClass("refuse_request")
-            .attr("id_richiesta", row['id'])
-            .attr("title", "Rifiuta")
-            .prop("disabled", disabilitaRifiutaPermesso)
-            .text("close")
-        );
+        row['base64'] = base64;
+        row['ext'] = ext;
+        row['disabilitaApprovaPermesso'] = disabilitaApprovaPermesso;
+        row['disabilitaRifiutaPermesso'] = disabilitaRifiutaPermesso;
+        var bottoneInfoDipendente = __this.utilsService.generaBottoneInfoDipendente(row);
+        var bottoneDonwloadCertificato = __this.utilsService.generateDownloadButton(row);
+        var bottoneApprovaPermesso = __this.utilsService.generaBottoneApprovaPermesso(row);
+        var bottoneRifiutaPermesso = __this.utilsService.generaBottoneRifiutaPermesso(row);
         var myrow = [
           row['id'],
           $(bottoneInfoDipendente).html(),
           row['stato_richiesta'],
-          row['data_inizio'],
-          row['data_fine'],
+          //row['data_inizio'],
+          //row['data_fine'],
           row['totale_giorni'],
           $(bottoneDonwloadCertificato).html(),
           $(bottoneApprovaPermesso).html(),
@@ -241,42 +205,36 @@ export class DatatableListaPermessiManagerComponent implements OnDestroy, OnInit
     this.bindDettagliDipendente(dtInstance);
   }
 
-  format(data) {
-      // `d` is the original data object for the row
-      return $("<div>").append(
-        $("<table>")
-          .attr("cellpadding", "5")
-          .attr("cellspacing", "0")
-          .attr("border", "0")
-          .css("padding-left", "50px")
-          .append(
-            $("<tr>").append(
-              $("<td>").text("Nome")
-            ).append(
-              $("<td>").text(data["nome"])
-            )
-          )
-          .append(
-            $("<tr>").append(
-              $("<td>").text("Cognome")
-            ).append(
-              $("<td>").text(data["cognome"])
-            )
-          )
-          .append(
-            $("<tr>").append(
-              $("<td>").text("Codice fiscale")
-            ).append(
-              $("<td>").text(data["codice_fiscale"])
-            )
-          )
-          .append(
-            $("<tr>").append(
-              $("<td>").text("Note")
-            ).append(
-              $("<td>").text(data["note"])
-            )
-          )
-      ).html();      
+  format(row) {
+    //costruisce la sottotabella della datatable, torna l'html.
+    return $("<div>").append(
+      $("<table>")
+        .addClass("col-12")
+        .attr("cellpadding", "5")
+        .attr("cellspacing", "0")
+        .attr("border", "0")
+        .css("padding-left", "50px")
+        .append(
+          this.utilsService.generateSubTableNode("Nome", row["nome"])
+        ).append(
+          this.utilsService.generateSubTableNode("Cognome", row["cognome"])
+        ).append(
+          this.utilsService.generateSubTableNode("Codice fiscale", row["codice_fiscale"])
+        ).append(
+          this.utilsService.generateSubTableNode("Data inizio", row["data_inizio"])
+        ).append(
+          this.utilsService.generateSubTableNode("Data fine", row["data_fine"])
+        ).append(
+          this.utilsService.generateSubTableNode("Note", row["note"])
+        ).append(
+          this.utilsService.generateSubTableNode("Totale giorni", row["totale_giorni"], "d-md-none")
+        ).append(
+          this.utilsService.generateSubTableNode("Certificato", this.utilsService.generateDownloadButton(row).html(), "d-lg-none")
+        ).append(
+          this.utilsService.generateSubTableNode("Annulla richiesta", this.utilsService.generaBottoneApprovaPermesso(row).html(), "d-lg-none")
+        ).append(
+          this.utilsService.generateSubTableNode("Annulla richiesta", this.utilsService.generaBottoneRifiutaPermesso(row).html(), "d-lg-none")
+        )
+    ).html();      
   }
 }

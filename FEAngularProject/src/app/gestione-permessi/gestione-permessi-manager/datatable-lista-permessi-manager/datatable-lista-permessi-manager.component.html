@@ -1,10 +1,9 @@
-
 <div class="listaPermessiManager">
     <div class="card">
-      <div class="card-header">
+      <div class="card-header col-12">
         <h5 class="card-title">Elenco dei permessi richiesti dai subordinati</h5>
       </div>
-      <div class="card-body">
+      <div class="card-body col-12">
         <table [ngClass]="tableReady ? '' : 'not-visible'" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover datatable-permessi-manager">
           <thead>
             <tr>
