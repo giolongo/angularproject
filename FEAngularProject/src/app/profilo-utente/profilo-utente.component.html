@@ -1,12 +1,5 @@
-<div *ngIf = "employerLogService.isLogged()">
-    <div class = "row">
-        <div class="col-md-2"></div>
-        <div class="col-md-4">
-            <app-profilo-utente-dati-personali></app-profilo-utente-dati-personali>
-        </div>
-        <div class = "col-md-4">
-            <app-profilo-utente-skills></app-profilo-utente-skills>
-        </div>
-        <div class="col-md-2"></div>
-    </div>
+<div class="row" *ngIf = "employerLogService.isLogged()">
+    <div class="col-lg-6 col-md-5 col-12 fix-padding-left"><app-profilo-utente-dati-personali></app-profilo-utente-dati-personali></div>
+    <div class="d-none d-md-block col-lg-6 col-md-7"><app-profilo-utente-skills></app-profilo-utente-skills></div>    
+    <div class="d-block d-md-none col-12 fix-padding-left"><app-profilo-utente-skills></app-profilo-utente-skills></div>
 </div>

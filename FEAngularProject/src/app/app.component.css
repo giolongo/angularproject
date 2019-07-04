@@ -28,3 +28,7 @@ ul a i{
 /deep/ .ngb-dp-week {
     justify-content: space-evenly;
 }
+
+/deep/ .card{
+    margin-top: 30px;
+}
