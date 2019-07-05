@@ -14,7 +14,7 @@ class AddCertificatoToPermessiTable extends Migration
     public function up()
     {
         Schema::table('permessi', function($table) {
-            $table->longText('certificatoBase64')->nullable()->default(null);
+            $table->longText('nome_file_certificato')->nullable()->default(null);
         });
     }
 
@@ -26,7 +26,7 @@ class AddCertificatoToPermessiTable extends Migration
     public function down()
     {
         Schema::table('permessi', function($table) {
-            $table->dropColumn('certificatoBase64');
+            $table->dropColumn('nome_file_certificato');
         });
     }
 }

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
+import { RestRequestService } from '../service/rest-request.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UtilsService {
 
-    constructor() {
-
+    constructor(protected restRequestService:RestRequestService) {
     }
 
     getBootstrapBreakpoint(){
@@ -37,7 +37,7 @@ export class UtilsService {
     
     generateDownloadButton(row){
         return $("<div>").append(
-            $("<a>").attr("href", row["base64"]).attr("download", 'file'+row["ext"]).append(
+            $("<a>").attr("href", this.restRequestService.getCertificateUrl(row["id"])).attr("download", row["nome_file_certificato"]).append(
             $("<button>")
                 .addClass("btn")
                 .addClass("btn-info")

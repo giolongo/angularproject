@@ -95,26 +95,9 @@ export class DatatableListaPermessiDipendentiComponent implements OnDestroy, OnI
       //per ogni riga ottenuta dalla chiamata backend inserisco la controparte nella datatable
       this.rows.forEach(function (row) {
         //il certificato è gestito per mezzo della codifica base64 (memorizzo una stringa lato backend).
-        var base64 = row['certificatoBase64'];
-        if(base64.indexOf('base64,') == -1){
-          return "";
-        }
-        var ext = null;
-        if(base64.indexOf('image') != -1 ){
-          ext = '.jpg';
-        }else if(base64.indexOf('text') != -1){
-          ext = '.txt';
-        }else{
-          return;
-        }
-        var baseFile = 'data:application/octet-stream';
-        var strippedFile = base64.split(';base64,')[1];
-        base64 = baseFile+';base64,'+strippedFile;
         //attivo/disattivo i bottoni
         var disabilitaCancellaPermesso = row['stato_richiesta'] == 'approvato';
         //genero i bottoni (attivati/disattivati a seconda del caso, il controllo è stato implementato anche a backend)
-        row["base64"] = base64;
-        row["ext"] = ext;
         row['disabilitaCancellaPermesso'] = disabilitaCancellaPermesso;
         var bottoneInfoDipendente = __this.utilsService.generaBottoneInfoDipendente(row);
         var bottoneDonwloadCertificato = __this.utilsService.generateDownloadButton(row);

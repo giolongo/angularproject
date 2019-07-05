@@ -40,7 +40,7 @@ class InitDatabaseSeeder extends Seeder
             'note' => 'Emicrania',
             'tipologia' => 'malattia',
             'stato' => 'approvato',
-            'certificatoBase64' => 'data:text/plain;base64,Q2VydGlmaWNhdG8gZGkgcHJvdmEhDQpIZWxsbyBDZXJ0aWZpY2F0by4=',
+            'nome_file_certificato' => '',
             'data_inizio' => Carbon::now(),
             'data_fine' => Carbon::now()->addDays(10)
         ]);
@@ -50,7 +50,7 @@ class InitDatabaseSeeder extends Seeder
             'note' => 'Emicrania',
             'tipologia' => 'malattia',
             'stato' => 'rifiutato',
-            'certificatoBase64' => 'data:text/plain;base64,Q2VydGlmaWNhdG8gZGkgcHJvdmEhDQpIZWxsbyBDZXJ0aWZpY2F0by4=',
+            'nome_file_certificato' => '',
             'data_inizio' => Carbon::now(),
             'data_fine' => Carbon::now()->addDays(10)
         ]);
@@ -60,7 +60,7 @@ class InitDatabaseSeeder extends Seeder
             'note' => 'Emicrania',
             'tipologia' => 'malattia',
             'stato' => 'pending',
-            'certificatoBase64' => 'data:text/plain;base64,Q2VydGlmaWNhdG8gZGkgcHJvdmEhDQpIZWxsbyBDZXJ0aWZpY2F0by4=',
+            'nome_file_certificato' => '',
             'data_inizio' => Carbon::now()->addDays(10),
             'data_fine' => Carbon::now()->addDays(20)
         ]);

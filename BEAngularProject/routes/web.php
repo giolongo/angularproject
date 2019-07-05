@@ -36,6 +36,7 @@ Route::match(array('GET','POST'),'registraPermesso', 'GestionePermessiController
 Route::match(array('GET','POST'),'approvaPermesso', 'GestionePermessiController@approvaPermesso');
 Route::match(array('GET','POST'),'rifiutaPermesso', 'GestionePermessiController@rifiutaPermesso');
 Route::match(array('GET','POST'),'cancellaPermesso', 'GestionePermessiController@cancellaPermesso');
+Route::match(array('GET'),'getCertificate', 'GestionePermessiController@getCertificate');
 
 //----deprecati
 Route::match(array('GET','POST'),'generateMockData', 'GestionePermessiController@generateMockData');

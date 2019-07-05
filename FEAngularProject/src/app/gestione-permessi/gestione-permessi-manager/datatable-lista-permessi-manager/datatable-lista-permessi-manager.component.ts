@@ -84,26 +84,9 @@ export class DatatableListaPermessiManagerComponent implements OnDestroy, OnInit
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
       dtInstance.clear().draw();
       this.rows.forEach(function (row) {
-        var base64 = row['certificatoBase64'];
-        if(base64.indexOf('base64,') == -1){
-          return "";
-        }
-        var ext = null;
-        if(base64.indexOf('image') != -1 ){
-          ext = '.jpg';
-        }else if(base64.indexOf('text') != -1){
-          ext = '.txt';
-        }else{
-          return;
-        }
-        var baseFile = 'data:application/octet-stream';
-        var strippedFile = base64.split(';base64,')[1];
-        base64 = baseFile+';base64,'+strippedFile;
 
         var disabilitaApprovaPermesso = row['stato_richiesta'] == 'approvato';
         var disabilitaRifiutaPermesso = row['stato_richiesta'] == 'rifiutato';
-        row['base64'] = base64;
-        row['ext'] = ext;
         row['disabilitaApprovaPermesso'] = disabilitaApprovaPermesso;
         row['disabilitaRifiutaPermesso'] = disabilitaRifiutaPermesso;
         var bottoneInfoDipendente = __this.utilsService.generaBottoneInfoDipendente(row);

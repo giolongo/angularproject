@@ -21,7 +21,7 @@ class Permessi extends Model
         'note',
         'tipologia',
         'stato',
-        'certificatoBase64'
+        'nome_file_certificato'
     ];
     protected $dates = [
         'data_inizio',

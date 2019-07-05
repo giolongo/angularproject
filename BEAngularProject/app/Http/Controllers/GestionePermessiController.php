@@ -5,8 +5,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Dipendente;
 use App\Models\Permessi;
 use App\Models\Sottoposti;
@@ -14,6 +16,9 @@ use Carbon\Carbon;
 use App\angularproject\CommonFunction;
 use Hash;
 use JWTAuth;
+use Response;
+use Illuminate\Support\Facades\Auth;
+
 /**
  *
  *@deprecated See WebHookVotaController
@@ -23,6 +28,30 @@ class GestionePermessiController extends Controller
     public function __construct()
     {
         //$this->middleware('jwt.auth');
+    }
+
+    public function getCertificate(Request $request)
+    {
+        $params = $request->only('token', 'id_permesso');
+        $user = CommonFunction::tokenToDipendente($params['token']);
+        if(empty($user)){
+            return response()->json(['success' => false, 'error' => 'Invalid token']);
+        }
+
+        $idList = Sottoposti::where('id_capo', '=', $user->id_dipendente)->pluck('id_dipendente')->toArray();
+        array_push($idList, $user->id_dipendente);
+        $lista_permessi = Permessi::where('id', '=', $params['id_permesso'])
+            ->whereIn('id_dipendente', $idList)
+            ->get()->toArray();
+
+        if(count($lista_permessi) == 0){
+            return response()->json(['success' => false, 'error' => 'Non puoi eseguire questa operazione[ cambio stato in '.$nuovoStato.']']);
+        }
+        $permesso = $lista_permessi[0];
+
+        $filepath = storage_path();
+        $filename = $permesso['nome_file_certificato'];
+        return Response::download($filepath."\\app\\private\\".$filename, $filename);
     }
 
     public function approvaPermesso(Request $request){
@@ -110,7 +139,6 @@ class GestionePermessiController extends Controller
                 'data_fine' => $data_fine->format('d-m-Y'),
                 'totale_giorni' => $data_inizio->diffInDays($data_fine, false),
                 'stato_richiesta' => $permesso->stato,
-                'certificatoBase64' => $permesso->certificatoBase64,
                 'note' => $permesso->note
             ];
             if($ruolo == 'manager'){
@@ -143,8 +171,29 @@ class GestionePermessiController extends Controller
             return response()->json(['success' => false, 'error' => 'Form non compilato correttamente, verifica i campi relativi alle date!']);
         }
         else{
-            $soab = Carbon::now()->endOfDay()->toDateTimeString();
-            $soab2 = Carbon::now()->toDateTimeString();
+            $data = explode(";base64,", $params['certificatoBase64']);
+            $file = [
+                'name' => uniqid('certificato_').".".explode("/", $data[0])[1],
+                'content' => base64_decode($data[1])
+            ];
+            /*
+            var base64 = row['nome_file_certificato'];
+            if(base64.indexOf('base64,') == -1){
+            return "";
+            }
+            var ext = null;
+            if(base64.indexOf('image') != -1 ){
+            ext = '.jpg';
+            }else if(base64.indexOf('text') != -1){
+            ext = '.txt';
+            }else{
+            return;
+            }
+            var baseFile = 'data:application/octet-stream';
+            var strippedFile = base64.split(';base64,')[1];
+            base64 = baseFile+';base64,'+strippedFile;
+            */
+            Storage::put("private/".$file['name'], $file['content']);
             $permesso = [
                 'id_dipendente' => $user->id_dipendente,
                 'data_inizio' => $dataInizio,
@@ -152,7 +201,7 @@ class GestionePermessiController extends Controller
                 'note' => $params['note'],
                 'tipologia' => $params['tipologia'],
                 'stato' => 'pending',
-                'certificatoBase64' => $params['certificatoBase64'],
+                'nome_file_certificato' => $file['name'],
             ];
             Permessi::create($permesso);
             return response()->json(['success' => true, 'data' => 'Permesso registrato']);
@@ -263,7 +312,7 @@ class GestionePermessiController extends Controller
                     'note' => 'Nota di prova',
                     'tipologia' => 'ferie',
                     'stato' => 'approvato',
-                    'certificatoBase64' => 'x'
+                    'nome_file_certificato' => ''
                 ]); 
                 
                 Permessi::create([
@@ -273,7 +322,7 @@ class GestionePermessiController extends Controller
                     'note' => 'Nota di prova',
                     'tipologia' => 'ferie',
                     'stato' => 'rifiutato',
-                    'certificatoBase64' => 'x'
+                    'nome_file_certificato' => ''
                 ]); 
 
                 Permessi::create([
@@ -283,7 +332,7 @@ class GestionePermessiController extends Controller
                     'note' => 'Nota di prova',
                     'tipologia' => 'ferie',
                     'stato' => 'pending',
-                    'certificatoBase64' => 'x'
+                    'nome_file_certificato' => ''
                 ]); 
 
                 Permessi::create([
@@ -293,7 +342,7 @@ class GestionePermessiController extends Controller
                     'note' => 'Nota di prova',
                     'tipologia' => 'malattia',
                     'stato' => 'approvato',
-                    'certificatoBase64' => 'x'
+                    'nome_file_certificato' => ''
                 ]); 
                 
                 Permessi::create([
@@ -303,7 +352,7 @@ class GestionePermessiController extends Controller
                     'note' => 'Nota di prova',
                     'tipologia' => 'malattia',
                     'stato' => 'rifiutato',
-                    'certificatoBase64' => 'x'
+                    'nome_file_certificato' => ''
                 ]); 
 
                 Permessi::create([
@@ -313,7 +362,7 @@ class GestionePermessiController extends Controller
                     'note' => 'Nota di prova',
                     'tipologia' => 'malattia',
                     'stato' => 'pending',
-                    'certificatoBase64' => 'x'
+                    'nome_file_certificato' => ''
                 ]); 
             }
         }

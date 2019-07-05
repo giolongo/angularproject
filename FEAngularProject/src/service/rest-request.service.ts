@@ -48,6 +48,7 @@ export class RestRequestService {
     this.endpoint['cancellaPermesso'] = this.context+'/cancellaPermesso';
     this.endpoint['approvaPermesso'] = this.context+'/approvaPermesso';
     this.endpoint['rifiutaPermesso'] = this.context+'/rifiutaPermesso';
+    this.endpoint['getCertificate'] = this.context+'/getCertificate';
    }
 
   login(username: String, password: String) : any{
@@ -243,6 +244,19 @@ export class RestRequestService {
       'password' : password
     }
     return this.http.post(this.endpoint['checkPasswordUtente'], parameter, httpOptions);
+  }
+
+  getCertificate(id){
+    var option = {
+      params: {
+        'token':sessionStorage.getItem("token"),
+        id_permesso: id
+      }
+    }
+    return this.http.get(this.endpoint['getCertificate'], option);
+  }
+  getCertificateUrl(id):string{
+    return this.endpoint['getCertificate']+"?token="+sessionStorage.getItem("token")+"&id_permesso="+id;
   }
 }
 
