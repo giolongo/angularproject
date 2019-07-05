@@ -21,7 +21,7 @@ export class RestRequestService {
   private endpoint : Map<String, String>;
 
   constructor(private http: HttpClient) {
-    this.context = 'http://localhost/angularproject/be';
+    this.context = '/api';
     this.endpoint = new Map<String, String>();
     this.endpoint['login'] = this.context+'/login';
     this.endpoint['register'] = this.context+'/register';
