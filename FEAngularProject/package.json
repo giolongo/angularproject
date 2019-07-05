@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --proxy-config proxy.config.json --open",
+    "start": "ng serve --proxy-config proxy.config.json --open --host 0.0.0.0 --publicHost rdp.ocontarino.site",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
