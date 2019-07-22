@@ -1,17 +1,27 @@
-# Progetto Angular
-- Esegui `git clone https://github.com/oraziocontarino/angularproject.git`  
-# Configurazione BackEnd (BE) 
-### Prerequisiti:  
+# Bank Holidays Manager  
+The following guide will allow you to setup the develop environment under Windows Os.  
+The project uses Laravel and Angular frameworks.  
+The project can be set up in Linux Os too.  
+
+# Configuration: Global develop environment  
+### Prerequisites  
+- **Git CLI**  
+### Init workspace  
+Download and install git CLI  
+- Run on terminal: `git clone https://github.com/oraziocontarino/angularproject.git`  
+  
+# Configuration: Laravel develop environment  
+### Prerequisites    
 - **COMPOSER**  
 - **XAMPP** 
-  - Apache
-  - MySQL
+  - Apache  
+  - MySQL  
   
-### Configurazione ambiente di sviluppo e progetto BE:
-- Aggiungi alla variabile PATH di sistema i path per i comandi `php` e `composer`.
-- Apri il terminale.
-- Esegui `cd angularproject/BEAngularProject`.
-- Apri la cartella dove è stato installato xampp, modifica il file httpd.conf di Apache (`xampp > apache > conf`) ed incolla alla fine del file la seguente configurazione:
+### Init workspace
+- Add to `PATH` environment variable the following commands: `php`, `composer`.
+- Run on terminal: `cd angularproject/BEAngularProject`.
+- Open `XAMPP` installation folder and edit the `httpd.conf` file under `xampp\apache\conf` folder.  
+Copy/Paste the following configuration at the bottom of the file:  
 
     ```  
     #!conf  
@@ -21,15 +31,18 @@
     Require all granted  
     </Directory>  
     ```
-    (sostituire Path/To/ con il percorso esatto della cartella `angularproject/BEAngularProject` ottenuta dal comando `git clone`)
-
-- Avvia XAMPP.
-- Avvia i servizi Apache e MySQL dal client XAMPP.
-- Accedi all'indirizzo `http://localhost/phpmyadmin` quindi crea il database `angularproject` cliccando su `nuovo` (menù laterale sinistro).  
-- Ritorna al terminale, nella cartella di progetto `angularproject/BEAngularProject`.
-- Esegui `copy .env.example .env`: il comando genera il file di configurazione *.env* utilizzato da Laravel.
-- Modifica il contenuto del file .env creato al punto precedente come segue:
-
+    (Change `C:/Path/To/` with the absolute path of `angularproject`, downloaded previously from git with `git clone...` command)  
+  
+- Run `XAMPP` client.
+- From `XAMPP` client run the following services: `Apache`, `MySQL`.
+- Configure a new database via `PhpMyAdmin` web panel: `http://localhost/phpmyadmin`.  
+    - Click on `new`.  
+    - Insert `angularproject` as name of new database.  
+    - Confirm.  
+- Open new terminal in the `angularproject/BEAngularProject` folder.  
+- Run in terminal `copy .env.example .env`: laravel configuration file will be initialized.  
+- Replace laravel configuration `.env` content with the following content:  
+  
     ```  
     APP_NAME=Laravel
     APP_ENV=local
@@ -74,26 +87,26 @@
     JWT_SECRET=
     ```
 
-- Esegui `composer install`
-- Esegui `php artisan key:generate`
-- Esegui `php artisan jwt:secret`
-- Esegui `php artisan migrate`
-- Esegui `php artisan db:seed --class=InitDatabaseSeeder`
+- Run in terminal: `composer install`
+- Run in terminal: `php artisan key:generate`
+- Run in terminal: `php artisan jwt:secret`
+- Run in terminal: `php artisan migrate`
+- Run in terminal: `php artisan db:seed --class=InitDatabaseSeeder`
 
-# Configurazione Frontend (FE)  
-### Prerequisiti:  
+# Configuration: Angular develop environment  
+### Prerequisites:  
 - NodeJS   
-### Configurazione ambiente di sviluppo e progetto FE:
-- Assicurati di avere i comandi `npm`, `ng`, `ts` nel PATH (eseguibili da terminale)
-- Esegui `cd C:/Path/To/FEAngularProject/`
-- Esegui `npm install`
-- Esegui `ng serve --open`
+### Init workspace  
+- Add to `PATH` environment variable the following commands: `npm`, `ng`, `ts`.  
+- Run in terminal:  `cd C:/Path/To/FEAngularProject/`
+- Run in terminal:  `npm install`
+- Run in terminal:  `ng serve --open`
  
-### Credenziali di accesso  
-- Utente Manager:  
+### Demo access credentials 
+- Manager user:  
   Username: `CNTRZO94P28C351T`  
   Password: `prova123`  
-- Utente Dipendente:  
+- Employee user:  
   Username: `LNGGNN93P12C351O`  
   Password: `prova321`  
   
