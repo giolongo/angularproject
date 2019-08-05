@@ -7,8 +7,11 @@ The project can be set up in Linux Os too.
 ### Prerequisites  
 - **Git CLI**  
 ### Init workspace  
-Download and install git CLI  
-- Run on terminal: `git clone https://github.com/oraziocontarino/angularproject.git`  
+- Download and install git CLI  
+- Run on terminal:  
+  ```  
+  git clone https://github.com/oraziocontarino/angularproject.git  
+  ```  
   
 # Configuration: Laravel develop environment  
 ### Prerequisites    
@@ -19,7 +22,12 @@ Download and install git CLI
   
 ### Init workspace
 - Add to `PATH` environment variable the following commands: `php`, `composer`.
-- Run on terminal: `cd angularproject/BEAngularProject`.
+- Run on terminal:  
+  
+  ```  
+  cd angularproject/BEAngularProject  
+  ```  
+
 - Open `XAMPP` installation folder and edit the `httpd.conf` file under `xampp\apache\conf` folder.  
 Copy/Paste the following configuration at the bottom of the file:  
 
@@ -40,7 +48,13 @@ Copy/Paste the following configuration at the bottom of the file:
     - Insert `angularproject` as name of new database.  
     - Confirm.  
 - Open new terminal in the `angularproject/BEAngularProject` folder.  
-- Run in terminal `copy .env.example .env`: laravel configuration file will be initialized.  
+- Run in terminal:  
+  
+  ```  
+  copy .env.example .env  
+  ```  
+  
+  laravel configuration file will be initialized.   
 - Replace laravel configuration `.env` content with the following content:  
   
     ```  
@@ -87,22 +101,30 @@ Copy/Paste the following configuration at the bottom of the file:
     JWT_SECRET=
     ```
 
-- Run in terminal: `composer install`
-- Run in terminal: `php artisan key:generate`
-- Run in terminal: `php artisan jwt:secret`
-- Run in terminal: `php artisan migrate`
-- Run in terminal: `php artisan db:seed --class=InitDatabaseSeeder`
+- Run in terminal:  
+
+  ```  
+  composer install  
+  php artisan key:generate  
+  php artisan jwt:secret  
+  php artisan migrate  
+  php artisan db:seed --class=InitDatabaseSeeder  
+  ```  
 
 # Configuration: Angular develop environment  
 ### Prerequisites:  
 - NodeJS   
 ### Init workspace  
 - Add to `PATH` environment variable the following commands: `npm`, `ng`, `ts`.  
-- Run in terminal:  `cd C:/Path/To/FEAngularProject/`
-- Run in terminal:  `npm install`
-- Run in terminal:  `ng serve --open`
- 
-### Demo access credentials 
+- Run in terminal:  
+
+  ```  
+  cd C:/Path/To/FEAngularProject/  
+  npm install  
+  ng serve --open  
+  ```  
+
+### Demo access credentials  
 - Manager user:  
   Username: `CNTRZO94P28C351T`  
   Password: `prova123`  
@@ -110,3 +132,6 @@ Copy/Paste the following configuration at the bottom of the file:
   Username: `LNGGNN93P12C351O`  
   Password: `prova321`  
   
+### Author
+- Orazio Contarino (Holiday Management)  
+- Giovanni Longo (Skills Management)  
