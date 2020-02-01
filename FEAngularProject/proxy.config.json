@@ -1,10 +1,10 @@
 {
     "/api/*": {
-      "target": "http://localhost/angularproject/be",
+      "target": "http://localhost:8080/angularproject/be",
       "secure": false,
       "logLevel": "debug",
       "changeOrigin": true,
-      "pathRewrite": {
+"pathRewrite": {
           "^/api": "/"
       }
     }
