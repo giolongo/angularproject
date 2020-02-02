@@ -8,26 +8,17 @@
     <div class="card-body col-3" style="margin-top: 5rem">
       <label>Codice Fiscale</label>
       <input type="text" name="codiceFiscale" class="input-text" [(ngModel)]="codiceFiscale">
-      <label>Password</label>
+      <label class="mt-1">Password</label>
       <input type="password" name="password" class="input-text" [(ngModel)]="password">
       <div class="row" style="padding-top:1rem; padding-left:1rem;">
-        <button class="ladda-button blue" data-size="s" [disabled]="!codiceFiscale || !password" [ladda]="isLoading" (click)="login()">Login</button>
+        <button class="ladda-button blue"
+                style="cursor: pointer"
+                data-size="s"
+                [disabled]="!codiceFiscale || !password"
+                [ladda]="isLoading"
+                (click)="login()">Login</button>
         <label class="error" *ngIf="error">{{error}}</label>
       </div>
     </div>
   </div>
-  <!--<div class="row">-->
-  <!--<div class="card col-4 offset-4 mt-2">-->
-    <!--<div class="card-body">-->
-        <!--<label>Codice Fiscale</label>-->
-        <!--<input type="text" name="codiceFiscale" class="input-text" [(ngModel)]="codiceFiscale">-->
-        <!--<label>Password</label>-->
-        <!--<input type="password" name="password" class="input-text" [(ngModel)]="password">-->
-        <!--<div class="row" style="padding-top:1rem; padding-left:1rem;">-->
-          <!--<button class="ladda-button blue" data-size="s" [disabled]="!codiceFiscale || !password" [ladda]="isLoading" (click)="login()">Login</button>-->
-          <!--<label class="error" *ngIf="error">{{error}}</label>-->
-        <!--</div>-->
-    <!--</div>-->
-  <!--</div>-->
-  <!--</div>-->
 </form>
