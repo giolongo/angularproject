@@ -1,3 +1,26 @@
 .loader{
     display: "none";
 }
+blockquote {
+  border: 3px solid #06e8b45c;
+  margin: 1.5em;
+  padding: 3em;
+  quotes: "\201C""\201D""\2018""\2019";
+  border-radius: 50%;
+  font-style: italic;
+}
+blockquote:before {
+  color: #ccc;
+  content: open-quote;
+  font-size: 4em;
+  line-height: 0.1em;
+  margin-right: 0.25em;
+  vertical-align: -0.4em;
+}
+blockquote p {
+  display: inline;
+}
+
+.mention{
+  float: right; margin-top: 1rem; font-weight: bold;
+}

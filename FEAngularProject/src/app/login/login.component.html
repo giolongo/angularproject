@@ -1,9 +1,18 @@
-<form #userlogin = "ngForm">
-  <div class="row ml-3" style="margin-top: 5rem;">
+<form #userlogin="ngForm">
+  <div class="row">
+    <div class="col-6 offset-3">
+      <blockquote>
+        Con il talento si vincono le partite, ma è con il lavoro di squadra e l’intelligenza che si vincono i
+        campionati.
+        <span class="mention">M. Jordan</span>
+      </blockquote>
+    </div>
+  </div>
+  <div class="row ml-3 mt-3">
     <div class="col-5 offset-2">
       <img src="../../assets/tb_bgk.jpg" class="img-fluid" alt="Team Managment Logo">
-    <!--</div>-->
-    <!--<div class="card col-4">-->
+      <!--</div>-->
+      <!--<div class="card col-4">-->
     </div>
     <div class="card-body col-3" style="margin-top: 5rem">
       <label>Codice Fiscale</label>
@@ -16,7 +25,8 @@
                 data-size="s"
                 [disabled]="!codiceFiscale || !password"
                 [ladda]="isLoading"
-                (click)="login()">Login</button>
+                (click)="login()">Login
+        </button>
         <label class="error" *ngIf="error">{{error}}</label>
       </div>
     </div>
