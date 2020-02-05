@@ -1,8 +1,10 @@
 <nav class="row" style="background-color: #e3f2fd;" *ngIf="employerLogService.isLogged()">
   <div ngbDropdown class="d-inline-block">
-    <a class="nav-link valid-action name" ngbDropdownToggle>
-      <i class="material-icons">face</i>
-      {{employerLogService.getNomeUtente()}} {{employerLogService.getCognomeUtente()}}
+    <a class="nav-link valid-action name ml-3" ngbDropdownToggle>
+      <div style="text-align: center">
+        <i class="material-icons">face</i>
+      </div>
+      <label>{{employerLogService.getNomeUtente()}} {{employerLogService.getCognomeUtente()}}</label>
     </a>
     <div class="dropdown-menu" aria-labelledby="dropdownMenu1" ngbDropdownMenu>
         <a class="dropdown-item nav-link valid-action" routerLink="/visualizzaProfilo">
@@ -18,9 +20,11 @@
 
 
   <div ngbDropdown class="d-inline-block">
-    <a class="nav-link valid-action" ngbDropdownToggle>
-        <i class="material-icons" title="Registra">add</i> 
-        Registra
+    <a class="nav-link valid-action ml-3" ngbDropdownToggle>
+      <div style="text-align: center">
+        <i class="material-icons" title="Registra">add</i>
+      </div>
+        <label>Registra</label>
     </a>
     <div class="dropdown-menu" aria-labelledby="dropdownMenu1" ngbDropdownMenu>
       <a class="dropdown-item" routerLink="/registraUtente">
@@ -51,11 +55,19 @@
     <!--</div>-->
   <!--</div>-->
   <div>
-    <a class="nav-link valid-action" (click)="search()">
-      <i class="material-icons">search</i>
-      Cerca
+    <a class="nav-link valid-action ml-3" (click)="search()">
+      <div style="text-align: center">
+        <i class="material-icons">search</i>
+      </div>
+      <label>Cerca</label>
     </a>
   </div>
+  <img
+    src="../../assets/tb_bgk.png"
+    style="width: 15vh; margin-left: 145vh; cursor: pointer"
+    class="img-fluid"
+    alt="Team Managment Logo"
+    (click)="home()">
 </nav>
 <router-outlet></router-outlet>
 

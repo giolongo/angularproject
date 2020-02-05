@@ -21,6 +21,10 @@ blockquote p {
   display: inline;
 }
 
+form {
+  width: 99%;
+}
+
 .mention{
   float: right; margin-top: 1rem; font-weight: bold;
 }

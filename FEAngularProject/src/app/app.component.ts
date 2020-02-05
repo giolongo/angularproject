@@ -25,6 +25,10 @@ export class AppComponent {
     this.router.navigate(['/ricercaRisultati']);
   }
 
+  home() {
+    this.router.navigate(['/']);
+  }
+
 
   logout(){
     this.employerLogService.logOut();
