@@ -1,5 +1,12 @@
-<nav class="row" style="background-color: #e3f2fd;" *ngIf="employerLogService.isLogged()">
-  <div ngbDropdown class="d-inline-block">
+<nav class="row" style="background-color: #e3f2fd; padding:0 1rem 0 0" [@openClosed]="isMenuOpen ? 'open' : 'closed'" *ngIf="employerLogService.isLogged()">
+  <div (click)="isMenuOpen = !isMenuOpen">
+    <a class="nav-link valid-action name ml-3">
+      <div style="text-align: center">
+        <i class="material-icons">{{isMenuOpen ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}}</i>
+      </div>
+    </a>
+  </div>
+  <div ngbDropdown class="d-inline-block" *ngIf="isMenuOpen">
     <a class="nav-link valid-action name ml-3" ngbDropdownToggle>
       <div style="text-align: center">
         <i class="material-icons">face</i>
@@ -19,7 +26,7 @@
   </div>
 
 
-  <div ngbDropdown class="d-inline-block">
+  <div ngbDropdown class="d-inline-block" *ngIf="isMenuOpen">
     <a class="nav-link valid-action ml-3" ngbDropdownToggle>
       <div style="text-align: center">
         <i class="material-icons" title="Registra">add</i>
@@ -54,7 +61,7 @@
       <!--</a>-->
     <!--</div>-->
   <!--</div>-->
-  <div>
+  <div *ngIf="isMenuOpen">
     <a class="nav-link valid-action ml-3" (click)="search()">
       <div style="text-align: center">
         <i class="material-icons">search</i>
@@ -63,8 +70,9 @@
     </a>
   </div>
   <img
+    *ngIf="isMenuOpen"
     src="../../assets/tb_bgk.png"
-    style="width: 15vh; margin-left: 145vh; cursor: pointer"
+    style="width: 15vh; margin-left: auto; cursor: pointer"
     class="img-fluid"
     alt="Team Managment Logo"
     (click)="home()">
