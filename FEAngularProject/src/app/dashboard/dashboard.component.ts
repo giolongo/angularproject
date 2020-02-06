@@ -26,4 +26,9 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  search() {
+    this.router.navigate(['/ricercaRisultati']);
+  }
+
+
 }
