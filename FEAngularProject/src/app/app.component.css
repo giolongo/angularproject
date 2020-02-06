@@ -34,5 +34,5 @@ ul a i{
 }
 
 div{
-  transition: width 2s;
+  transition: all 1s ease-out !important;
 }

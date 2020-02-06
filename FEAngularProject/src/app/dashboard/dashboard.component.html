@@ -1,12 +1,28 @@
 <div *ngIf = "employerLogService.isLogged()">
-    <div *ngIf = "employerLogService.isManager()">
-        <h1>Dashboard manager</h1>
-        <p>Tramite questo pannello puoi gestire le informazioni ed i permessi dei dipendenti</p>
+
+  <div>
+    <h1>Piacere di rivederti {{employerLogService.getNomeUtente()+' '+employerLogService.getCognomeUtente()}}</h1>
+    <p *ngIf = "employerLogService.isManager()">Il tuo ruole di Manager ti permette di gestire i dipendenti ed i team</p>
+    <p *ngIf = "!employerLogService.isManager()">Puoi gestire tutte le informazioni relative al tuo profilo</p>
+  </div>
+  <div class="row text-center">
+    <div class="col-12">
+      <i class="material-icons btn-menu" style="cursor:pointer;">search</i>
     </div>
-    <div *ngIf = "!employerLogService.isManager()">
-        <h1>Dashboard utente</h1>
-        <p>Tramite questo pannello puoi gestire le tue informazioni ed i tuoi permessi</p>
-    </div>
+
+  </div>
+
+  <!---->
+  <!---->
+  <!---->
+    <!--<div *ngIf = "employerLogService.isManager()">-->
+        <!--<h1>Dashboard manager</h1>-->
+        <!--<p>Tramite questo pannello puoi gestire le informazioni ed i permessi dei dipendenti</p>-->
+    <!--</div>-->
+    <!--<div *ngIf = "!employerLogService.isManager()">-->
+        <!--<h1>Dashboard utente</h1>-->
+        <!--<p>Tramite questo pannello puoi gestire le tue informazioni ed i tuoi permessi</p>-->
+    <!--</div>-->
 </div>
 
 <div  *ngIf = "!employerLogService.isLogged()" class="loader"></div>

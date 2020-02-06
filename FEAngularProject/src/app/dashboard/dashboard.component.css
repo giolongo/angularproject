@@ -10,3 +10,15 @@
 h1, p{
     text-align: center;
 }
+
+.btn-menu {
+  transition: all 1s ease-out !important;
+}
+.btn-menu:hover {
+  transform: rotate(360deg);
+  color: blue;
+}
+
+.material-icons{
+  font-size: 6rem;
+}
