@@ -11,7 +11,7 @@ h1, p{
     text-align: center;
 }
 
-.btn-menu {
+* {
   transition: all 1s ease-out !important;
 }
 .btn-menu:hover {
@@ -21,4 +21,22 @@ h1, p{
 
 .material-icons{
   font-size: 6rem;
+}
+
+.container{
+  border: 1px solid;
+  border-radius: 15%;
+  min-height: 215px;
+}
+
+.container:hover{
+  background-color: #fffd53;
+}
+
+.mb-6{
+  margin-bottom: 6rem!important;
+}
+
+h4:hover{
+  color: blue;
 }

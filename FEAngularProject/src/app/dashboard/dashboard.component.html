@@ -1,15 +1,38 @@
 <div *ngIf = "employerLogService.isLogged()">
 
-  <div>
+  <div class="mb-5">
     <h1>Piacere di rivederti {{employerLogService.getNomeUtente()+' '+employerLogService.getCognomeUtente()}}</h1>
-    <p *ngIf = "employerLogService.isManager()">Il tuo ruole di Manager ti permette di gestire i dipendenti ed i team</p>
-    <p *ngIf = "!employerLogService.isManager()">Puoi gestire tutte le informazioni relative al tuo profilo</p>
+    <p *ngIf = "employerLogService.isManager()">Il tuo ruole di Manager ti permette di gestire anche i dipendenti ed i team</p>
+    <p>Scegli l'operazione da eseguire</p>
   </div>
   <div class="row text-center">
-    <div class="col-12">
-      <i class="material-icons btn-menu" style="cursor:pointer;" (click)="search()">search</i>
+    <div class="col-2 offset-4" style="cursor: pointer" (click)="search()">
+      <div class="container">
+        <i class="material-icons btn-menu" style="cursor:pointer;">search</i>
+        <div><h4>Ricerca Team e Utenti</h4></div>
+      </div>
     </div>
+    <div class="col-2" style="cursor: pointer" (click)="visualizzaProfilo()">
+      <div class="container">
+        <i class="material-icons btn-menu" style="cursor:pointer;">accessibility</i>
+        <div><h4>Visulizza e modifica i tuoi dati</h4></div>
+      </div>
+    </div>
+  </div>
 
+  <div class="row text-center mt-2" *ngIf="employerLogService.isManager()">
+    <div class="col-2 offset-4" style="cursor: pointer" (click)="registraUtente()">
+      <div class="container">
+        <i class="material-icons btn-menu pt-4" style="cursor:pointer;">person_add</i>
+        <div><h4>Registra un nuovo utente</h4></div>
+      </div>
+    </div>
+    <div class="col-2" style="cursor: pointer" (click)="registraTeam()">
+      <div class="container pb-2">
+        <i class="material-icons btn-menu pt-4" style="cursor:pointer;">group_add</i>
+        <div><h4>Inserisci un nuovo Team</h4></div>
+      </div>
+    </div>
   </div>
 
   <!---->

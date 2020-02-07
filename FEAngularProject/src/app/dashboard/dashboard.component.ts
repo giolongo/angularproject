@@ -30,5 +30,16 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['/ricercaRisultati']);
   }
 
+  registraUtente() {
+    this.router.navigate(['/registraUtente']);
+  }
+
+  registraTeam() {
+    this.router.navigate(['/registraTeam']);
+  }
+
+  visualizzaProfilo() {
+    this.router.navigate(['/visualizzaProfilo']);
+  }
 
 }
