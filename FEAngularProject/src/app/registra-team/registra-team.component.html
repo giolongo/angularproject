@@ -1,4 +1,4 @@
-<div *ngIf = "employerLogService.isLogged()">
+<div *ngIf = "employerLogService.isLogged()" class="mt-2">
     <div *ngIf = "!employerLogService.isManager()">
         <div class="row">
             <i class="material-icons" style="margin:auto; font-size: 17rem;">error_outline</i>
@@ -9,9 +9,21 @@
             </p>
         </div>
     </div>
-    <div *ngIf="employerLogService.isManager()">
+    <div *ngIf="employerLogService.isManager()" class="row">
+      <div class="col-12 text-center">
+        <h1>Inserisci un nuovo Team</h1>
+      </div>
+      <div class="col-4 offset-2">
+      <img
+        src="../../assets/team.png"
+        style="width: 100vh; margin-left: auto;"
+        class="img-fluid"
+        alt="Team">
+      </div>
+      <div class="col-4">
         <form #creaTeam = "ngForm">
-            <div class="card" style="">
+            <div class="card">
+              <div class="card-header">Nuovo Team</div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-10">
