@@ -110,4 +110,8 @@ export class DatatableListaDipendentiComponent implements OnDestroy, OnInit {
   redirect(idDipendente : string){
     this.router.navigate (['/skillDipendente/' + idDipendente]);
   }
+
+  registraUtente() {
+    this.router.navigate(['/registraUtente']);
+  }
 }

@@ -1,6 +1,6 @@
 <div *ngIf = "employerLogService.isLogged()">
 
-  <div class="mb-5">
+  <div class="mb-4">
     <h1>Piacere di rivederti {{employerLogService.getNomeUtente()+' '+employerLogService.getCognomeUtente()}}</h1>
     <p *ngIf = "employerLogService.isManager()">Il tuo ruole di Manager ti permette di gestire anche i dipendenti ed i team</p>
     <p>Scegli l'operazione da eseguire</p>

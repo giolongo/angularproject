@@ -100,4 +100,8 @@ export class DatatableListaTeamComponent implements OnInit {
   getCapoTeam (row : any){
     return row.team_capo_team[0].cognome + ' ' + row.team_capo_team[0].nome;
   }
+
+  registraTeam() {
+    this.router.navigate(['/registraTeam']);
+  }
 }

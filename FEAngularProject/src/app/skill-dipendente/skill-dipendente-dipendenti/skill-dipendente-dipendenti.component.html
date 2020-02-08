@@ -1,6 +1,6 @@
 <div [hidden]="isReady" class="loader"></div>
 <div class="row" [hidden]="!isReady" *ngIf="datiDipendente && datiDipendente.length>0">
-  <div class="col-md-6">
+  <div class="col-5 offset-1">
     <div *ngIf="datiDipendente">
       <div class="card" style="">
           <div class="card-header">
@@ -36,7 +36,7 @@
     </div>
   </div>
   
-  <div class="col-md-6">
+  <div class="col-5">
     <div class="card" style="">
       <div class="card-header">
           <h5 class="card-title">Skills</h5>
