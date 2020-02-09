@@ -9,6 +9,10 @@
     padding-top: 0.5rem;
 }
 
+.grey{
+  color: grey;
+}
+
 ul a i{
     display: inline-flex;
     vertical-align: middle;
@@ -34,5 +38,5 @@ ul a i{
 }
 
 div{
-  transition: all 1s ease-out !important;
+  transition: width 2s;
 }
