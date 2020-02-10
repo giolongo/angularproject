@@ -16,7 +16,8 @@ class SkillDipendente extends Model
     
     protected $fillable = [
         'id_skill',
-        'id_dipendente'
+        'id_dipendente',
+        'seniority'
     ];
 
     public function skill()
