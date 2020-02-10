@@ -14,8 +14,13 @@ h1, p{
 * {
   transition: all 1s ease-out !important;
 }
-.btn-menu:hover {
+.btn-menu-round:hover {
   transform: rotate(360deg);
+  color: blue;
+}
+
+.btn-menu-jump:hover {
+  transform: translateY(-15px);
   color: blue;
 }
 
