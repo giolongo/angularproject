@@ -29,7 +29,7 @@
     "angular2-ladda": "^2.0.0",
     "bootstrap": "^4.1.1",
     "core-js": "^2.5.4",
-    "datatables.net": "^1.10.19",
+    "datatables.net": "^1.11.3",
     "datatables.net-dt": "^1.10.19",
     "font-awesome": "^4.7.0",
     "glyphicons": "^0.2.0",
